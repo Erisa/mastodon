@@ -56,7 +56,6 @@ services:
 
   web:
     build: .
-    image: ghcr.io/mastodon/mastodon:v4.1.6
     restart: always
     env_file: .env.production
     command: bash -c "rm -f /mastodon/tmp/pids/server.pid; bundle exec rails s -p 3000"
@@ -66,18 +65,13 @@ services:
     healthcheck:
       # prettier-ignore
       test: ['CMD-SHELL', 'wget -q --spider --proxy=off localhost:3000/health || exit 1']
-    ports:
-      - '127.0.0.1:3000:3000'
+#    ports:
+#      - '127.0.0.1:3000:3000'
     depends_on:
       - db
       - redis
-      # - es
-    volumes:
-      - ./public/system:/mastodon/public/system
-
   streaming:
     build: .
-    image: ghcr.io/mastodon/mastodon:v4.1.6
     restart: always
     env_file: .env.production
     command: node ./streaming
@@ -87,15 +81,14 @@ services:
     healthcheck:
       # prettier-ignore
       test: ['CMD-SHELL', 'wget -q --spider --proxy=off localhost:4000/api/v1/streaming/health || exit 1']
-    ports:
-      - '127.0.0.1:4000:4000'
+#    ports:
+#      - '127.0.0.1:4000:4000'
     depends_on:
       - db
       - redis
 
   sidekiq:
     build: .
-    image: ghcr.io/mastodon/mastodon:v4.1.6
     restart: always
     env_file: .env.production
     command: bundle exec sidekiq
@@ -105,8 +98,6 @@ services:
     networks:
       - external_network
       - internal_network
-    volumes:
-      - ./public/system:/mastodon/public/system
     healthcheck:
       test: ['CMD-SHELL', "ps aux | grep '[s]idekiq\ 6' || false"]
 
@@ -126,6 +117,15 @@ services:
   #   networks:
   #     - external_network
   #     - internal_network
+
+  cloudflared:
+    image: erisamoe/cloudflared
+    restart: unless-stopped
+    command: tunnel run
+    environment:
+      - TUNNEL_TOKEN=${TUNNEL_TOKEN}
+    networks:
+      - external_network
 
 networks:
   external_network:
