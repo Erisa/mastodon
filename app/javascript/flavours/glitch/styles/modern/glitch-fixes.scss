@@ -253,6 +253,38 @@ body.app-body.flavour-glitch > #mastodon .pillbar-button {
   padding: 6px;
 }
 
+body.app-body.flavour-glitch > #mastodon .account__header__account-note {
+  margin-block: 10px 0;
+}
+
+body.app-body.flavour-glitch
+  > #mastodon
+  .account__header__account-note:focus-within {
+  border-radius: var(--radius) !important;
+}
+
+body.app-body.flavour-glitch
+  > #mastodon
+  .account__header__account-note__header {
+  align-items: center;
+}
+
+body.app-body.flavour-glitch
+  > #mastodon
+  .account__header__account-note__header
+  button {
+  display: flex;
+  gap: 0.2em;
+}
+
+body.app-body.flavour-glitch
+  > #mastodon
+  .account__header__account-note__content {
+  width: 100%;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
 body.app-body.flavour-glitch > #mastodon .account-card .media-modal__close {
   left: 10px;
   top: 10px;
