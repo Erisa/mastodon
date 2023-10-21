@@ -3529,7 +3529,7 @@ a:focus-visible,
     margin-top: 2px !important;
   }
   #mastodon:not(:has(.navigation-panel__sign-in-banner)) .ui__header {
-    z-index: 200;
+    z-index: 199;
   }
   #mastodon:not(:has(.navigation-panel__sign-in-banner)) .ui__header::before,
   #mastodon:not(:has(.navigation-panel__sign-in-banner)) .ui__header::after {
