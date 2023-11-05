@@ -9,7 +9,7 @@ import ImmutablePureComponent from 'react-immutable-pure-component';
 import TransitionMotion from 'react-motion/lib/TransitionMotion';
 import spring from 'react-motion/lib/spring';
 
-import unicodeMapping from '../features/emoji/emoji_unicode_mapping_light';
+import { unicodeMapping } from '../features/emoji/emoji_unicode_mapping_light';
 import { autoPlayGif, reduceMotion } from '../initial_state';
 import { assetHost } from '../utils/config';
 

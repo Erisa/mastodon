@@ -65,6 +65,21 @@ body.app-body.flavour-glitch > #mastodon .collapsed .status__content::after {
   content: unset;
 }
 
+body.app-body.flavour-glitch > #mastodon .collapsed .status__action-bar :not(i),
+body.app-body.flavour-glitch
+  > #mastodon
+  .collapsed
+  .detailed-status__action-bar
+  :not(i),
+body.app-body.flavour-glitch
+  > #mastodon
+  .collapsed
+  .picture-in-picture__footer
+  :not(i) {
+  height: unset !important;
+  width: unset !important;
+}
+
 body.app-body.flavour-glitch
   > #mastodon
   .collapsed.muted

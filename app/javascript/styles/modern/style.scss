@@ -2652,8 +2652,6 @@ a:focus-visible,
 #mastodon .status__action-bar :not(i),
 #mastodon .detailed-status__action-bar :not(i),
 #mastodon .picture-in-picture__footer :not(i) {
-  height: unset !important;
-  width: unset !important;
   pointer-events: all;
 }
 #mastodon .status__action-bar .icon-button,
