@@ -67,7 +67,7 @@ import ColumnHeader from '../../components/column_header';
 import { textForScreenReader, defaultMediaVisibility } from '../../components/status';
 import StatusContainer from '../../containers/status_container';
 import { boostModal, deleteModal } from '../../initial_state';
-import { makeCustomEmojiMap, makeGetStatus, makeGetPictureInPicture } from '../../selectors';
+import { makeGetStatus, makeGetPictureInPicture } from '../../selectors';
 import Column from '../ui/components/column';
 import { attachFullscreenListener, detachFullscreenListener, isFullscreen } from '../ui/util/fullscreen';
 
@@ -166,7 +166,6 @@ const makeMapStateToProps = () => {
       askReplyConfirmation: state.getIn(['compose', 'text']).trim().length !== 0,
       domain: state.getIn(['meta', 'domain']),
       pictureInPicture: getPictureInPicture(state, { id: props.params.statusId }),
-      emojiMap: makeCustomEmojiMap(state),
     };
   };
 

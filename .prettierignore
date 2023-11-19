@@ -90,3 +90,4 @@ app/javascript/styles/win95.scss
 # Ignore mastomodern theme
 app/javascript/styles/modern/style.scss
 app/javascript/flavours/glitch/styles/modern/style.scss
+app/javascript/flavours/glitch/styles/modern/glitch-fixes.scss

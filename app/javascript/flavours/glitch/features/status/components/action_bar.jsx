@@ -8,13 +8,14 @@ import { withRouter } from 'react-router-dom';
 
 import ImmutablePropTypes from 'react-immutable-proptypes';
 
-import { IconButton } from 'flavours/glitch/components/icon_button';
-import DropdownMenuContainer from 'flavours/glitch/containers/dropdown_menu_container';
-import EmojiPickerDropdown from 'flavours/glitch/features/compose/containers/emoji_picker_dropdown_container';
-import { me, maxReactions } from 'flavours/glitch/initial_state';
 import { PERMISSION_MANAGE_USERS, PERMISSION_MANAGE_FEDERATION } from 'flavours/glitch/permissions';
 import { accountAdminLink, statusAdminLink } from 'flavours/glitch/utils/backend_links';
 import { WithRouterPropTypes } from 'flavours/glitch/utils/react_router';
+
+import { IconButton } from '../../../components/icon_button';
+import DropdownMenuContainer from '../../../containers/dropdown_menu_container';
+import { me, maxReactions } from '../../../initial_state';
+import EmojiPickerDropdown from '../../compose/containers/emoji_picker_dropdown_container';
 
 const messages = defineMessages({
   delete: { id: 'status.delete', defaultMessage: 'Delete' },
@@ -88,7 +89,7 @@ class ActionBar extends PureComponent {
 
   handleEmojiPick = data => {
     this.props.onReactionAdd(this.props.status.get('id'), data.native.replace(/:/g, ''), data.imageUrl);
-  }
+  };
 
   handleBookmarkClick = (e) => {
     this.props.onBookmark(this.props.status, e);
@@ -149,7 +150,7 @@ class ActionBar extends PureComponent {
     navigator.clipboard.writeText(url);
   };
 
-  handleNoOp = () => {} // hack for reaction add button
+  handleNoOp = () => {}; // hack for reaction add button
 
   render () {
     const { status, intl } = this.props;

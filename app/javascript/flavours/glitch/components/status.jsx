@@ -12,13 +12,15 @@ import { HotKeys } from 'react-hotkeys';
 import PictureInPicturePlaceholder from 'flavours/glitch/components/picture_in_picture_placeholder';
 import PollContainer from 'flavours/glitch/containers/poll_container';
 import NotificationOverlayContainer from 'flavours/glitch/features/notifications/containers/overlay_container';
-import { displayMedia, visibleReactions } from 'flavours/glitch/initial_state';
 import { autoUnfoldCW } from 'flavours/glitch/utils/content_warning';
 import { withOptionalRouter, WithOptionalRouterPropTypes } from 'flavours/glitch/utils/react_router';
 
 import Card from '../features/status/components/card';
+// We use the component (and not the container) since we do not want
+// to use the progress bar to show download progress
 import Bundle from '../features/ui/components/bundle';
 import { MediaGallery, Video, Audio } from '../features/ui/util/async-components';
+import { displayMedia, visibleReactions } from '../initial_state';
 
 import AttachmentList from './attachment_list';
 import { getHashtagBarForStatus } from './hashtag_bar';

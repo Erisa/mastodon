@@ -22,7 +22,7 @@ module StatusesHelper
     attachments = { image: 0, video: 0, audio: 0 }
 
     status.ordered_media_attachments.each do |media|
-      if media.video?
+      if media.video? || media.gifv?
         attachments[:video] += 1
       elsif media.audio?
         attachments[:audio] += 1

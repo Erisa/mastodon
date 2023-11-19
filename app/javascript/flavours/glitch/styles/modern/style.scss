@@ -2717,6 +2717,7 @@ a:focus-visible,
   display: flex;
   justify-content: center;
   width: 100%;
+  flex-basis: 0%;
 }
 #mastodon .status__action-bar.detailed-status__action-bar > div :not(i),
 #mastodon .detailed-status__action-bar.detailed-status__action-bar > div :not(i),

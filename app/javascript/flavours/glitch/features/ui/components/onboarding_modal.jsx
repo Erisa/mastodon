@@ -234,7 +234,9 @@ class OnboardingModal extends PureComponent {
     }));
   };
 
-  handleSwipe = (index) => {
+  handleSwipe = (index, lastIndex, meta) => {
+    if (meta.reason !== 'swipe') return;
+
     this.setState({ currentIndex: index });
   };
 

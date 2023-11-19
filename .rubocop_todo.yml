@@ -212,10 +212,6 @@ RSpec/MultipleMemoizedHelpers:
 RSpec/NestedGroups:
   Max: 6
 
-RSpec/PendingWithoutReason:
-  Exclude:
-    - 'spec/models/status_reaction_spec.rb'
-
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Rails/ApplicationController:
   Exclude:
