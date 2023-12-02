@@ -34,7 +34,7 @@ end
 
 unless Rails.env.development?
   assets_host = Rails.configuration.action_controller.asset_host || "https://#{ENV['WEB_DOMAIN'] || ENV['LOCAL_DOMAIN']}"
-  data_hosts = [assets_host]
+  data_hosts = [assets_host, 'https://media.tenor.com']
 
   if ENV['S3_ENABLED'] == 'true' || ENV['AZURE_ENABLED'] == 'true'
     attachments_host = host_to_url(ENV['S3_ALIAS_HOST'] || ENV['S3_CLOUDFRONT_HOST'] || ENV['AZURE_ALIAS_HOST'] || ENV['S3_HOSTNAME'] || "s3-#{ENV['S3_REGION'] || 'us-east-1'}.amazonaws.com")
@@ -68,7 +68,7 @@ unless Rails.env.development?
     p.frame_src       :self, :https
     p.child_src       :self, :blob, assets_host
     p.worker_src      :self, :blob, assets_host
-    p.connect_src     :self, :blob, :data, Rails.configuration.x.streaming_api_base_url, *data_hosts
+    p.connect_src     :self, :blob, :data, Rails.configuration.x.streaming_api_base_url, *data_hosts, 'https://api.tenor.com'
     p.manifest_src    :self, assets_host
 
     if sso_host.present?

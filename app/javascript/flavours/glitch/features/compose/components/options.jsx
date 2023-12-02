@@ -134,7 +134,6 @@ class ComposerOptions extends ImmutablePureComponent {
     advancedOptions: ImmutablePropTypes.map,
     disabled: PropTypes.bool,
     allowMedia: PropTypes.bool,
-    allowPoll: PropTypes.bool,
     hasPoll: PropTypes.bool,
     intl: PropTypes.object.isRequired,
     onChangeAdvancedOption: PropTypes.func,
@@ -206,7 +205,6 @@ class ComposerOptions extends ImmutablePureComponent {
       contentType,
       disabled,
       allowMedia,
-      allowPoll,
       hasPoll,
       onChangeAdvancedOption,
       onChangeContentType,
@@ -276,7 +274,7 @@ class ComposerOptions extends ImmutablePureComponent {
         {!!pollLimits && (
           <IconButton
             active={hasPoll}
-            disabled={disabled || !allowPoll}
+            disabled={disabled}
             icon='tasks'
             inverted
             onClick={onTogglePoll}

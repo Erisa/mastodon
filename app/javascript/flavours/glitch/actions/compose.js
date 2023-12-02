@@ -88,7 +88,6 @@ export const COMPOSE_SET_STATUS = 'COMPOSE_SET_STATUS';
 
 const messages = defineMessages({
   uploadErrorLimit: { id: 'upload_error.limit', defaultMessage: 'File upload limit exceeded.' },
-  uploadErrorPoll:  { id: 'upload_error.poll', defaultMessage: 'File upload not allowed with polls.' },
 });
 
 export const ensureComposeIsVisible = (getState, routerHistory) => {
@@ -315,11 +314,6 @@ export function uploadCompose(files, alt = '') {
 
     if (files.length + media.size + pending > uploadLimit) {
       dispatch(showAlert(undefined, messages.uploadErrorLimit));
-      return;
-    }
-
-    if (getState().getIn(['compose', 'poll'])) {
-      dispatch(showAlert(undefined, messages.uploadErrorPoll));
       return;
     }
 

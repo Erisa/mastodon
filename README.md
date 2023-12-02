@@ -8,6 +8,7 @@ Here are some of the changes compared to glitch-soc:
 - Tenor GIF picker (originally from [koyu.space](https://github.com/koyuspace/mastodon))
 - Mastodon Modern theme (licensed under CC-BY-SA 4.0, [original repo](https://codeberg.org/Freeplay/Mastodon-Modern))
 - Workaround for opengraph video embeds when using [Jortage](https://jortage.com)
+- Polls can be posted alongside media
 - Restores status trend half-life to 2 hours
 - Minor media attachment tweaks
 - Custom favicon
