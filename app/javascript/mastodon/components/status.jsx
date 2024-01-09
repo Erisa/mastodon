@@ -22,7 +22,7 @@ import Card from '../features/status/components/card';
 // to use the progress bar to show download progress
 import Bundle from '../features/ui/components/bundle';
 import { MediaGallery, Video, Audio } from '../features/ui/util/async-components';
-import { displayMedia, visibleReactions } from '../initial_state';
+import { displayMedia } from '../initial_state';
 
 import { Avatar } from './avatar';
 import { AvatarOverlay } from './avatar_overlay';
@@ -31,7 +31,6 @@ import { getHashtagBarForStatus } from './hashtag_bar';
 import { RelativeTimestamp } from './relative_timestamp';
 import StatusActionBar from './status_action_bar';
 import StatusContent from './status_content';
-import StatusReactions from './status_reactions';
 import { VisibilityIcon } from './visibility_icon';
 
 const domParser = new DOMParser();
@@ -79,13 +78,9 @@ const messages = defineMessages({
 
 class Status extends ImmutablePureComponent {
 
-  static contextTypes = {
-    identity: PropTypes.object,
-  };
-
   static propTypes = {
     status: ImmutablePropTypes.map,
-    account: ImmutablePropTypes.map,
+    account: ImmutablePropTypes.record,
     previousId: PropTypes.string,
     nextInReplyToId: PropTypes.string,
     rootId: PropTypes.string,
@@ -96,8 +91,6 @@ class Status extends ImmutablePureComponent {
     onDelete: PropTypes.func,
     onDirect: PropTypes.func,
     onMention: PropTypes.func,
-    onReactionAdd: PropTypes.func,
-    onReactionRemove: PropTypes.func,
     onPin: PropTypes.func,
     onOpenMedia: PropTypes.func,
     onOpenVideo: PropTypes.func,
@@ -121,7 +114,6 @@ class Status extends ImmutablePureComponent {
     cachedMediaWidth: PropTypes.number,
     scrollKey: PropTypes.string,
     deployPictureInPicture: PropTypes.func,
-    emojiMap: ImmutablePropTypes.map.isRequired,
     pictureInPicture: ImmutablePropTypes.contains({
       inUse: PropTypes.bool,
       available: PropTypes.bool,
@@ -588,15 +580,6 @@ class Status extends ImmutablePureComponent {
             {media}
 
             {expanded && hashtagBar}
-
-            <StatusReactions
-              statusId={status.get('id')}
-              reactions={status.get('reactions')}
-              numVisible={visibleReactions}
-              addReaction={this.props.onReactionAdd}
-              removeReaction={this.props.onReactionRemove}
-              canReact={this.context.identity.signedIn}
-            />
 
             <StatusActionBar scrollKey={scrollKey} status={status} account={account} onFilter={matchedFilters ? this.handleFilterClick : null} {...other} />
           </div>

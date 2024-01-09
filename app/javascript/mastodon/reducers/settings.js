@@ -34,7 +34,6 @@ const initialState = ImmutableMap({
       follow: false,
       follow_request: false,
       favourite: false,
-      reaction: false,
       reblog: false,
       mention: false,
       poll: false,
@@ -58,7 +57,6 @@ const initialState = ImmutableMap({
       follow_request: false,
       favourite: true,
       reblog: true,
-      reaction: true,
       mention: true,
       poll: true,
       status: true,
@@ -72,7 +70,6 @@ const initialState = ImmutableMap({
       follow_request: false,
       favourite: true,
       reblog: true,
-      reaction: true,
       mention: true,
       poll: true,
       status: true,
@@ -102,6 +99,15 @@ const initialState = ImmutableMap({
     regex: ImmutableMap({
       body: '',
     }),
+  }),
+
+  dismissed_banners: ImmutableMap({
+    'public_timeline': false,
+    'community_timeline': false,
+    'home.explore_prompt': false,
+    'explore/links': false,
+    'explore/statuses': false,
+    'explore/tags': false,
   }),
 });
 
