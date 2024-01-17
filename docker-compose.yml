@@ -56,7 +56,8 @@ services:
 
   web:
     build: .
-    image: ghcr.io/erisa/mastodon
+    image: ghcr.io/erisa/mastodon:nightly
+
     restart: always
     env_file: .env.production
     command: bundle exec puma -C config/puma.rb
@@ -71,9 +72,10 @@ services:
     depends_on:
       - db
       - redis
+
   streaming:
     build: .
-    image: ghcr.io/erisa/mastodon
+    image: ghcr.io/erisa/mastodon-streaming:nightly
     restart: always
     env_file: .env.production
     command: node ./streaming
@@ -91,7 +93,7 @@ services:
 
   sidekiq:
     build: .
-    image: ghcr.io/erisa/mastodon
+    image: ghcr.io/erisa/mastodon:nightly
     restart: always
     env_file: .env.production
     command: bundle exec sidekiq
@@ -129,6 +131,16 @@ services:
       - TUNNEL_TOKEN=${TUNNEL_TOKEN}
     networks:
       - external_network
+      - internal_network
+
+  libretranslate:
+    image: libretranslate/libretranslate:v1.5.2
+    restart: unless-stopped
+ #   volumes:
+  #    - ./lt-data:/home/libretranslate/.local
+    networks:
+      - external_network
+      - internal_network
 
 networks:
   external_network:
