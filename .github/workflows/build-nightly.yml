@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   compute-suffix:
-    runs-on: ubicloud-standard-4
+    runs-on: ubuntu-latest
     steps:
       - id: version_vars
         env:
