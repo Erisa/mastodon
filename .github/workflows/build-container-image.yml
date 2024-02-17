@@ -26,7 +26,7 @@ on:
 
 jobs:
   build-image:
-    runs-on: ubuntu-latest
+    runs-on: ubicloud-standard-4
 
     steps:
       - uses: actions/checkout@v4
