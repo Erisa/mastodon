@@ -1,8 +1,8 @@
 name: Build nightly container image
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 2 * * *' # run at 2 AM UTC
+  #schedule:
+  #  - cron: '0 2 * * *' # run at 2 AM UTC
   push:
     branches: [main]
 
@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   compute-suffix:
-    runs-on: ubuntu-latest
+    runs-on: ubicloud-standard-4
     steps:
       - id: version_vars
         env:
