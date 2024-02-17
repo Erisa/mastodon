@@ -1,10 +1,10 @@
 name: Ruby Testing
 
 on:
-  push:
-    branches-ignore:
-      - 'dependabot/**'
-      - 'renovate/**'
+  #push:
+  #  branches-ignore:
+  #    - 'dependabot/**'
+  #    - 'renovate/**'
   pull_request:
 
 env:
