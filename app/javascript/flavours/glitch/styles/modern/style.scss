@@ -406,6 +406,8 @@ a:focus-visible,
 }
 .scrollable,
 .detailed-status__action-bar,
+.column-back-button,
+.column-header__collapsible.collapsed,
 .column-header__collapsible-inner,
 .audio-player,
 .search__input {
@@ -507,6 +509,7 @@ a:focus-visible,
 }
 .emoji-mart-category-list button {
   position: relative;
+  padding: 0 !important;
   padding-top: 100% !important;
 }
 .emoji-mart-category-list button img,
@@ -540,18 +543,22 @@ a:focus-visible,
 #mastodon .compose-panel > * {
   padding-inline: 0;
 }
+#mastodon .compose-panel > .navigation-bar {
+  padding-top: 0 !important;
+}
+#mastodon .compose-panel .search,
+.drawer .search {
+  margin-bottom: 25px;
+}
 #mastodon .search {
   border-radius: var(--radius);
   margin-inline: -5px;
-  margin-bottom: 15px !important;
 }
 #mastodon .search label {
   box-sizing: border-box;
 }
 #mastodon .search input {
   border-radius: var(--radius-round) !important;
-  padding-inline-start: 20px !important;
-  padding-inline-end: 40px !important;
 }
 #mastodon .search .search__icon > i {
   margin-inline: 5px;
@@ -572,6 +579,13 @@ a:focus-visible,
 #mastodon .compose-form {
   min-height: unset;
   overflow: unset;
+  gap: 15px;
+}
+#mastodon .compose-form > * {
+  margin: 0 !important;
+}
+#mastodon .compose-form > [aria-hidden="true"] {
+  display: none;
 }
 #mastodon .compose-form > .navigation-bar {
   margin-top: 10px;
@@ -610,6 +624,7 @@ a:focus-visible,
 #mastodon .compose-form .compose-form__publish-button-wrapper {
   overflow: visible !important;
   max-width: 100%;
+  padding: 0;
 }
 #mastodon .compose-form .compose-form__upload__actions {
   z-index: 5;
@@ -938,7 +953,7 @@ a:focus-visible,
   margin-bottom: 10px;
   background-color: inherit;
   border-radius: var(--radius) !important;
-  animation: slideUp backwards 0.4s cubic-bezier(0, 1, 1, 1);
+  animation: fade backwards 0.4s cubic-bezier(0, 1, 1, 1);
 }
 #mastodon .account-timeline__header .account__moved-note {
   box-sizing: border-box;
@@ -978,43 +993,51 @@ a:focus-visible,
   top: var(--radius);
 }
 #mastodon .account-timeline__header .account__header__bar {
+  position: relative;
+  z-index: 2;
   border: 0;
-  padding: 0 20px;
+  padding-inline: 20px;
   border-radius: var(--radius) var(--radius) 0 0;
   margin-top: calc(0px - var(--radius)) !important;
   display: flex;
   flex-direction: column;
   background: inherit;
+  isolation: isolate;
 }
 @media (max-width: 890px) {
   #mastodon .account-timeline__header .account__header__bar {
     padding-inline: 15px;
   }
 }
+#mastodon .account-timeline__header .account__header__bar::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  height: 95px;
+  background: inherit;
+  z-index: -1;
+  border-radius: var(--radius);
+  mask: linear-gradient(to bottom, transparent, #000);
+}
 #mastodon .account-timeline__header .account__header__bar .account__header__tabs {
   overflow: visible !important;
-  position: relative;
   align-items: flex-end;
   padding: 0;
   height: unset !important;
   margin-top: -55px !important;
-  isolation: isolate;
 }
 #mastodon .account-timeline__header .account__header__bar .account__header__tabs::before {
   content: "";
   position: absolute;
-  top: 0;
-  left: -20px;
-  right: -20px;
-  bottom: -100px;
+  top: -55px;
+  inset-inline: 0;
+  height: 150px;
   backdrop-filter: blur(40px);
   filter: brightness(1.1);
   pointer-events: none;
   opacity: 0.7;
-  z-index: -1;
+  z-index: -2;
   clip-path: inset(55px 0 0 0 round var(--radius));
-  mask: linear-gradient(transparent 55px, #000 50px, transparent);
-  -webkit-mask: linear-gradient(transparent 55px, #000 50px, transparent);
 }
 #mastodon .account-timeline__header .account__header__bar .account__header__tabs ~ div {
   z-index: 2;
@@ -1049,31 +1072,29 @@ a:focus-visible,
   gap: 0 0.4em;
   font-weight: 600;
 }
+#mastodon .account-timeline__header .account__header__extra {
+  margin-top: 5px;
+}
+#mastodon .account-timeline__header .account__header__bio {
+  margin: 0;
+}
+#mastodon .account-timeline__header .account__header__bio > * {
+  padding-inline: 0;
+}
+#mastodon .account-timeline__header .account__header__bio .account__header__content {
+  padding: 0px;
+}
 #mastodon .account-timeline__header .account__header__badges {
   margin-top: 10px;
 }
 #mastodon .account-timeline__header .account__header__badges span {
   font-weight: 600;
 }
-#mastodon .account-timeline__header .account__header__bio {
-  padding: 0;
-  margin: 0;
-}
-#mastodon .account-timeline__header .account__header__bio > * {
-  padding-inline: 0;
-}
-#mastodon .account-timeline__header .account__header__content {
-  padding-top: 0;
-}
-#mastodon .account-timeline__header .account__header__extra {
-  margin-top: 1em;
-}
-#mastodon :not(.admin-account-bio) > div > .account__header__fields,
+#mastodon .account__header__fields,
 #mastodon .account__header__account-note {
   display: flex;
   flex-wrap: wrap;
   gap: 2px;
-  margin-bottom: 20px;
   background: none;
   border-radius: var(--radius);
   overflow: hidden;
@@ -1081,19 +1102,12 @@ a:focus-visible,
   max-width: 100%;
   border: 0;
 }
-#mastodon :not(.admin-account-bio) > div > .account__header__fields.account__header__fields:not(:first-child),
-#mastodon .account__header__account-note.account__header__fields:not(:first-child) {
-  margin-top: 10px;
-  margin-bottom: -10px;
+#mastodon .account__header__fields:first-child,
+#mastodon .account__header__account-note:first-child {
+  margin-block: 5px 15px;
 }
-.public-account-bio .account__header__fields {
-  padding: 20px !important;
-  padding-bottom: 0 !important;
-}
-#mastodon :not(.admin-account-bio) > div > .account__header__fields dl,
-#mastodon .account__header__account-note dl,
-#mastodon :not(.admin-account-bio) > div > .account__header__fields.account__header__account-note.account__header__account-note,
-#mastodon .account__header__account-note.account__header__account-note.account__header__account-note {
+#mastodon .account__header__fields dl,
+#mastodon .account__header__account-note dl {
   display: inline;
   border-radius: 0;
   overflow: hidden;
@@ -1103,37 +1117,27 @@ a:focus-visible,
   overflow: hidden;
   flex-grow: 1;
 }
-#mastodon :not(.admin-account-bio) > div > .account__header__fields dl:not(.verified),
-#mastodon .account__header__account-note dl:not(.verified),
-#mastodon :not(.admin-account-bio) > div > .account__header__fields.account__header__account-note.account__header__account-note:not(.verified),
-#mastodon .account__header__account-note.account__header__account-note.account__header__account-note:not(.verified) {
+#mastodon .account__header__fields dl:not(.verified),
+#mastodon .account__header__account-note dl:not(.verified) {
   background-color: var(--elevated-color);
 }
-#mastodon :not(.admin-account-bio) > div > .account__header__fields dl dt,
-#mastodon .account__header__account-note dl dt,
-#mastodon :not(.admin-account-bio) > div > .account__header__fields.account__header__account-note.account__header__account-note dt,
-#mastodon .account__header__account-note.account__header__account-note.account__header__account-note dt {
+#mastodon .account__header__fields dl dt,
+#mastodon .account__header__account-note dl dt {
   all: unset;
   color: unset;
   opacity: 0.9;
 }
-#mastodon :not(.admin-account-bio) > div > .account__header__fields dl dd,
-#mastodon .account__header__account-note dl dd,
-#mastodon :not(.admin-account-bio) > div > .account__header__fields.account__header__account-note.account__header__account-note dd,
-#mastodon .account__header__account-note.account__header__account-note.account__header__account-note dd {
+#mastodon .account__header__fields dl dd,
+#mastodon .account__header__account-note dl dd {
   padding: 0;
   white-space: unset;
   max-height: unset;
   text-align: unset;
 }
-#mastodon :not(.admin-account-bio) > div > .account__header__fields dl dd > span > a:first-child:last-child::after,
+#mastodon .account__header__fields dl dd > span > a:first-child:last-child::after,
 #mastodon .account__header__account-note dl dd > span > a:first-child:last-child::after,
-#mastodon :not(.admin-account-bio) > div > .account__header__fields.account__header__account-note.account__header__account-note dd > span > a:first-child:last-child::after,
-#mastodon .account__header__account-note.account__header__account-note.account__header__account-note dd > span > a:first-child:last-child::after,
-#mastodon :not(.admin-account-bio) > div > .account__header__fields dl dd .h-card:first-child:last-child a::after,
-#mastodon .account__header__account-note dl dd .h-card:first-child:last-child a::after,
-#mastodon :not(.admin-account-bio) > div > .account__header__fields.account__header__account-note.account__header__account-note dd .h-card:first-child:last-child a::after,
-#mastodon .account__header__account-note.account__header__account-note.account__header__account-note dd .h-card:first-child:last-child a::after {
+#mastodon .account__header__fields dl dd .h-card:first-child:last-child a::after,
+#mastodon .account__header__account-note dl dd .h-card:first-child:last-child a::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -1141,58 +1145,42 @@ a:focus-visible,
   opacity: 0;
   transition: opacity 0.2s;
 }
-#mastodon :not(.admin-account-bio) > div > .account__header__fields dl dd > span > a:first-child:last-child:hover:after,
+#mastodon .account__header__fields dl dd > span > a:first-child:last-child:hover:after,
 #mastodon .account__header__account-note dl dd > span > a:first-child:last-child:hover:after,
-#mastodon :not(.admin-account-bio) > div > .account__header__fields.account__header__account-note.account__header__account-note dd > span > a:first-child:last-child:hover:after,
-#mastodon .account__header__account-note.account__header__account-note.account__header__account-note dd > span > a:first-child:last-child:hover:after,
-#mastodon :not(.admin-account-bio) > div > .account__header__fields dl dd .h-card:first-child:last-child a:hover:after,
+#mastodon .account__header__fields dl dd .h-card:first-child:last-child a:hover:after,
 #mastodon .account__header__account-note dl dd .h-card:first-child:last-child a:hover:after,
-#mastodon :not(.admin-account-bio) > div > .account__header__fields.account__header__account-note.account__header__account-note dd .h-card:first-child:last-child a:hover:after,
-#mastodon .account__header__account-note.account__header__account-note.account__header__account-note dd .h-card:first-child:last-child a:hover:after,
-#mastodon :not(.admin-account-bio) > div > .account__header__fields dl dd > span > a:first-child:last-child:focus:after,
+#mastodon .account__header__fields dl dd > span > a:first-child:last-child:focus:after,
 #mastodon .account__header__account-note dl dd > span > a:first-child:last-child:focus:after,
-#mastodon :not(.admin-account-bio) > div > .account__header__fields.account__header__account-note.account__header__account-note dd > span > a:first-child:last-child:focus:after,
-#mastodon .account__header__account-note.account__header__account-note.account__header__account-note dd > span > a:first-child:last-child:focus:after,
-#mastodon :not(.admin-account-bio) > div > .account__header__fields dl dd .h-card:first-child:last-child a:focus:after,
-#mastodon .account__header__account-note dl dd .h-card:first-child:last-child a:focus:after,
-#mastodon :not(.admin-account-bio) > div > .account__header__fields.account__header__account-note.account__header__account-note dd .h-card:first-child:last-child a:focus:after,
-#mastodon .account__header__account-note.account__header__account-note.account__header__account-note dd .h-card:first-child:last-child a:focus:after {
+#mastodon .account__header__fields dl dd .h-card:first-child:last-child a:focus:after,
+#mastodon .account__header__account-note dl dd .h-card:first-child:last-child a:focus:after {
   opacity: 1;
 }
-#mastodon :not(.admin-account-bio) > div > .account__header__fields dl dd.verified,
-#mastodon .account__header__account-note dl dd.verified,
-#mastodon :not(.admin-account-bio) > div > .account__header__fields.account__header__account-note.account__header__account-note dd.verified,
-#mastodon .account__header__account-note.account__header__account-note.account__header__account-note dd.verified {
+#mastodon .account__header__fields dl dd.verified,
+#mastodon .account__header__account-note dl dd.verified {
   overflow: visible !important;
   border: 0;
   background: none;
 }
-#mastodon :not(.admin-account-bio) > div > .account__header__fields dl dd.verified a::before,
+#mastodon .account__header__fields dl dd.verified a::before,
 #mastodon .account__header__account-note dl dd.verified a::before,
-#mastodon :not(.admin-account-bio) > div > .account__header__fields.account__header__account-note.account__header__account-note dd.verified a::before,
-#mastodon .account__header__account-note.account__header__account-note.account__header__account-note dd.verified a::before,
-#mastodon :not(.admin-account-bio) > div > .account__header__fields dl dd.verified a::after,
-#mastodon .account__header__account-note dl dd.verified a::after,
-#mastodon :not(.admin-account-bio) > div > .account__header__fields.account__header__account-note.account__header__account-note dd.verified a::after,
-#mastodon .account__header__account-note.account__header__account-note.account__header__account-note dd.verified a::after {
+#mastodon .account__header__fields dl dd.verified a::after,
+#mastodon .account__header__account-note dl dd.verified a::after {
   content: "";
   position: absolute;
   inset: 0;
   background: currentcolor;
   opacity: 0.2;
 }
-#mastodon :not(.admin-account-bio) > div > .account__header__fields dl dd.verified a::after,
-#mastodon .account__header__account-note dl dd.verified a::after,
-#mastodon :not(.admin-account-bio) > div > .account__header__fields.account__header__account-note.account__header__account-note dd.verified a::after,
-#mastodon .account__header__account-note.account__header__account-note.account__header__account-note dd.verified a::after {
+#mastodon .account__header__fields dl dd.verified a::after,
+#mastodon .account__header__account-note dl dd.verified a::after {
   background: linear-gradient(20deg, currentcolor, transparent) !important;
   opacity: 0.2 !important;
   z-index: -2;
 }
-#mastodon :not(.admin-account-bio) > div > .account__header__fields.account__header__account-note.account__header__account-note,
-#mastodon .account__header__account-note.account__header__account-note.account__header__account-note {
+#mastodon .account__header__fields.account__header__account-note,
+#mastodon .account__header__account-note.account__header__account-note {
   display: flex;
-  margin-bottom: 10px;
+  margin-bottom: 10px !important;
   gap: 0;
   border: 0;
   padding: 0 !important;
@@ -1202,8 +1190,8 @@ a:focus-visible,
   font-size: 12px;
   width: unset;
 }
-#mastodon :not(.admin-account-bio) > div > .account__header__fields.account__header__account-note.account__header__account-note label,
-#mastodon .account__header__account-note.account__header__account-note.account__header__account-note label {
+#mastodon .account__header__fields.account__header__account-note label,
+#mastodon .account__header__account-note.account__header__account-note label {
   z-index: 2;
   padding: 0 !important;
   padding-inline-end: 0.7em !important;
@@ -1213,20 +1201,20 @@ a:focus-visible,
   font-weight: inherit;
   vertical-align: unset;
 }
-#mastodon :not(.admin-account-bio) > div > .account__header__fields.account__header__account-note.account__header__account-note:focus-within,
-#mastodon .account__header__account-note.account__header__account-note.account__header__account-note:focus-within {
+#mastodon .account__header__fields.account__header__account-note:focus-within,
+#mastodon .account__header__account-note.account__header__account-note:focus-within {
   padding: 0.5em 0.7em !important;
   margin-inline: -5px !important;
   border: 1px solid;
 }
-#mastodon :not(.admin-account-bio) > div > .account__header__fields.account__header__account-note.account__header__account-note:not(:focus-within),
-#mastodon .account__header__account-note.account__header__account-note.account__header__account-note:not(:focus-within) {
+#mastodon .account__header__fields.account__header__account-note:not(:focus-within),
+#mastodon .account__header__account-note.account__header__account-note:not(:focus-within) {
   border-radius: 0;
   border-bottom: 1px solid;
   padding-bottom: 0.4em !important;
 }
-#mastodon :not(.admin-account-bio) > div > .account__header__fields.account__header__account-note.account__header__account-note textarea,
-#mastodon .account__header__account-note.account__header__account-note.account__header__account-note textarea {
+#mastodon .account__header__fields.account__header__account-note textarea,
+#mastodon .account__header__account-note.account__header__account-note textarea {
   width: 0;
   flex-grow: 1;
   margin: 0 !important;
@@ -1242,12 +1230,12 @@ a:focus-visible,
   vertical-align: unset;
   background: none;
 }
-#mastodon :not(.admin-account-bio) > div > .account__header__fields.account__header__account-note.account__header__account-note textarea::placeholder,
-#mastodon .account__header__account-note.account__header__account-note.account__header__account-note textarea::placeholder {
+#mastodon .account__header__fields.account__header__account-note textarea::placeholder,
+#mastodon .account__header__account-note.account__header__account-note textarea::placeholder {
   font-weight: 600;
 }
-#mastodon :not(.admin-account-bio) > div > .account__header__fields.account__header__account-note.account__header__account-note label,
-#mastodon .account__header__account-note.account__header__account-note.account__header__account-note label {
+#mastodon .account__header__fields.account__header__account-note label,
+#mastodon .account__header__account-note.account__header__account-note label {
   margin: 0;
   font-weight: 600;
   padding-inline: 14px;
@@ -1285,6 +1273,9 @@ a:focus-visible,
 #mastodon :not(.explore__search-header) + .account__section-headline:not(:first-child) a::before,
 #mastodon :not(.explore__search-header) + .account__section-headline:not(:first-child) button::before {
   border-color: transparent transparent var(--border-color);
+}
+#mastodon .account__disclaimer {
+  border-top: 1px solid;
 }
 #mastodon .account-gallery__container {
   border-radius: var(--radius);
@@ -1528,6 +1519,58 @@ a:focus-visible,
 #mastodon .account-card::after {
   content: unset !important;
 }
+#mastodon .account__wrapper {
+  gap: 15px;
+  flex-wrap: wrap;
+}
+#mastodon .account__wrapper .account__display-name {
+  flex-grow: 100;
+}
+#mastodon .account__wrapper .account__contents {
+  line-height: 1.4;
+  flex-basis: 70%;
+  width: 100px;
+  flex-grow: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0 20px;
+  flex-wrap: wrap;
+}
+#mastodon .account__wrapper .account__contents * {
+  line-height: unset !important;
+}
+#mastodon .account__wrapper .account__contents .display-name {
+  height: unset;
+  margin: 0;
+  width: 27ch !important;
+  flex-grow: 1;
+}
+#mastodon .account__wrapper .account__contents .display-name span {
+  display: block;
+}
+#mastodon .account__wrapper .account__contents .account__details {
+  flex-direction: column;
+  width: 25ch;
+}
+#mastodon .account__wrapper .account__contents .account__details span {
+  white-space: break-spaces !important;
+}
+#mastodon .account__wrapper .account__contents .account__details:has(.verified-badge) > span:first-child {
+  display: none;
+}
+#mastodon .account__wrapper .account__relationship {
+  display: flex !important;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  min-width: 10ch;
+  gap: 10px;
+  flex-grow: 1;
+}
+#mastodon .account__wrapper .account__relationship button {
+  background: var(--elevated-color);
+  color: inherit;
+}
 #mastodon .scrollable > div:first-child > [tabindex="-1"]:last-child .status__wrapper::after {
   content: unset;
 }
@@ -1540,8 +1583,8 @@ a:focus-visible,
 .scrollable :not(.focusable) > .account,
 .timeline-hint {
   overflow: hidden;
-  transition: background 0.2s, box-shadow 0.4s, margin 0.2s, border 0.2s;
-  animation: slideUp backwards 0.4s cubic-bezier(0, 1, 1, 1);
+  transition: background 0.2s, box-shadow 0.4s, border 0.2s;
+  animation: fade 0.4s backwards cubic-bezier(0, 1, 1, 1);
   position: relative;
   border-radius: var(--radius);
 }
@@ -1569,8 +1612,7 @@ a:focus-visible,
 .account-card.account-card,
 .scrollable :not(.focusable) > .account.account-card,
 .timeline-hint.account-card {
-  animation-name: slideUpFade;
-  animation-delay: 0.44s;
+  animation: slideUpFade backwards 0.44s cubic-bezier(0, 1, 1, 1);
 }
 .focusable.trends__item:nth-child(1),
 .entry.trends__item:nth-child(1),
@@ -2126,6 +2168,8 @@ a:focus-visible,
   width: 100px;
   margin: 0 !important;
   opacity: 0.5;
+  overflow: hidden;
+  border-radius: var(--radius);
 }
 #mastodon .notification .status .status__content ~ [style*="aspect-ratio:"] .video-player__controls {
   display: none;
@@ -2346,6 +2390,12 @@ a:focus-visible,
 #mastodon .status__content__spoiler-link:hover::after,
 #mastodon .status__content__spoiler-link:focus::after {
   opacity: 1;
+}
+#mastodon .detailed-status__wrapper-direct,
+#mastodon .status-direct,
+#mastodon .status__wrapper-direct,
+#mastodon .conversation {
+  background: none;
 }
 #mastodon .detailed-status__wrapper-direct .status__prepend,
 #mastodon .status-direct .status__prepend,
@@ -2775,10 +2825,6 @@ a:focus-visible,
     border-radius: var(--radius);
     overflow: hidden;
   }
-  .layout-single-column .tabs-bar__wrapper .column-back-button,
-  .layout-single-column .column-back-button--slim .column-back-button .column-back-button {
-    background: none;
-  }
   .layout-single-column .tabs-bar__wrapper .column-header,
   .layout-single-column .column-back-button--slim .column-back-button .column-header {
     background: none !important;
@@ -2788,6 +2834,11 @@ a:focus-visible,
   .layout-single-column .tabs-bar__wrapper .column-header > button,
   .layout-single-column .column-back-button--slim .column-back-button .column-header > button {
     z-index: 2;
+    display: inline;
+  }
+  .layout-single-column .tabs-bar__wrapper .column-header > button svg,
+  .layout-single-column .column-back-button--slim .column-back-button .column-header > button svg {
+    vertical-align: middle;
   }
   .layout-single-column .tabs-bar__wrapper .column-header__buttons button,
   .layout-single-column .column-back-button--slim .column-back-button .column-header__buttons button {
@@ -2798,7 +2849,7 @@ a:focus-visible,
     margin: 5px;
     margin-inline-start: 0;
     font-size: 0.9em;
-    padding-inline: 15px;
+    padding-inline: 10px;
   }
   .layout-single-column .tabs-bar__wrapper .column-header__buttons button .column-header__icon,
   .layout-single-column .column-back-button--slim .column-back-button .column-header__buttons button .column-header__icon {
@@ -2807,6 +2858,14 @@ a:focus-visible,
   .layout-single-column .tabs-bar__wrapper .column-header__buttons button:not(.active),
   .layout-single-column .column-back-button--slim .column-back-button .column-header__buttons button:not(.active) {
     background: var(--elevated-color) !important;
+  }
+  .layout-single-column .tabs-bar__wrapper .column-header__buttons button svg,
+  .layout-single-column .column-back-button--slim .column-back-button .column-header__buttons button svg {
+    margin: 0;
+  }
+  .layout-single-column .tabs-bar__wrapper .column-header__buttons button span,
+  .layout-single-column .column-back-button--slim .column-back-button .column-header__buttons button span {
+    display: none;
   }
   .layout-single-column .tabs-bar__wrapper .column-header__buttons button::before,
   .layout-single-column .column-back-button--slim .column-back-button .column-header__buttons button::before {
@@ -3047,28 +3106,28 @@ a:focus-visible,
   transform: scaleX(-1);
 }
 .getting-started,
-#mastodon .column.column[data-column="getting-started"] > .optionally-scrollable.optionally-scrollable {
+#mastodon .column[aria-labelledby="Getting-started"] > .scrollable.scrollable.scrollable {
   position: relative;
   padding: 5px 10px !important;
 }
 .getting-started .getting-started__wrapper,
-#mastodon .column.column[data-column="getting-started"] > .optionally-scrollable.optionally-scrollable .getting-started__wrapper {
+#mastodon .column[aria-labelledby="Getting-started"] > .scrollable.scrollable.scrollable .getting-started__wrapper {
   background: none;
 }
 .getting-started .getting-started__wrapper a,
-#mastodon .column.column[data-column="getting-started"] > .optionally-scrollable.optionally-scrollable .getting-started__wrapper a,
+#mastodon .column[aria-labelledby="Getting-started"] > .scrollable.scrollable.scrollable .getting-started__wrapper a,
 .getting-started .getting-started__wrapper .column-subheading,
-#mastodon .column.column[data-column="getting-started"] > .optionally-scrollable.optionally-scrollable .getting-started__wrapper .column-subheading {
+#mastodon .column[aria-labelledby="Getting-started"] > .scrollable.scrollable.scrollable .getting-started__wrapper .column-subheading {
   border: 0 !important;
   padding: 20px;
   background: none;
 }
 .getting-started .getting-started__footer,
-#mastodon .column.column[data-column="getting-started"] > .optionally-scrollable.optionally-scrollable .getting-started__footer {
+#mastodon .column[aria-labelledby="Getting-started"] > .scrollable.scrollable.scrollable .getting-started__footer {
   padding-inline: 20px;
 }
 .getting-started .getting-started__footer a span,
-#mastodon .column.column[data-column="getting-started"] > .optionally-scrollable.optionally-scrollable .getting-started__footer a span {
+#mastodon .column[aria-labelledby="Getting-started"] > .scrollable.scrollable.scrollable .getting-started__footer a span {
   font-size: 1.1em !important;
   line-height: 2;
 }
@@ -3500,6 +3559,7 @@ a:focus-visible,
   }
   #mastodon:not(:has(.navigation-panel__sign-in-banner)) .ui__header::before,
   #mastodon:not(:has(.navigation-panel__sign-in-banner)) .ui__header::after {
+    all: unset;
     content: "";
     position: fixed;
     bottom: 0;
@@ -3543,7 +3603,7 @@ a:focus-visible,
     display: flex;
     flex-direction: column;
     bottom: 4px;
-    z-index: 200;
+    z-index: 201;
     font-size: 1.7em;
     margin: 0 !important;
     padding: 0 !important;
@@ -3575,7 +3635,7 @@ a:focus-visible,
     display: flex;
     flex-direction: column;
     bottom: 4px;
-    z-index: 200;
+    z-index: 201;
     font-size: 1.7em;
     margin: 0 !important;
     padding: 0 !important;
@@ -3607,7 +3667,7 @@ a:focus-visible,
     display: flex;
     flex-direction: column;
     bottom: 4px;
-    z-index: 200;
+    z-index: 201;
     font-size: 1.7em;
     margin: 0 !important;
     padding: 0 !important;
@@ -3639,7 +3699,7 @@ a:focus-visible,
     display: flex;
     flex-direction: column;
     bottom: 4px;
-    z-index: 200;
+    z-index: 201;
     font-size: 1.7em;
     margin: 0 !important;
     padding: 0 !important;
@@ -3671,7 +3731,7 @@ a:focus-visible,
     display: flex;
     flex-direction: column;
     bottom: 4px;
-    z-index: 200;
+    z-index: 201;
     font-size: 1.7em;
     margin: 0 !important;
     padding: 0 !important;
@@ -3740,10 +3800,6 @@ a:focus-visible,
   }
   #mastodon:not(:has(.navigation-panel__sign-in-banner)):has(.column-link.active:not([href='/home']):not([href='/notifications']):not([href='/explore']):not([href='/public/local']):not([href='/lists']):not([href^="/lists"])) .tabs-bar__wrapper .column-header__collapsible {
     visibility: visible;
-  }
-  #mastodon .explore__search-header,
-  #mastodon .search input {
-    background: var(--elevated-color);
   }
   #mastodon .columns-area__panels {
     justify-content: flex-start;
@@ -4577,6 +4633,7 @@ a:focus-visible,
 .layout-multiple-columns #mastodon .columns-area .drawer {
   padding-inline: 6px !important;
   padding-top: 20px !important;
+  overflow: clip;
 }
 .layout-multiple-columns #mastodon .columns-area .drawer .drawer__header {
   border-radius: var(--radius-round);
@@ -4616,6 +4673,10 @@ a:focus-visible,
 }
 .layout-multiple-columns #mastodon .columns-area .search {
   margin-inline: 10px;
+}
+.layout-multiple-columns #mastodon .columns-area .compose-form {
+  display: flex;
+  flex-direction: column;
 }
 .layout-multiple-columns #mastodon .columns-area .drawer__inner:not(.darker),
 .layout-multiple-columns #mastodon .columns-area .drawer__inner__mastodon {

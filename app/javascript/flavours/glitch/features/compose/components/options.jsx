@@ -115,7 +115,9 @@ class ToggleOptionImpl extends ImmutablePureComponent {
 
     return (
       <>
-        <Toggle checked={checked} onChange={this.handleChange} />
+        <div className='privacy-dropdown__option__icon'>
+          <Toggle checked={checked} onChange={this.handleChange} />
+        </div>
 
         <div className='privacy-dropdown__option__content'>
           <strong>{text}</strong>
