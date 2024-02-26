@@ -22,6 +22,15 @@ body.app-body.flavour-glitch > #mastodon .character-counter__wrapper span {
   font-size: 0.9em;
   font-weight: 500;
 }
+body.app-body.flavour-glitch > #mastodon .compose-form__submit {
+  position: absolute;
+  right: -12px;
+  top: 100%;
+  margin-top: 24px;
+}
+body.app-body.flavour-glitch > #mastodon .compose-form__submit button {
+  padding: 10px 20px;
+}
 body.app-body.flavour-glitch > #mastodon .collapsed .status__content {
   height: auto !important;
   overflow: visible;

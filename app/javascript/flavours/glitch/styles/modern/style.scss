@@ -597,22 +597,6 @@ a:focus-visible,
 #mastodon .compose-form .reply-indicator__display-name {
   padding: 0;
 }
-#mastodon .compose-form .compose-form__highlightable {
-  border-radius: var(--radius);
-  overflow: visible !important;
-}
-#mastodon .compose-form .compose-form__highlightable > .compose-form__footer {
-  gap: 8px;
-}
-#mastodon .compose-form .compose-form__highlightable > .compose-form__footer .compose-form__buttons {
-  gap: 2px;
-}
-#mastodon .compose-form .compose-form__highlightable > .compose-form__footer .compose-form__buttons button {
-  padding: 6px;
-}
-#mastodon .compose-form .compose-form__highlightable .compose-form__submit button {
-  padding: 6px;
-}
 #mastodon .compose-form .compose-form__autosuggest-wrapper,
 #mastodon .compose-form .autosuggest-textarea__textarea {
   border-radius: var(--radius) var(--radius) 0 0 !important;
@@ -630,28 +614,78 @@ a:focus-visible,
   z-index: 5;
   position: relative;
 }
-#mastodon .compose-form .compose-form__upload-thumbnail {
+#mastodon .compose-form .compose-form__upload__actions button {
+  background: none;
+}
+#mastodon .compose-form .compose-form__upload__thumbnail {
   display: flex;
   flex-direction: column;
 }
 #mastodon .compose-form .compose-form__upload__warning {
   position: relative;
-  display: flex;
-  justify-content: center;
-  background: rgba(0,0,0,0.7);
   flex-grow: 1;
-  box-shadow: 0 -50px rgba(0,0,0,0.7);
+  display: flex;
 }
-#mastodon .compose-form .compose-form__upload__warning > button {
+#mastodon .compose-form .compose-form__upload__warning button {
+  margin-top: auto;
+}
+#mastodon .compose-form .compose-form__upload__warning button.active {
+  box-shadow: 0 0 0 100px rgba(0,0,0,0.75);
   width: 100%;
   height: 100%;
-  font-weight: 700;
-  padding-inline: 1em;
-  color: #fff;
+  font-weight: bold;
+  font-size: 1.1em;
+  color: inherit;
+  transition: background 0.2s, transform 0.2s cubic-bezier(0, 0, 0, 1) !important;
 }
-#mastodon .compose-form .compose-form__upload__warning > button i {
-  margin-inline-end: 0.2em;
-  transform: scale(1.2);
+#mastodon .compose-form .compose-form__upload__warning button.active svg {
+  height: 1.2em;
+  width: 1.2em;
+}
+#mastodon .compose-form .compose-form__upload__warning button.active:hover,
+#mastodon .compose-form .compose-form__upload__warning button.active:focus {
+  background: rgba(20,20,20,0.75);
+}
+#mastodon .compose-form__highlightable {
+  border-radius: var(--radius);
+  overflow: visible !important;
+}
+#mastodon .compose-form__highlightable #cw-spoiler-input {
+  border-radius: 0 !important;
+}
+#mastodon .compose-form__highlightable > .compose-form__footer {
+  gap: 12px;
+}
+#mastodon .compose-form__highlightable > .compose-form__footer .compose-form__dropdowns {
+  max-width: calc(100% - 7ch);
+}
+#mastodon .compose-form__highlightable > .compose-form__footer .compose-form__actions {
+  position: relative;
+}
+#mastodon .compose-form__highlightable > .compose-form__footer .compose-form__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  gap: 0;
+  flex-grow: 9999;
+}
+#mastodon .compose-form__highlightable > .compose-form__footer .compose-form__buttons > * {
+  flex-grow: 1;
+  box-sizing: border-box;
+}
+#mastodon .compose-form__highlightable > .compose-form__footer .compose-form__buttons button {
+  flex-grow: 1;
+  padding: 5px;
+}
+#mastodon .compose-form__highlightable > .compose-form__footer .compose-form__submit button {
+  padding: 8px 16px;
+}
+#mastodon .compose-form__highlightable > .compose-form__footer .character-counter {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 12px);
+  padding: 4px;
+  font-size: 13px;
 }
 .server-banner {
   padding: 10px;
@@ -4687,9 +4721,6 @@ a:focus-visible,
 .layout-multiple-columns #mastodon .columns-area .drawer__inner.darker {
   padding: 0 !important;
   border-radius: var(--radius-round) var(--radius-round) 0 0;
-}
-.layout-multiple-columns #mastodon .columns-area .compose-form:first-child {
-  padding-top: 0;
 }
 .layout-multiple-columns #mastodon .columns-area .getting-started__trends {
   padding: 0px 20px;
