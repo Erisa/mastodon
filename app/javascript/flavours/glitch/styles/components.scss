@@ -1334,19 +1334,19 @@ body > [data-popper-placement] {
 }
 
 .status__content__spoiler-link {
-  display: inline-flex;
+  display: inline-flex; // glitch: media icon in spoiler button
   border-radius: 2px;
   background: transparent;
   border: 0;
   color: $inverted-text-color;
   font-weight: 700;
   font-size: 11px;
-  padding: 0 5px;
+  padding: 0 6px;
   text-transform: uppercase;
-  line-height: inherit;
+  line-height: 20px;
   cursor: pointer;
   vertical-align: top;
-  align-items: center;
+  align-items: center; // glitch: content indicator
 
   &:hover {
     background: lighten($ui-base-color, 33%);
@@ -1662,6 +1662,7 @@ body > [data-popper-placement] {
   font-size: 15px;
   padding-bottom: 10px;
   display: flex;
+  align-items: start; // glitch: changed because of our different layout
   justify-content: space-between;
   gap: 10px;
   cursor: pointer;
@@ -1878,7 +1879,12 @@ body > [data-popper-placement] {
   .media-gallery,
   .video-player,
   .audio-player {
-    margin-top: 8px;
+    margin-top: 8px; // glitch: reduced margins
+  }
+
+  .status__prepend {
+    padding: 0;
+    margin-bottom: 16px;
   }
 }
 
@@ -2082,8 +2088,6 @@ body > [data-popper-placement] {
     position: relative;
 
     & > div {
-      @include avatar-radius;
-
       float: left;
       position: relative;
       box-sizing: border-box;
@@ -2235,7 +2239,7 @@ a.account__display-name {
 
     &:hover,
     &:focus {
-      background: lighten($ui-base-color, 29%);
+      background: lighten($ui-base-lighter-color, 7%);
       text-decoration: none;
     }
   }
@@ -2634,6 +2638,10 @@ a.account__display-name {
   justify-content: flex-start;
   overflow-x: auto;
   position: relative;
+
+  &.unscrollable {
+    overflow-x: hidden;
+  }
 
   &__panels {
     display: flex;
@@ -4717,35 +4725,6 @@ a.status-card {
   z-index: 100;
 }
 
-.media-spoiler {
-  background: $base-overlay-background;
-  color: $darker-text-color;
-  border: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 4px;
-  appearance: none;
-
-  &:hover,
-  &:active,
-  &:focus {
-    padding: 0;
-    color: lighten($darker-text-color, 8%);
-  }
-}
-
-.media-spoiler__warning {
-  display: block;
-  font-size: 14px;
-}
-
-.media-spoiler__trigger {
-  display: block;
-  font-size: 11px;
-  font-weight: 700;
-}
-
 .spoiler-button {
   top: 0;
   inset-inline-start: 0;
@@ -4755,12 +4734,11 @@ a.status-card {
   z-index: 100;
 
   &--minified {
-    display: flex; // glitch: media icon in spoiler button
+    display: block;
     inset-inline-start: 4px;
     top: 4px;
     width: auto;
     height: auto;
-    align-items: center; // glitch: media icon in spoiler button
   }
 
   &--click-thru {
@@ -5737,7 +5715,6 @@ a.status-card {
   .icon {
     position: absolute;
     top: 12px + 2px;
-    inset-inline-start: 16px - 2px;
     display: inline-block;
     opacity: 0;
     transition: all 100ms linear;
@@ -5747,6 +5724,7 @@ a.status-card {
     color: $darker-text-color;
     cursor: default;
     pointer-events: none;
+    margin-inline-start: 16px - 2px;
 
     &.active {
       pointer-events: auto;
@@ -6522,6 +6500,7 @@ a.status-card {
 .report-modal__comment {
   box-sizing: border-box;
   width: 50%;
+  min-width: 50%;
 
   @media screen and (width <= 480px) {
     width: 100%;
@@ -6590,6 +6569,14 @@ a.status-card {
     min-height: 100px;
     max-height: 50vh;
     border: 0;
+
+    @media screen and (height <= 600px) {
+      max-height: 20vh;
+    }
+
+    @media screen and (max-width: $no-columns-breakpoint) {
+      max-height: 20vh;
+    }
   }
 
   .setting-toggle {
@@ -6659,8 +6646,6 @@ a.status-card {
           }
         }
 
-        & > .react-toggle,
-        & > .icon,
         button:first-child {
           margin-inline-end: 10px;
         }
@@ -8890,7 +8875,7 @@ noscript {
   .search__input {
     border: 1px solid lighten($ui-base-color, 8%);
     padding: 10px;
-    padding-inline-end: 28px;
+    padding-inline-end: 30px;
   }
 
   .search__popout {

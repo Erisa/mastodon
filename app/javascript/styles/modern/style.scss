@@ -653,6 +653,9 @@ a:focus-visible,
 #mastodon .compose-form__highlightable #cw-spoiler-input {
   border-radius: 0 !important;
 }
+#mastodon .compose-form__highlightable textarea {
+  background: none !important;
+}
 #mastodon .compose-form__highlightable > .compose-form__footer {
   gap: 12px;
 }
@@ -682,7 +685,7 @@ a:focus-visible,
 }
 #mastodon .compose-form__highlightable > .compose-form__footer .character-counter {
   position: absolute;
-  right: 0;
+  inset-inline-end: 0;
   bottom: calc(100% + 12px);
   padding: 4px;
   font-size: 13px;
@@ -3916,6 +3919,7 @@ a:focus-visible,
   }
   #mastodon .compose-form {
     padding: 10px;
+    margin-bottom: 100px;
   }
   #mastodon .compose-form::before {
     content: "";
