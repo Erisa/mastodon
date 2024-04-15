@@ -48,13 +48,14 @@ const initialState = ImmutableMap({
   browserPermission: 'default',
 });
 
-const notificationToMap = notification => ImmutableMap({
+export const notificationToMap = notification => ImmutableMap({
   id: notification.id,
   type: notification.type,
   account: notification.account.id,
   created_at: notification.created_at,
   status: notification.status ? notification.status.id : null,
   report: notification.report ? fromJS(notification.report) : null,
+  event: notification.event ? fromJS(notification.event) : null,
 });
 
 const normalizeNotification = (state, notification, usePendingItems) => {

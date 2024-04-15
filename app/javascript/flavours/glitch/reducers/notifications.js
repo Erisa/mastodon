@@ -54,13 +54,14 @@ const initialState = ImmutableMap({
   markNewForDelete: false,
 });
 
-const notificationToMap = (notification, markForDelete) => ImmutableMap({
+export const notificationToMap = (notification, markForDelete = false) => ImmutableMap({
   id: notification.id,
   type: notification.type,
   account: notification.account.id,
   markedForDelete: markForDelete,
   status: notification.status ? notification.status.id : null,
   report: notification.report ? fromJS(notification.report) : null,
+  event: notification.event ? fromJS(notification.event) : null,
 });
 
 const normalizeNotification = (state, notification, usePendingItems) => {
