@@ -408,7 +408,6 @@ class FocalPointModal extends ImmutablePureComponent {
                 blurhash={media.get('blurhash')}
                 src={media.get('url')}
                 detailed
-                inline
                 editable
               />
             )}

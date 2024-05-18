@@ -113,6 +113,14 @@ module ApplicationHelper
     content_tag(:i, nil, attributes.merge(class: class_names.join(' ')))
   end
 
+  def material_symbol(icon, attributes = {})
+    inline_svg_tag(
+      "400-24px/#{icon}.svg",
+      class: %w(icon).concat(attributes[:class].to_s.split),
+      role: :img
+    )
+  end
+
   def check_icon
     inline_svg_tag 'check.svg'
   end
@@ -231,6 +239,13 @@ module ApplicationHelper
 
   def prerender_custom_emojis(html, custom_emojis, other_options = {})
     EmojiFormatter.new(html, custom_emojis, other_options.merge(animate: prefers_autoplay?)).to_s
+  end
+
+  def site_icon_path(type, size = '48')
+    icon = SiteUpload.find_by(var: type)
+    return nil unless icon
+
+    icon.file.url(size)
   end
 
   # glitch-soc addition to handle the multiple flavors

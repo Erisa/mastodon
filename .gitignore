@@ -70,3 +70,5 @@ yarn-debug.log
 docker-compose.override.yml
 
 lt-data/*
+# Ignore dotenv .local files
+.env*.local

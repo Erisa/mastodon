@@ -85,7 +85,7 @@ class Status < ApplicationRecord
   has_many :local_reblogged, -> { merge(Account.local) }, through: :reblogs, source: :account
   has_many :local_bookmarked, -> { merge(Account.local) }, through: :bookmarks, source: :account
 
-  has_and_belongs_to_many :tags
+  has_and_belongs_to_many :tags # rubocop:disable Rails/HasAndBelongsToMany
 
   has_one :preview_cards_status, inverse_of: :status, dependent: :delete
 
@@ -110,7 +110,9 @@ class Status < ApplicationRecord
   scope :remote, -> { where(local: false).where.not(uri: nil) }
   scope :local,  -> { where(local: true).or(where(uri: nil)) }
   scope :with_accounts, ->(ids) { where(id: ids).includes(:account) }
-  scope :without_replies, -> { where('statuses.reply = FALSE OR statuses.in_reply_to_account_id = statuses.account_id') }
+  scope :without_replies, -> { not_reply.or(reply_to_account) }
+  scope :not_reply, -> { where(reply: false) }
+  scope :reply_to_account, -> { where(arel_table[:in_reply_to_account_id].eq arel_table[:account_id]) }
   scope :without_reblogs, -> { where(statuses: { reblog_of_id: nil }) }
   scope :tagged_with, ->(tag_ids) { joins(:statuses_tags).where(statuses_tags: { tag_id: tag_ids }) }
   scope :not_excluded_by_account, ->(account) { where.not(account_id: account.excluded_from_timeline_account_ids) }
@@ -272,7 +274,7 @@ class Status < ApplicationRecord
   end
 
   def reported?
-    @reported ||= Report.where(target_account: account).unresolved.exists?(['? = ANY(status_ids)', id])
+    @reported ||= account.targeted_reports.unresolved.exists?(['? = ANY(status_ids)', id]) || account.strikes.exists?(['? = ANY(status_ids)', id.to_s])
   end
 
   def emojis

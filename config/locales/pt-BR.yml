@@ -751,6 +751,7 @@ pt-BR:
         desc_html: Isso é baseado em scripts externos de hCaptcha, o que pode ser uma preocupação de segurança e privacidade. Além disso, <strong>isso pode tornar o processo de registro significativamente menos acessível para algumas pessoas (especialmente deficientes)</strong>. Por estas razões, favor considerar medidas alternativas como o registro baseado em aprovação ou em convite.
         title: Exigir que novos usuários resolvam um CAPTCHA para confirmar sua conta
       content_retention:
+        danger_zone: Zona de perigo
         preamble: Controlar como o conteúdo gerado pelo usuário é armazenado no Mastodon.
         title: Retenção de conteúdo
       default_noindex:
@@ -1671,6 +1672,9 @@ pt-BR:
       domain_block: Suspensão do servidor (%{target_name})
       user_domain_block: Você bloqueou %{target_name}
     lost_followers: Seguidores perdidos
+    lost_follows: Seguidores perdidos
+    preamble: Você poderá perder seguidores e seguidores quando bloquear um domínio ou quando os seus moderadores decidirem suspender um servidor remoto. Quando isso acontecer, você poderá baixar listas de relações desfeitas, a serem inspecionadas e possivelmente importadas para outro servidor.
+    purged: As informações sobre este servidor foram eliminadas pelos administradores do seu servidor.
     type: Evento
   statuses:
     attached:
@@ -1765,6 +1769,7 @@ pt-BR:
     contrast: Mastodon  (Alto contraste)
     default: Mastodon (Noturno)
     mastodon-light: Mastodon (Diurno)
+    system: Automático (usar tema do sistema)
   time:
     formats:
       default: "%H:%M em %d de %b de %Y"

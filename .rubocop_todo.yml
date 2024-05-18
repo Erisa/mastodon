@@ -42,14 +42,6 @@ RSpec/MultipleMemoizedHelpers:
 RSpec/NestedGroups:
   Max: 6
 
-# Configuration parameters: Include.
-# Include: app/models/**/*.rb
-Rails/HasAndBelongsToMany:
-  Exclude:
-    - 'app/models/concerns/account/associations.rb'
-    - 'app/models/status.rb'
-    - 'app/models/tag.rb'
-
 Rails/OutputSafety:
   Exclude:
     - 'config/initializers/simple_form.rb'
@@ -61,10 +53,6 @@ Style/ClassEqualityComparison:
   Exclude:
     - 'app/helpers/jsonld_helper.rb'
     - 'app/serializers/activitypub/outbox_serializer.rb'
-
-Style/ClassVars:
-  Exclude:
-    - 'config/initializers/devise.rb'
 
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: AllowedVars.
@@ -82,7 +70,7 @@ Style/FetchEnvVar:
     - 'config/initializers/vapid.rb'
     - 'lib/mastodon/redis_config.rb'
     - 'lib/tasks/repo.rake'
-    - 'spec/features/profile_spec.rb'
+    - 'spec/system/profile_spec.rb'
 
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyle, MaxUnannotatedPlaceholdersAllowed, AllowedMethods, AllowedPatterns.
@@ -127,19 +115,6 @@ Style/GuardClause:
     - 'lib/mastodon/cli/maintenance.rb'
     - 'lib/mastodon/cli/media.rb'
     - 'lib/tasks/repo.rake'
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: braces, no_braces
-Style/HashAsLastArrayItem:
-  Exclude:
-    - 'app/controllers/admin/statuses_controller.rb'
-    - 'app/controllers/api/v1/statuses_controller.rb'
-    - 'app/models/concerns/account/counters.rb'
-    - 'app/models/concerns/status/threading_concern.rb'
-    - 'app/models/status.rb'
-    - 'app/services/batched_remove_status_service.rb'
-    - 'app/services/notify_service.rb'
 
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Style/HashTransformValues:
@@ -217,14 +192,6 @@ Style/RedundantFetchBlock:
 Style/SafeNavigation:
   Exclude:
     - 'app/models/concerns/account/finder_concern.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: only_raise, only_fail, semantic
-Style/SignalException:
-  Exclude:
-    - 'lib/devise/strategies/two_factor_ldap_authenticatable.rb'
-    - 'lib/devise/strategies/two_factor_pam_authenticatable.rb'
 
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: Mode.

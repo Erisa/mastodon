@@ -1,4 +1,4 @@
-# <img src="https://github.com/TheEssem/mastodon/raw/main/app/javascript/icons/android-chrome-256x256.png" width="128"> Chuckya
+# <img src="https://github.com/TheEssem/mastodon/raw/main/public/chuckya.png" width="128"> Chuckya
 
 Chuckya is a close-to-upstream soft fork of Mastodon Glitch Edition (more commonly known as glitch-soc) that aims to introduce more experimental features/fixes with the goal of making the overall experience more enjoyable. Although it's mainly developed for and used on the [wetdry.world](https://wetdry.world) instance, it can be deployed by any server admin as a drop-in, backwards-compatible replacement for Mastodon.
 
@@ -15,7 +15,6 @@ Here are some of the changes compared to glitch-soc:
 - Allows dashes in custom emote names
 - Emojis can be put side-by-side
 - Minor media attachment tweaks
-- Custom favicon
 
 Changes previously in Chuckya that made their way into vanilla Mastodon:
 
@@ -113,7 +112,7 @@ Mastodon acts as an OAuth2 provider, so 3rd party apps can use the REST and Stre
 - **PostgreSQL** 12+
 - **Redis** 4+
 - **Ruby** 3.1+
-- **Node.js** 16+
+- **Node.js** 18+
 
 The repository includes deployment configurations for **Docker and docker-compose** as well as specific platforms like **Heroku**, **Scalingo**, and **Nanobox**. For Helm charts, reference the [mastodon/chart repository](https://github.com/mastodon/chart). The [**standalone** installation guide](https://docs.joinmastodon.org/admin/install/) is available in the documentation.
 
@@ -134,10 +133,12 @@ A **Vagrant** configuration is included for development purposes. To use it, com
 To set up **MacOS** for native development, complete the following steps:
 
 - Use a Ruby version manager to install the specified version from `.ruby-version`
+- Run `bundle` to install required gems
 - Run `brew install postgresql@14 redis imagemagick libidn` to install required dependencies
 - Navigate to Mastodon's root directory and run `brew install nvm` then `nvm use` to use the version from `.nvmrc`
+- Run `yarn` to install required packages
 - Run `corepack enable && corepack prepare`
-- Run `bundle exec rails db:setup` (optionally prepend `RAILS_ENV=development` to target the dev environment)
+- Run `RAILS_ENV=development bundle exec rails db:setup`
 - Finally, run `bin/dev` which will launch the local services via `overmind` (if installed) or `foreman`
 
 ### Docker

@@ -46,6 +46,8 @@ class Form::AdminSettings
     authorized_fetch
     reject_pattern
     reject_blurhash
+    app_icon
+    favicon
   ).freeze
 
   INTEGER_KEYS = %i(
@@ -76,6 +78,8 @@ class Form::AdminSettings
   UPLOAD_KEYS = %i(
     thumbnail
     mascot
+    app_icon
+    favicon
   ).freeze
 
   PSEUDO_KEYS = %i(

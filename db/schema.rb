@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_22_161611) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_10_192043) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -1031,8 +1031,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_22_161611) do
   create_table "status_pins", force: :cascade do |t|
     t.bigint "account_id", null: false
     t.bigint "status_id", null: false
-    t.datetime "created_at", precision: nil, default: -> { "now()" }, null: false
-    t.datetime "updated_at", precision: nil, default: -> { "now()" }, null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["account_id", "status_id"], name: "index_status_pins_on_account_id_and_status_id", unique: true
     t.index ["status_id"], name: "index_status_pins_on_status_id"
   end
@@ -1214,6 +1214,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_22_161611) do
     t.bigint "role_id"
     t.text "settings"
     t.string "time_zone"
+    t.string "otp_secret"
     t.index ["account_id"], name: "index_users_on_account_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["created_by_application_id"], name: "index_users_on_created_by_application_id", where: "(created_by_application_id IS NOT NULL)"
@@ -1349,7 +1350,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_22_161611) do
   add_foreign_key "mutes", "accounts", name: "fk_b8d8daf315", on_delete: :cascade
   add_foreign_key "notification_permissions", "accounts"
   add_foreign_key "notification_permissions", "accounts", column: "from_account_id"
-  add_foreign_key "notification_policies", "accounts"
+  add_foreign_key "notification_policies", "accounts", on_delete: :cascade
   add_foreign_key "notification_requests", "accounts", column: "from_account_id", on_delete: :cascade
   add_foreign_key "notification_requests", "accounts", on_delete: :cascade
   add_foreign_key "notification_requests", "statuses", column: "last_status_id", on_delete: :nullify

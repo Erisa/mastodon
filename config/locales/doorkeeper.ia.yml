@@ -17,6 +17,7 @@ ia:
         authorize: Autorisar
         cancel: Cancellar
         edit: Modificar
+        submit: Submitter
       confirmations:
         destroy: Es tu secur?
       edit:
@@ -33,10 +34,12 @@ ia:
         title: Nove application
       show:
         actions: Actiones
+        scopes: Ambitos
         title: 'Application: %{name}'
     authorizations:
       buttons:
         authorize: Autorisar
+        deny: Negar
       error:
         title: Ocurreva un error
     authorized_applications:
@@ -65,7 +68,9 @@ ia:
         conversations: Conversationes
         favourites: Favoritos
         filters: Filtros
+        follows: Sequites
         lists: Listas
+        media: Annexos multimedial
         mutes: Silentiates
         notifications: Notificationes
         push: Notificationes push
@@ -87,6 +92,7 @@ ia:
       read:filters: vider tu filtros
       read:follows: vider tu sequites
       read:lists: vider tu listas
+      read:me: leger solmente le information basic de tu conto
       read:notifications: vider tu notificationes
       read:reports: vider tu reportos
       read:statuses: vider tote le messages
