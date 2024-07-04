@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from 'react';
 
-import { useIntl, defineMessages } from 'react-intl';
+import { useIntl, defineMessages, FormattedMessage } from 'react-intl';
 
 import { useIdentity } from '@/flavours/glitch/identity_context';
 import {
@@ -18,15 +18,11 @@ const messages = defineMessages({
   unfollow: { id: 'account.unfollow', defaultMessage: 'Unfollow' },
   follow: { id: 'account.follow', defaultMessage: 'Follow' },
   followBack: { id: 'account.follow_back', defaultMessage: 'Follow back' },
-  cancel_follow_request: {
-    id: 'account.cancel_follow_request',
-    defaultMessage: 'Withdraw follow request',
-  },
   edit_profile: { id: 'account.edit_profile', defaultMessage: 'Edit profile' },
 });
 
 export const FollowButton: React.FC<{
-  accountId: string;
+  accountId?: string;
 }> = ({ accountId }) => {
   const intl = useIntl();
   const dispatch = useAppDispatch();
@@ -35,7 +31,7 @@ export const FollowButton: React.FC<{
     accountId ? state.accounts.get(accountId) : undefined,
   );
   const relationship = useAppSelector((state) =>
-    state.relationships.get(accountId),
+    accountId ? state.relationships.get(accountId) : undefined,
   );
   const following = relationship?.following || relationship?.requested;
 
@@ -64,11 +60,28 @@ export const FollowButton: React.FC<{
     if (accountId === me) {
       return;
     } else if (relationship.following || relationship.requested) {
-      dispatch(unfollowAccount(accountId));
+      dispatch(
+        openModal({
+          modalType: 'CONFIRM',
+          modalProps: {
+            message: (
+              <FormattedMessage
+                id='confirmations.unfollow.message'
+                defaultMessage='Are you sure you want to unfollow {name}?'
+                values={{ name: <strong>@{account?.acct}</strong> }}
+              />
+            ),
+            confirm: intl.formatMessage(messages.unfollow),
+            onConfirm: () => {
+              dispatch(unfollowAccount(accountId));
+            },
+          },
+        }),
+      );
     } else {
       dispatch(followAccount(accountId));
     }
-  }, [dispatch, accountId, relationship, account, signedIn]);
+  }, [dispatch, intl, accountId, relationship, account, signedIn]);
 
   let label;
 
@@ -78,11 +91,9 @@ export const FollowButton: React.FC<{
     label = intl.formatMessage(messages.edit_profile);
   } else if (!relationship) {
     label = <LoadingIndicator />;
-  } else if (relationship.requested) {
-    label = intl.formatMessage(messages.cancel_follow_request);
   } else if (!relationship.following && relationship.followed_by) {
     label = intl.formatMessage(messages.followBack);
-  } else if (relationship.following) {
+  } else if (relationship.following || relationship.requested) {
     label = intl.formatMessage(messages.unfollow);
   } else {
     label = intl.formatMessage(messages.follow);
