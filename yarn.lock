@@ -3018,8 +3018,9 @@ __metadata:
     "@rails/ujs": "npm:7.1.3"
     "@reduxjs/toolkit": "npm:^2.0.1"
     "@svgr/webpack": "npm:^5.5.0"
+    "@testing-library/dom": "npm:^10.2.0"
     "@testing-library/jest-dom": "npm:^6.0.0"
-    "@testing-library/react": "npm:^15.0.0"
+    "@testing-library/react": "npm:^16.0.0"
     "@types/babel__core": "npm:^7.20.1"
     "@types/emoji-mart": "npm:^3.0.9"
     "@types/escape-html": "npm:^1.0.2"
@@ -3602,9 +3603,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/dom@npm:^10.0.0":
-  version: 10.0.0
-  resolution: "@testing-library/dom@npm:10.0.0"
+"@testing-library/dom@npm:^10.2.0":
+  version: 10.2.0
+  resolution: "@testing-library/dom@npm:10.2.0"
   dependencies:
     "@babel/code-frame": "npm:^7.10.4"
     "@babel/runtime": "npm:^7.12.5"
@@ -3614,7 +3615,7 @@ __metadata:
     dom-accessibility-api: "npm:^0.5.9"
     lz-string: "npm:^1.5.0"
     pretty-format: "npm:^27.0.2"
-  checksum: 10c0/2d12d2a6018a6f1d15e91834180bc068932c699ff1fcbfb80aa21aba519a4f5329c861dfa852e06ee5615bcb92ef2a0f0e755e32684ea3dada63bc34248382ab
+  checksum: 10c0/de582dfbeb632436547a0ca5851b5a714a4a17f8e96ab3dc4fb4e454eef52c912b648b7cb6e9fdf477f3eeef97e698f3250f0ce50846f39d04677a44169209f2
   languageName: node
   linkType: hard
 
@@ -3651,17 +3652,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/react@npm:^15.0.0":
-  version: 15.0.5
-  resolution: "@testing-library/react@npm:15.0.5"
+"@testing-library/react@npm:^16.0.0":
+  version: 16.0.0
+  resolution: "@testing-library/react@npm:16.0.0"
   dependencies:
     "@babel/runtime": "npm:^7.12.5"
-    "@testing-library/dom": "npm:^10.0.0"
-    "@types/react-dom": "npm:^18.0.0"
   peerDependencies:
+    "@testing-library/dom": ^10.0.0
+    "@types/react": ^18.0.0
+    "@types/react-dom": ^18.0.0
     react: ^18.0.0
     react-dom: ^18.0.0
-  checksum: 10c0/8759cc8e7e6b4d8964f151d8872ea3c91b6ef6d8fb3b9116fae53350b9a6b29e5ad45b18408c22525924d050263f7ea77cd17ca803918759f22a760f68a42227
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+    "@types/react-dom":
+      optional: true
+  checksum: 10c0/297f97bf4722dad05f11d9cafd47d387dbdb096fea4b79b876c7466460f0f2e345b55b81b3e37fc81ed8185c528cb53dd8455ca1b6b019b229edf6c796f11c9f
   languageName: node
   linkType: hard
 
@@ -3872,11 +3879,11 @@ __metadata:
   linkType: hard
 
 "@types/http-link-header@npm:^1.0.3":
-  version: 1.0.5
-  resolution: "@types/http-link-header@npm:1.0.5"
+  version: 1.0.6
+  resolution: "@types/http-link-header@npm:1.0.6"
   dependencies:
     "@types/node": "npm:*"
-  checksum: 10c0/adeb13381b38c3625478149820772924c154b4a7250dca62c346810a8378f8968fc7f3a9a4f55ec61de5d06083637540f862c8a920f6a710310c9645d19a077d
+  checksum: 10c0/63f3f7ab5ff6312280727ba8cf836abf5d1b76f9dc5eefc8cd4389db29d57a72fb0e028db99735ada5ccfd3c2cc6607e096b5cc142fc53c2bb5688b6295f61af
   languageName: node
   linkType: hard
 
@@ -4079,12 +4086,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:^18.0.0, @types/react-dom@npm:^18.2.4":
-  version: 18.2.25
-  resolution: "@types/react-dom@npm:18.2.25"
+"@types/react-dom@npm:^18.2.4":
+  version: 18.3.0
+  resolution: "@types/react-dom@npm:18.3.0"
   dependencies:
     "@types/react": "npm:*"
-  checksum: 10c0/87604407eca6884c5b4d4657cb511dc5ba28ea1cfa5d0ce1fc2d659a7ad1b64ae85dcda60e3f010641f9a52a6a60dfcaa6be3b0d0de9d624475052a13dae01f4
+  checksum: 10c0/6c90d2ed72c5a0e440d2c75d99287e4b5df3e7b011838cdc03ae5cd518ab52164d86990e73246b9d812eaf02ec351d74e3b4f5bd325bf341e13bf980392fd53b
   languageName: node
   linkType: hard
 

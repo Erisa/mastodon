@@ -15,6 +15,7 @@ import { HotKeys } from 'react-hotkeys';
 import { changeLayout } from 'flavours/glitch/actions/app';
 import { synchronouslySubmitMarkers, submitMarkers, fetchMarkers } from 'flavours/glitch/actions/markers';
 import { INTRODUCTION_VERSION } from 'flavours/glitch/actions/onboarding';
+import { HoverCardController } from 'flavours/glitch/components/hover_card_controller';
 import { Permalink } from 'flavours/glitch/components/permalink';
 import { PictureInPicture } from 'flavours/glitch/features/picture_in_picture';
 import { identityContextPropShape, withIdentity } from 'flavours/glitch/identity_context';
@@ -648,6 +649,7 @@ class UI extends PureComponent {
 
           {layout !== 'mobile' && <PictureInPicture />}
           <NotificationsContainer />
+          {/* Temporarily disabled while upstream improves the issue */ null && <HoverCardController />}
           <LoadingBarContainer className='loading-bar' />
           <ModalContainer />
           <UploadArea active={draggingOver} onClose={this.closeUploadModal} />

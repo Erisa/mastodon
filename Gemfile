@@ -26,7 +26,7 @@ gem 'active_model_serializers', '~> 0.10'
 gem 'addressable', '~> 2.8'
 gem 'bootsnap', '~> 1.18.0', require: false
 gem 'browser'
-gem 'charlock_holmes', github: 'TheEssem/charlock_holmes', ref: '226932af4b03eb60d2e31d58b6c3efd72a3ace68'
+gem 'charlock_holmes', '~> 0.7.7'
 gem 'chewy', '~> 7.3'
 gem 'devise', '~> 4.9'
 gem 'devise-two-factor'
@@ -100,8 +100,6 @@ gem 'json-ld'
 gem 'json-ld-preloaded', '~> 3.2'
 gem 'rdf-normalize', '~> 0.5'
 
-gem 'private_address_check', '~> 0.5'
-
 gem 'opentelemetry-api', '~> 1.2.5'
 
 group :opentelemetry do
@@ -123,6 +121,9 @@ group :opentelemetry do
 end
 
 group :test do
+  # Enable usage of all available CPUs/cores during spec runs
+  gem 'flatware-rspec'
+
   # Adds RSpec Error/Warning annotations to GitHub PRs on the Files tab
   gem 'rspec-github', '~> 2.4', require: false
 
