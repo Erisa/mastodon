@@ -1,3 +1,6 @@
+:root {
+  --background-color-alt: transparent;
+}
 body.app-body.flavour-glitch > #mastodon .compose-form__autosuggest-wrapper > :last-child {
   padding-bottom: 2em !important;
 }
@@ -37,6 +40,7 @@ body.app-body.flavour-glitch > #mastodon .compose-form__submit button {
 body.app-body.flavour-glitch > #mastodon .collapsed .status__content {
   height: auto !important;
   overflow: visible;
+  mask: unset !important;
 }
 body.app-body.flavour-glitch > #mastodon .collapsed .status__content .status__content__text {
   mask: linear-gradient(to bottom, #000 50px, transparent) !important;
@@ -55,31 +59,35 @@ body.app-body.flavour-glitch > #mastodon .collapsed .status__content::after {
 body.app-body.flavour-glitch > #mastodon .collapsed.muted .status__content__text ~ * {
   display: none;
 }
+@media (pointer: coarse) {
+  body.app-body.flavour-glitch > #mastodon .status__info {
+    align-items: center;
+  }
+  body.app-body.flavour-glitch > #mastodon .status__info__icons {
+    height: auto;
+  }
+}
+body.app-body.flavour-glitch > #mastodon .status {
+  isolation: isolate;
+  overflow: hidden;
+}
+body.app-body.flavour-glitch > #mastodon .status__info {
+  pointer-events: none;
+}
+body.app-body.flavour-glitch > #mastodon .status__avatar,
+body.app-body.flavour-glitch > #mastodon .status__info__icons {
+  pointer-events: all;
+}
+body.app-body.flavour-glitch > #mastodon .status > :not(.status__content):not(.status__line) {
+  position: relative;
+  z-index: 2;
+}
 body.app-body.flavour-glitch > #mastodon .status:not(.status-direct) > .status__content {
-  margin-block: -90px -100px !important;
+  margin-block: -100px !important;
   padding-block: 100px !important;
 }
-body.app-body.flavour-glitch > #mastodon .status:not(.status-direct) > .status__content .status__content__text {
-  margin-top: 0px;
-}
-body.app-body.flavour-glitch > #mastodon .status:not(.status-direct) > .status__content > :last-child:not(.status__content__text) {
-  margin-bottom: 5px !important;
-}
-body.app-body.flavour-glitch > #mastodon .status .full-width {
+body.app-body.flavour-glitch > #mastodon .full-width {
   margin-inline: 0 !important;
-}
-body.app-body.flavour-glitch > #mastodon .status .status__action-bar {
-  position: static;
-}
-body.app-body.flavour-glitch > #mastodon .status__info .notification__message {
-  padding-top: 0 !important;
-  padding-inline-start: 0 !important;
-}
-body.app-body.flavour-glitch > #mastodon .status__display-name {
-  line-height: 22px;
-}
-body.app-body.flavour-glitch > #mastodon .display-name__account {
-  font-size: 15px;
 }
 body.app-body.flavour-glitch > #mastodon .media-gallery__item > .media-gallery__preview {
   display: unset;
@@ -93,6 +101,7 @@ body.app-body.flavour-glitch > #mastodon .status__relative-time {
   flex-grow: 0 !important;
   min-width: 5ch !important;
   max-width: unset !important;
+  justify-content: flex-end;
 }
 body.app-body.flavour-glitch > #mastodon .status__relative-time time {
   display: inline !important;
@@ -100,8 +109,10 @@ body.app-body.flavour-glitch > #mastodon .status__relative-time time {
 body.app-body.flavour-glitch > #mastodon .reactions-bar {
   width: unset;
   margin-top: 8px;
+  pointer-events: none;
 }
 body.app-body.flavour-glitch > #mastodon .reactions-bar button {
+  pointer-events: all;
   border-radius: 6px !important;
   padding-block: 2px;
   border: 1px solid var(--border-color-2);
@@ -116,69 +127,61 @@ body.app-body.flavour-glitch > #mastodon .reactions-bar button:not(.active) {
 body.app-body.flavour-glitch > #mastodon .reactions-bar:empty {
   display: none;
 }
+body.app-body.flavour-glitch > #mastodon .notification__message {
+  padding-top: 15px;
+}
 body.app-body.flavour-glitch > #mastodon .notification__message + .status {
-  padding-top: 0 !important;
-}
-body.app-body.flavour-glitch > #mastodon .notification > .notification__message {
-  padding-inline: 15px !important;
-  padding-top: 18px !important;
-}
-body.app-body.flavour-glitch > #mastodon .notification__favourite-icon-wrapper {
-  position: static;
-  margin-inline-end: 10px;
-}
-body.app-body.flavour-glitch > #mastodon .notification__favourite-icon-wrapper i {
-  width: 1.28571429em !important;
-  text-align: center;
-}
-body.app-body.flavour-glitch > #mastodon .detailed-status__wrapper .focusable:not(.status)::before {
-  content: unset !important;
-}
-body.app-body.flavour-glitch > #mastodon .setting-text {
-  border-radius: 0 !important;
-  margin: 4px;
-  width: calc(100% - 8px);
+  padding-top: 5px !important;
 }
 body.app-body.flavour-glitch > #mastodon .column-settings__pillbar {
   border-radius: var(--radius);
 }
 body.app-body.flavour-glitch > #mastodon .pillbar-button {
-  border-radius: 0 !important;
-  padding: 6px;
+  padding: 10px;
+  border-radius: 4px;
 }
-body.app-body.flavour-glitch > #mastodon .account__header__account-note:focus-within {
-  border-radius: var(--radius) !important;
+body.app-body.flavour-glitch > #mastodon .column-header__notif-cleaning-buttons {
+  flex-wrap: wrap;
 }
-body.app-body.flavour-glitch > #mastodon .account__header__account-note__header {
-  align-items: center;
+body.app-body.flavour-glitch > #mastodon .column-header__notif-cleaning-buttons button {
+  min-width: 50% !important;
 }
-body.app-body.flavour-glitch > #mastodon .account__header__account-note__header button {
-  display: flex;
-  gap: 0.2em;
+body.app-body.flavour-glitch > #mastodon .notification__dismiss-overlay {
+  position: absolute !important;
 }
-body.app-body.flavour-glitch > #mastodon .account__header__account-note__content {
+body.app-body.flavour-glitch > #mastodon .notification__dismiss-overlay .wrappy {
+  box-shadow: none;
+  background: none;
+  border-top: 0;
+}
+body.app-body.flavour-glitch > #mastodon .local-settings {
+  max-height: 700px !important;
   width: 100%;
-  padding: 0 !important;
-  margin: 0 !important;
 }
-body.app-body.flavour-glitch > #mastodon .account-card .media-modal__close {
-  left: 10px;
-  top: 10px;
+body.app-body.flavour-glitch > #mastodon .glitch.local-settings__page {
+  padding: 20px;
 }
-body.app-body.flavour-glitch > #mastodon .account-card .media-modal__close::before {
-  content: "";
-  position: absolute;
-  inset: -60px -30px;
-  background: linear-gradient(to right, #000, transparent);
-  transform: rotate(45deg);
-  z-index: -1;
-  opacity: 0.5;
+body.app-body.flavour-glitch > #mastodon .local-settings__navigation {
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
+  background: none;
+  border-right: 1px solid var(--border-color);
+  width: auto;
 }
-.layout-multiple-columns.flavour-glitch .drawer {
-  flex-grow: 0.2;
+body.app-body.flavour-glitch > #mastodon .local-settings__navigation .local-settings__navigation__item:not(.close):not(.active) {
+  background: none;
 }
-.layout-multiple-columns.flavour-glitch .drawer__inner {
-  margin-top: -20px;
-  max-height: unset !important;
-  min-height: calc(100% + 40px);
+body.app-body.flavour-glitch > #mastodon .local-settings__navigation .local-settings__navigation__item {
+  border: 0;
+  flex-direction: column;
+  padding-inline: 8px;
+}
+body.app-body.flavour-glitch > #mastodon .local-settings__navigation .local-settings__navigation__item span {
+  font-size: 0.8em;
+}
+body.app-body.flavour-glitch > #mastodon .local-settings__navigation [href="/settings/preferences"] {
+  margin-block: auto 10px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border-color);
 }

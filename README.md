@@ -6,7 +6,7 @@ Here are some of the changes compared to glitch-soc:
 
 - Emoji reactions (glitch-soc/mastodon#2462)
 - Tenor GIF picker (originally from [koyu.space](https://github.com/koyuspace/mastodon))
-- Mastodon Modern theme (licensed under CC-BY-SA 4.0, [original repo](https://codeberg.org/Freeplay/Mastodon-Modern))
+- Mastodon Modern theme (licensed under CC-BY-SA 4.0, [original repo](https://git.gay/freeplay/Mastodon-Modern))
 - Workaround for OpenGraph video embeds when using [Jortage](https://jortage.com)
 - Multiple fixes for oEmbed/OpenGraph embeds
 - Polls can be posted alongside media (glitch-soc/mastodon#2524)
