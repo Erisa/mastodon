@@ -237,7 +237,7 @@ class Notifications extends PureComponent {
         <LoadGap
           key={'gap:' + notifications.getIn([index + 1, 'id'])}
           disabled={isLoading}
-          maxId={index > 0 ? notifications.getIn([index - 1, 'id']) : null}
+          param={index > 0 ? notifications.getIn([index - 1, 'id']) : null}
           onClick={this.handleLoadGap}
         />
       ) : (
@@ -258,6 +258,13 @@ class Notifications extends PureComponent {
 
     let scrollContainer;
 
+    const prepend = (
+      <>
+        {needsNotificationPermission && <NotificationsPermissionBanner />}
+        <FilteredNotificationsBanner />
+      </>
+    );
+
     if (signedIn) {
       scrollContainer = (
         <ScrollableList
@@ -267,7 +274,7 @@ class Notifications extends PureComponent {
           showLoading={isLoading && notifications.size === 0}
           hasMore={hasMore}
           numPending={numPending}
-          prepend={needsNotificationPermission && <NotificationsPermissionBanner />}
+          prepend={prepend}
           alwaysPrepend
           emptyMessage={emptyMessage}
           onLoadMore={this.handleLoadOlder}
@@ -355,8 +362,6 @@ class Notifications extends PureComponent {
         </ColumnHeader>
 
         {filterBarContainer}
-
-        <FilteredNotificationsBanner />
 
         {scrollContainer}
 

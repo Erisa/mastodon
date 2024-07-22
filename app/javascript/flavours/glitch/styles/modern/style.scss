@@ -1065,6 +1065,7 @@ a:focus-visible,
 }
 .column-link {
   border: 0;
+  gap: 0;
 }
 .icon-with-badge__badge {
   display: flex !important;
@@ -2287,11 +2288,11 @@ a:focus-visible,
 .admin-wrapper .with_block_label.radio_buttons .label_input > *:focus-within::after {
   opacity: 1;
 }
-.admin-wrapper :not(.fields-row__column) > .fields-group label::before,
-.admin-wrapper .fields-row > * label::before,
-.admin-wrapper .label_input > ul label::before,
-.admin-wrapper .label_input__wrapper > ul label::before,
-.admin-wrapper .with_block_label.radio_buttons .label_input label::before {
+.admin-wrapper :not(.fields-row__column) > .fields-group :not(.input.with_block_label) > label::before,
+.admin-wrapper .fields-row > * :not(.input.with_block_label) > label::before,
+.admin-wrapper .label_input > ul :not(.input.with_block_label) > label::before,
+.admin-wrapper .label_input__wrapper > ul :not(.input.with_block_label) > label::before,
+.admin-wrapper .with_block_label.radio_buttons .label_input :not(.input.with_block_label) > label::before {
   content: "";
   position: absolute;
   inset: -900px;
@@ -2313,8 +2314,10 @@ a:focus-visible,
   margin-inline-end: 10px !important;
   position: static !important;
 }
-.admin-wrapper input {
+.admin-wrapper input,
+.admin-wrapper .select {
   border-radius: var(--radius) !important;
+  z-index: 2;
 }
 .admin-wrapper .radio {
   flex-grow: 1;
