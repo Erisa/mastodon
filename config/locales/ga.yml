@@ -495,6 +495,9 @@ ga:
       title: Moltaí leanúna
       unsuppress: Aischuir moladh leanúna
     instances:
+      audit_log:
+        title: Logchomhaid Iniúchta le Déanaí
+        view_all: Féach ar logaí iniúchta iomlána
       availability:
         description_html:
           few: Má theipeann ar sheachadadh chuig an bhfearann ​​ar <strong>%{count} laethanta éagsúla</strong> gan rath, ní dhéanfar aon iarrachtaí seachadta eile mura bhfaightear <em>ó</em> seachadadh ón bhfearann.
@@ -1656,7 +1659,7 @@ ga:
     mutual: Frithpháirteach
     primary: Príomha
     relationship: Gaol
-    remove_selected_domains: Remove all followers from the selected domains
+    remove_selected_domains: Bain gach leantóir ó na fearainn roghnaithe
     remove_selected_followers: Bain leantóirí roghnaithe
     remove_selected_follows: Dí-lean úsáideoirí roghnaithe
     status: Stádas cuntais
@@ -2029,6 +2032,6 @@ ga:
     invalid_credential: Eochair shlándála neamhbhailí
     nickname_hint: Cuir isteach leasainm d'eochair shlándála nua
     not_enabled: Níl WebAuthn cumasaithe agat fós
-    not_supported: This browser doesn't support security keys
-    otp_required: To use security keys please enable two-factor authentication first.
-    registered_on: Registered on %{date}
+    not_supported: Ní thacaíonn an brabhsálaí seo le heochracha slándála
+    otp_required: Chun eochracha slándála a úsáid cumasaigh fíordheimhniú dhá fhachtóir ar dtús.
+    registered_on: Cláraithe ar %{date}

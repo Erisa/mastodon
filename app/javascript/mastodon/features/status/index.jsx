@@ -38,12 +38,10 @@ import {
   unblockDomain,
 } from '../../actions/domain_blocks';
 import {
-  favourite,
-  unfavourite,
+  toggleFavourite,
   bookmark,
   unbookmark,
-  reblog,
-  unreblog,
+  toggleReblog,
   pin,
   unpin,
 } from '../../actions/interactions';
@@ -64,7 +62,7 @@ import {
 import ColumnHeader from '../../components/column_header';
 import { textForScreenReader, defaultMediaVisibility } from '../../components/status';
 import StatusContainer from '../../containers/status_container';
-import { boostModal, deleteModal } from '../../initial_state';
+import { deleteModal } from '../../initial_state';
 import { makeGetStatus, makeGetPictureInPicture } from '../../selectors';
 import Column from '../ui/components/column';
 import { attachFullscreenListener, detachFullscreenListener, isFullscreen } from '../ui/util/fullscreen';
@@ -244,11 +242,7 @@ class Status extends ImmutablePureComponent {
     const { signedIn } = this.props.identity;
 
     if (signedIn) {
-      if (status.get('favourited')) {
-        dispatch(unfavourite(status));
-      } else {
-        dispatch(favourite(status));
-      }
+      dispatch(toggleFavourite(status.get('id')));
     } else {
       dispatch(openModal({
         modalType: 'INTERACTION',
@@ -280,11 +274,11 @@ class Status extends ImmutablePureComponent {
           modalProps: {
             message: intl.formatMessage(messages.replyMessage),
             confirm: intl.formatMessage(messages.replyConfirm),
-            onConfirm: () => dispatch(replyCompose(status, this.props.history)),
+            onConfirm: () => dispatch(replyCompose(status)),
           },
         }));
       } else {
-        dispatch(replyCompose(status, this.props.history));
+        dispatch(replyCompose(status));
       }
     } else {
       dispatch(openModal({
@@ -298,24 +292,12 @@ class Status extends ImmutablePureComponent {
     }
   };
 
-  handleModalReblog = (status, privacy) => {
-    this.props.dispatch(reblog({ statusId: status.get('id'), visibility: privacy }));
-  };
-
   handleReblogClick = (status, e) => {
     const { dispatch } = this.props;
     const { signedIn } = this.props.identity;
 
     if (signedIn) {
-      if (status.get('reblogged')) {
-        dispatch(unreblog({ statusId: status.get('id') }));
-      } else {
-        if ((e && e.shiftKey) || !boostModal) {
-          this.handleModalReblog(status);
-        } else {
-          dispatch(openModal({ modalType: 'BOOST', modalProps: { status, onReblog: this.handleModalReblog } }));
-        }
-      }
+      dispatch(toggleReblog(status.get('id'), e && e.shiftKey));
     } else {
       dispatch(openModal({
         modalType: 'INTERACTION',
@@ -336,33 +318,33 @@ class Status extends ImmutablePureComponent {
     }
   };
 
-  handleDeleteClick = (status, history, withRedraft = false) => {
+  handleDeleteClick = (status, withRedraft = false) => {
     const { dispatch, intl } = this.props;
 
     if (!deleteModal) {
-      dispatch(deleteStatus(status.get('id'), history, withRedraft));
+      dispatch(deleteStatus(status.get('id'), withRedraft));
     } else {
       dispatch(openModal({
         modalType: 'CONFIRM',
         modalProps: {
           message: intl.formatMessage(withRedraft ? messages.redraftMessage : messages.deleteMessage),
           confirm: intl.formatMessage(withRedraft ? messages.redraftConfirm : messages.deleteConfirm),
-          onConfirm: () => dispatch(deleteStatus(status.get('id'), history, withRedraft)),
+          onConfirm: () => dispatch(deleteStatus(status.get('id'), withRedraft)),
         },
       }));
     }
   };
 
-  handleEditClick = (status, history) => {
-    this.props.dispatch(editStatus(status.get('id'), history));
+  handleEditClick = (status) => {
+    this.props.dispatch(editStatus(status.get('id')));
   };
 
-  handleDirectClick = (account, router) => {
-    this.props.dispatch(directCompose(account, router));
+  handleDirectClick = (account) => {
+    this.props.dispatch(directCompose(account));
   };
 
-  handleMentionClick = (account, router) => {
-    this.props.dispatch(mentionCompose(account, router));
+  handleMentionClick = (account) => {
+    this.props.dispatch(mentionCompose(account));
   };
 
   handleOpenMedia = (media, index, lang) => {

@@ -592,7 +592,7 @@ RSpec.describe Account do
       expect(results).to eq [match]
     end
 
-    it 'limits by 10 by default' do
+    it 'limits result count by default value' do
       stub_const('Account::Search::DEFAULT_LIMIT', 1)
       2.times { Fabricate(:account, display_name: 'Display Name') }
       results = described_class.advanced_search_for('display', account)
@@ -711,6 +711,14 @@ RSpec.describe Account do
     it 'does not match URL query string' do
       expect(subject.match('https://example.com/?x=@alice')).to be_nil
     end
+
+    it 'matches usernames immediately following the letter ß' do
+      expect(subject.match('Hello toß @alice from me')[1]).to eq 'alice'
+    end
+
+    it 'matches usernames containing uppercase characters' do
+      expect(subject.match('Hello to @aLice@Example.com from me')[1]).to eq 'aLice@Example.com'
+    end
   end
 
   describe 'validations' do
@@ -775,7 +783,7 @@ RSpec.describe Account do
       end
 
       it 'is invalid if the display name is longer than the character limit' do
-        account = Fabricate.build(:account, display_name: username_over_limit)
+        account = Fabricate.build(:account, display_name: display_name_over_limit)
         account.valid?
         expect(account).to model_have_error_on_field(:display_name)
       end
@@ -821,7 +829,7 @@ RSpec.describe Account do
       end
 
       it 'is valid even if the display name is longer than the character limit' do
-        account = Fabricate.build(:account, domain: 'domain', display_name: username_over_limit)
+        account = Fabricate.build(:account, domain: 'domain', display_name: display_name_over_limit)
         account.valid?
         expect(account).to_not model_have_error_on_field(:display_name)
       end
@@ -835,6 +843,10 @@ RSpec.describe Account do
 
     def username_over_limit
       'a' * described_class::USERNAME_LENGTH_LIMIT * 2
+    end
+
+    def display_name_over_limit
+      'a' * described_class::DISPLAY_NAME_LENGTH_LIMIT * 2
     end
 
     def account_note_over_limit

@@ -471,6 +471,9 @@ es-AR:
       title: Recom. de cuentas a seguir
       unsuppress: Restablecer recomendaciones de cuentas para seguir
     instances:
+      audit_log:
+        title: Registros de auditoría recientes
+        view_all: Ver registros de auditoría completos
       availability:
         description_html:
           one: Si el envío al dominio falla durante <strong>%{count} día</strong> sin éxito, no se harán más intentos de entrega a menos que se reciba un envío <em>desde</em> el dominio.
@@ -639,6 +642,7 @@ es-AR:
       report: 'Denuncia #%{id}'
       reported_account: Cuenta denunciada
       reported_by: Denunciada por
+      reported_with_application: Informado a través de la aplicación
       resolved: Resueltas
       resolved_msg: "¡Denuncia exitosamente resuelta!"
       skip_to_actions: Ir directamente a las acciones
