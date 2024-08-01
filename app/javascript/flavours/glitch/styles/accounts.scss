@@ -359,6 +359,10 @@
       color: $primary-text-color;
       font-weight: 700;
     }
+
+    .warning-hint {
+      font-weight: normal !important;
+    }
   }
 
   &__body {
