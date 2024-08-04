@@ -7,6 +7,8 @@ class Api::V2Alpha::NotificationsController < Api::BaseController
   after_action :insert_pagination_headers, only: :index
 
   DEFAULT_NOTIFICATIONS_LIMIT = 40
+  DEFAULT_NOTIFICATIONS_COUNT_LIMIT = 100
+  MAX_NOTIFICATIONS_COUNT_LIMIT = 1_000
 
   def index
     with_read_replica do
@@ -31,13 +33,23 @@ class Api::V2Alpha::NotificationsController < Api::BaseController
         'app.notification_grouping.status.unique_count' => statuses.uniq.size
       )
 
-      render json: @grouped_notifications, each_serializer: REST::NotificationGroupSerializer, relationships: @relationships, group_metadata: @group_metadata
+      presenter = GroupedNotificationsPresenter.new(@grouped_notifications)
+      render json: presenter, serializer: REST::DedupNotificationGroupSerializer, relationships: @relationships, group_metadata: @group_metadata
+    end
+  end
+
+  def unread_count
+    limit = limit_param(DEFAULT_NOTIFICATIONS_COUNT_LIMIT, MAX_NOTIFICATIONS_COUNT_LIMIT)
+
+    with_read_replica do
+      render json: { count: browserable_account_notifications.paginate_groups_by_min_id(limit, min_id: notification_marker&.last_read_id).count }
     end
   end
 
   def show
     @notification = current_account.notifications.without_suspended.find_by!(group_key: params[:id])
-    render json: NotificationGroup.from_notification(@notification), serializer: REST::NotificationGroupSerializer
+    presenter = GroupedNotificationsPresenter.new([NotificationGroup.from_notification(@notification)])
+    render json: presenter, serializer: REST::DedupNotificationGroupSerializer
   end
 
   def clear
@@ -90,6 +102,10 @@ class Api::V2Alpha::NotificationsController < Api::BaseController
       exclude_types: Array(browserable_params[:exclude_types]),
       include_filtered: truthy_param?(:include_filtered)
     )
+  end
+
+  def notification_marker
+    current_user.markers.find_by(timeline: 'notifications')
   end
 
   def target_statuses_from_notifications
