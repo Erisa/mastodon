@@ -9,7 +9,7 @@ services:
     networks:
       - internal_network
     healthcheck:
-      test: ['CMD', 'pg_isready', '-U', 'postgres']
+      test: [ 'CMD', 'pg_isready', '-U', 'postgres' ]
     volumes:
       - ./postgres14:/var/lib/postgresql/data
     environment:
@@ -21,7 +21,7 @@ services:
     networks:
       - internal_network
     healthcheck:
-      test: ['CMD', 'redis-cli', 'ping']
+      test: [ 'CMD', 'redis-cli', 'ping' ]
     volumes:
       - ./redis:/data
 
@@ -67,9 +67,13 @@ services:
       - internal_network
     healthcheck:
       # prettier-ignore
-      test: ['CMD-SHELL', 'wget -q --spider --proxy=off localhost:3000/health || exit 1']
-#    ports:
-#      - '127.0.0.1:3000:3000'
+      test:
+        [
+          'CMD-SHELL',
+          'wget -q --spider --proxy=off localhost:3000/health || exit 1'
+        ]
+    #    ports:
+    #      - '127.0.0.1:3000:3000'
     depends_on:
       - db
       - redis
@@ -85,9 +89,13 @@ services:
       - internal_network
     healthcheck:
       # prettier-ignore
-      test: ['CMD-SHELL', 'wget -q --spider --proxy=off localhost:4000/api/v1/streaming/health || exit 1']
-#    ports:
-#      - '127.0.0.1:4000:4000'
+      test:
+        [
+          'CMD-SHELL',
+          'wget -q --spider --proxy=off localhost:4000/api/v1/streaming/health || exit 1'
+        ]
+    #    ports:
+    #      - '127.0.0.1:4000:4000'
     depends_on:
       - db
       - redis
@@ -105,7 +113,7 @@ services:
       - external_network
       - internal_network
     healthcheck:
-      test: ['CMD-SHELL', "ps aux | grep '[s]idekiq\ 6' || false"]
+      test: [ 'CMD-SHELL', "ps aux | grep '[s]idekiq 6' || false" ]
 
   ## Uncomment to enable federation with tor instances along with adding the following ENV variables
   ## http_hidden_proxy=http://privoxy:8118
@@ -137,8 +145,8 @@ services:
   libretranslate:
     image: libretranslate/libretranslate:v1.5.2
     restart: unless-stopped
- #   volumes:
-  #    - ./lt-data:/home/libretranslate/.local
+    #   volumes:
+    #    - ./lt-data:/home/libretranslate/.local
     networks:
       - external_network
       - internal_network
