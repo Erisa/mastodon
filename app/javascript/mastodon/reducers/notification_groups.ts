@@ -21,6 +21,7 @@ import {
   unmountNotifications,
   refreshStaleNotificationGroups,
   pollRecentNotifications,
+  shouldGroupNotificationType,
 } from 'mastodon/actions/notification_groups';
 import {
   disconnectTimeline,
@@ -205,6 +206,13 @@ function processNewNotification(
   groups: NotificationGroupsState['groups'],
   notification: ApiNotificationJSON,
 ) {
+  if (!shouldGroupNotificationType(notification.type)) {
+    notification = {
+      ...notification,
+      group_key: `ungrouped-${notification.id}`,
+    };
+  }
+
   const existingGroupIndex = groups.findIndex(
     (group) =>
       group.type !== 'gap' && group.group_key === notification.group_key,
@@ -242,7 +250,7 @@ function processNewNotification(
       groups.unshift(existingGroup);
     }
   } else {
-    // Create a new group
+    // We have not found an existing group, create a new one
     groups.unshift(createNotificationGroupFromNotificationJSON(notification));
   }
 }
@@ -551,7 +559,10 @@ export const notificationGroupsReducer = createReducer<NotificationGroupsState>(
           compareId(state.lastReadId, mostRecentGroup.page_max_id) < 0
         )
           state.lastReadId = mostRecentGroup.page_max_id;
-        commitLastReadId(state);
+
+        // We don't call `commitLastReadId`, because that is conditional
+        // and we want to unconditionally update the state instead.
+        state.readMarkerId = state.lastReadId;
       })
       .addCase(fetchMarkers.fulfilled, (state, action) => {
         if (

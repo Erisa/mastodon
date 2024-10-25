@@ -106,6 +106,35 @@ body.app-body.flavour-glitch > #mastodon .status__relative-time {
 body.app-body.flavour-glitch > #mastodon .status__relative-time time {
   display: inline !important;
 }
+body.app-body.flavour-glitch > #mastodon .status__content__spoiler-link {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 0.4em 1.2em;
+  border-radius: var(--radius-round);
+  color: inherit;
+  background: var(--elevated-color);
+  margin-block: 8px;
+}
+body.app-body.flavour-glitch > #mastodon .status__content__spoiler-link::before,
+body.app-body.flavour-glitch > #mastodon .status__content__spoiler-link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-round);
+  background-color: var(--hover-color);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+body.app-body.flavour-glitch > #mastodon .status__content__spoiler-link::after {
+  inset: -6px -9999px;
+}
+body.app-body.flavour-glitch > #mastodon .status__content__spoiler-link:hover::before,
+body.app-body.flavour-glitch > #mastodon .status__content__spoiler-link:focus::before,
+body.app-body.flavour-glitch > #mastodon .status__content__spoiler-link:hover::after,
+body.app-body.flavour-glitch > #mastodon .status__content__spoiler-link:focus::after {
+  opacity: 1;
+}
 body.app-body.flavour-glitch > #mastodon .reactions-bar {
   width: unset;
   margin-top: 8px;
@@ -115,7 +144,7 @@ body.app-body.flavour-glitch > #mastodon .reactions-bar button {
   pointer-events: all;
   border-radius: 6px !important;
   padding-block: 2px;
-  border: 1px solid var(--border-color-2);
+  border: 1px solid var(--border-color);
 }
 body.app-body.flavour-glitch > #mastodon .reactions-bar button .reactions-bar__item__emoji {
   height: 2em;
@@ -127,11 +156,13 @@ body.app-body.flavour-glitch > #mastodon .reactions-bar button:not(.active) {
 body.app-body.flavour-glitch > #mastodon .reactions-bar:empty {
   display: none;
 }
-body.app-body.flavour-glitch > #mastodon .notification__message {
-  padding-top: 15px;
+body.app-body.flavour-glitch > #mastodon .reactions-bar .emoji-picker-dropdown {
+  align-self: stretch;
 }
-body.app-body.flavour-glitch > #mastodon .notification__message + .status {
-  padding-top: 5px !important;
+body.app-body.flavour-glitch > #mastodon .reactions-bar .emoji-picker-dropdown button {
+  align-self: stretch;
+  height: 100%;
+  aspect-ratio: 1;
 }
 body.app-body.flavour-glitch > #mastodon .column-settings__pillbar {
   border-radius: var(--radius);
