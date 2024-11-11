@@ -534,6 +534,12 @@ a:focus-visible,
 .compose-form .reply-indicator__display-name {
   padding: 0;
 }
+.compose-form .spoiler-input__border {
+  display: none;
+}
+.compose-form #cw-spoiler-input {
+  padding-inline: 12px;
+}
 .compose-form .compose-form__autosuggest-wrapper,
 .compose-form .autosuggest-textarea__textarea {
   border-radius: var(--radius) var(--radius) 0 0 !important;
@@ -691,6 +697,7 @@ a:focus-visible,
 }
 .columns-area__panels__main {
   overflow: visible !important;
+  contain: inline-size style !important;
   transition: max-width 0.2s cubic-bezier(0, 0, 0, 1.1), margin 0.2s cubic-bezier(0, 0, 0, 1.1);
 }
 @media (min-width: 1175px) {
@@ -1541,16 +1548,24 @@ a:focus-visible,
   justify-content: center;
   flex-grow: 1;
 }
-.item-list > article {
+.item-list > article > div {
   position: relative;
 }
-.item-list > article::after {
+.item-list > article > div::after {
   content: "";
   position: absolute;
   bottom: 0px;
   inset-inline: 0;
   border-top: 1px solid var(--border-color);
   pointer-events: none;
+}
+@media (min-width: 890px) {
+  .layout-single-column .item-list > article > div {
+    position: relative;
+  }
+  .layout-single-column .item-list > article > div::after {
+    inset-inline: calc(var(--radius) + 10px);
+  }
 }
 .account__wrapper {
   line-height: 1.5;
