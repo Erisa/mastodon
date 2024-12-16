@@ -41,7 +41,8 @@ class Status < ApplicationRecord
   include Status::SnapshotConcern
   include Status::ThreadingConcern
 
-  MEDIA_ATTACHMENTS_LIMIT = 4
+  MEDIA_ATTACHMENTS_LIMIT = (ENV['MAX_MEDIA_ATTACHMENTS'] || 4).to_i
+  REMOTE_MEDIA_ATTACHMENTS_LIMIT = (ENV['MAX_REMOTE_MEDIA_ATTACHMENTS'] || 16).to_i
 
   rate_limit by: :account, family: :statuses
 
@@ -118,7 +119,7 @@ class Status < ApplicationRecord
   scope :without_reblogs, -> { where(statuses: { reblog_of_id: nil }) }
   scope :tagged_with, ->(tag_ids) { joins(:statuses_tags).where(statuses_tags: { tag_id: tag_ids }) }
   scope :not_excluded_by_account, ->(account) { where.not(account_id: account.excluded_from_timeline_account_ids) }
-  scope :not_domain_blocked_by_account, ->(account) { account.excluded_from_timeline_domains.blank? ? left_outer_joins(:account) : left_outer_joins(:account).merge(Account.not_domain_blocked_by_account(account)) }
+  scope :not_domain_blocked_by_account, ->(account, bubble_only = false) { account.excluded_from_timeline_domains.blank? ? left_outer_joins(:account) : left_outer_joins(:account).merge(Account.not_domain_blocked_by_account(account, bubble_only)) }
   scope :tagged_with_all, lambda { |tag_ids|
     Array(tag_ids).map(&:to_i).reduce(self) do |result, id|
       result.where(<<~SQL.squish, tag_id: id)
@@ -134,6 +135,8 @@ class Status < ApplicationRecord
   scope :not_direct_visibility, -> { where.not(visibility: :direct) }
 
   scope :not_local_only, -> { where(local_only: [false, nil]) }
+
+  scope :bubble, -> { left_outer_joins(:account).where(accounts: { domain: BubbleDomain.bubble_domains }) }
 
   after_create_commit :trigger_create_webhooks
   after_update_commit :trigger_update_webhooks
@@ -204,6 +207,10 @@ class Status < ApplicationRecord
 
   def local?
     attributes['local'] || uri.nil?
+  end
+
+  def bubble?
+    BubbleDomain.in_bubble?(account.domain)
   end
 
   def in_reply_to_local_account?
@@ -299,6 +306,10 @@ class Status < ApplicationRecord
     end
   end
 
+  def media_attachments_limit
+    local? ? MEDIA_ATTACHMENTS_LIMIT : REMOTE_MEDIA_ATTACHMENTS_LIMIT
+  end
+
   def ordered_media_attachments
     if ordered_media_attachment_ids.nil?
       # NOTE: sort Ruby-side to avoid hitting the database when the status is
@@ -307,7 +318,7 @@ class Status < ApplicationRecord
     else
       map = media_attachments.index_by(&:id)
       ordered_media_attachment_ids.filter_map { |media_attachment_id| map[media_attachment_id] }
-    end.take(MEDIA_ATTACHMENTS_LIMIT)
+    end.take(media_attachments_limit)
   end
 
   def replies_count
@@ -410,23 +421,23 @@ class Status < ApplicationRecord
     end
 
     def favourites_map(status_ids, account_id)
-      Favourite.select('status_id').where(status_id: status_ids).where(account_id: account_id).each_with_object({}) { |f, h| h[f.status_id] = true }
+      Favourite.select(:status_id).where(status_id: status_ids).where(account_id: account_id).each_with_object({}) { |f, h| h[f.status_id] = true }
     end
 
     def bookmarks_map(status_ids, account_id)
-      Bookmark.select('status_id').where(status_id: status_ids).where(account_id: account_id).map { |f| [f.status_id, true] }.to_h
+      Bookmark.select(:status_id).where(status_id: status_ids).where(account_id: account_id).map { |f| [f.status_id, true] }.to_h
     end
 
     def reblogs_map(status_ids, account_id)
-      unscoped.select('reblog_of_id').where(reblog_of_id: status_ids).where(account_id: account_id).each_with_object({}) { |s, h| h[s.reblog_of_id] = true }
+      unscoped.select(:reblog_of_id).where(reblog_of_id: status_ids).where(account_id: account_id).each_with_object({}) { |s, h| h[s.reblog_of_id] = true }
     end
 
     def mutes_map(conversation_ids, account_id)
-      ConversationMute.select('conversation_id').where(conversation_id: conversation_ids).where(account_id: account_id).each_with_object({}) { |m, h| h[m.conversation_id] = true }
+      ConversationMute.select(:conversation_id).where(conversation_id: conversation_ids).where(account_id: account_id).each_with_object({}) { |m, h| h[m.conversation_id] = true }
     end
 
     def pins_map(status_ids, account_id)
-      StatusPin.select('status_id').where(status_id: status_ids).where(account_id: account_id).each_with_object({}) { |p, h| h[p.status_id] = true }
+      StatusPin.select(:status_id).where(status_id: status_ids).where(account_id: account_id).each_with_object({}) { |p, h| h[p.status_id] = true }
     end
 
     def from_text(text)

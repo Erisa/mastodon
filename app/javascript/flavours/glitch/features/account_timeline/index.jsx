@@ -55,6 +55,7 @@ const mapStateToProps = (state, { params: { acct, id, tagged }, withReplies = fa
     hasMore:   state.getIn(['timelines', `account:${path}`, 'hasMore']),
     suspended: state.getIn(['accounts', accountId, 'suspended'], false),
     hidden: getAccountHidden(state, accountId),
+    instanceHideReason: state.getIn(['accounts', accountId, 'remote_limit_reason']),
   };
 };
 
@@ -164,7 +165,7 @@ class AccountTimeline extends ImmutablePureComponent {
   };
 
   render () {
-    const { accountId, statusIds, featuredStatusIds, isLoading, hasMore, suspended, isAccount, hidden, multiColumn, remote, remoteUrl } = this.props;
+    const { accountId, statusIds, featuredStatusIds, isLoading, hasMore, suspended, isAccount, hidden, multiColumn, remote, remoteUrl, instanceHideReason } = this.props;
 
     if (isLoading && statusIds.isEmpty()) {
       return (
@@ -185,7 +186,7 @@ class AccountTimeline extends ImmutablePureComponent {
     if (suspended) {
       emptyMessage = <FormattedMessage id='empty_column.account_suspended' defaultMessage='Account suspended' />;
     } else if (hidden) {
-      emptyMessage = <LimitedAccountHint accountId={accountId} />;
+      emptyMessage = <LimitedAccountHint accountId={accountId} reason={instanceHideReason} />;
     } else if (remote && statusIds.isEmpty()) {
       emptyMessage = <RemoteHint accountId={accountId} url={remoteUrl} />;
     } else {

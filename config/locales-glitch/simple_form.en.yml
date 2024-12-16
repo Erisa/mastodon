@@ -1,6 +1,7 @@
 ---
 en:
   simple_form:
+    chuckya_only: Chuckya
     glitch_only: glitch-soc
     hints:
       defaults:

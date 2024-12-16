@@ -105,7 +105,7 @@ class FanOutOnWriteService < BaseService
   end
 
   def deliver_to_hashtag_followers!
-    TagFollow.where(tag_id: @status.tags.map(&:id)).select(:id, :account_id).reorder(nil).find_in_batches do |follows|
+    TagFollow.for_local_distribution.where(tag_id: @status.tags.map(&:id)).select(:id, :account_id).reorder(nil).find_in_batches do |follows|
       FeedInsertWorker.push_bulk(follows) do |follow|
         [@status.id, follow.account_id, 'tags', { 'update' => update? }]
       end
@@ -146,10 +146,12 @@ class FanOutOnWriteService < BaseService
 
     redis.publish('timeline:public', anonymous_payload)
     redis.publish(@status.local? ? 'timeline:public:local' : 'timeline:public:remote', anonymous_payload)
+    redis.publish('timeline:public:bubble', anonymous_payload) if @status.bubble?
 
     if @status.with_media?
       redis.publish('timeline:public:media', anonymous_payload)
       redis.publish(@status.local? ? 'timeline:public:local:media' : 'timeline:public:remote:media', anonymous_payload)
+      redis.publish('timeline:public:bubble:media', anonymous_payload) if @status.bubble?
     end
   end
 

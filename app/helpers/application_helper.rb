@@ -79,7 +79,7 @@ module ApplicationHelper
 
   def html_title
     safe_join(
-      [content_for(:page_title).to_s.chomp, title]
+      [content_for(:page_title), title]
       .compact_blank,
       ' - '
     )
@@ -143,7 +143,7 @@ module ApplicationHelper
   end
 
   def body_classes
-    output = body_class_string.split
+    output = []
     output << content_for(:body_classes)
     output << "flavour-#{current_flavour.parameterize}"
     output << "skin-#{current_skin.parameterize}"

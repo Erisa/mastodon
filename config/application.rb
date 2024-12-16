@@ -105,6 +105,7 @@ module Mastodon
     end
 
     config.x.captcha = config_for(:captcha)
+    config.x.mastodon = config_for(:mastodon)
     config.x.translation = config_for(:translation)
 
     config.to_prepare do
@@ -113,7 +114,6 @@ module Mastodon
       Doorkeeper::Application.include ApplicationExtension
       Doorkeeper::AccessGrant.include AccessGrantExtension
       Doorkeeper::AccessToken.include AccessTokenExtension
-      Doorkeeper::OAuth::PreAuthorization.include OauthPreAuthorizationExtension
       Devise::FailureApp.include AbstractController::Callbacks
       Devise::FailureApp.include Localized
     end

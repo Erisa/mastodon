@@ -11,6 +11,7 @@ import ImmutablePureComponent from 'react-immutable-pure-component';
 import { connect } from 'react-redux';
 
 import BookmarksIcon from '@/material-icons/400-24px/bookmarks-fill.svg?react';
+import BubbleChartIcon from '@/material-icons/400-24px/bubble_chart.svg?react';
 import ExploreIcon from '@/material-icons/400-24px/explore.svg?react';
 import ModerationIcon from '@/material-icons/400-24px/gavel.svg?react';
 import PeopleIcon from '@/material-icons/400-24px/group.svg?react';
@@ -48,6 +49,7 @@ const messages = defineMessages({
   navigation_subheading: { id: 'column_subheading.navigation', defaultMessage: 'Navigation' },
   settings_subheading: { id: 'column_subheading.settings', defaultMessage: 'Settings' },
   community_timeline: { id: 'navigation_bar.community_timeline', defaultMessage: 'Local timeline' },
+  bubble_timeline: { id: 'navigation_bar.bubble_timeline', defaultMessage: 'Bubble timeline' },
   explore: { id: 'navigation_bar.explore', defaultMessage: 'Explore' },
   direct: { id: 'navigation_bar.direct', defaultMessage: 'Private mentions' },
   bookmarks: { id: 'navigation_bar.bookmarks', defaultMessage: 'Bookmarks' },
@@ -150,6 +152,10 @@ class GettingStarted extends ImmutablePureComponent {
 
       if (!columns.find(item => item.get('id') === 'COMMUNITY')) {
         navItems.push(<ColumnLink key='community_timeline' icon='users' iconComponent={PeopleIcon} text={intl.formatMessage(messages.community_timeline)} to='/public/local' />);
+      }
+
+      if (!columns.find(item => item.get('id') === 'BUBBLE')) {
+        navItems.push(<ColumnLink key='bubble_timeline' icon='bubble' iconComponent={BubbleChartIcon} text={intl.formatMessage(messages.bubble_timeline)} to='/public/bubble' />);
       }
 
       if (!columns.find(item => item.get('id') === 'PUBLIC')) {

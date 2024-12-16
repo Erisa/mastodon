@@ -90,6 +90,8 @@ class Account < ApplicationRecord
   include Account::Interactions
   include Account::Merging
   include Account::Search
+  include Account::Sensitizes
+  include Account::Silences
   include Account::StatusesSearch
   include Account::Suspensions
   include Account::AttributionDomains
@@ -129,9 +131,6 @@ class Account < ApplicationRecord
   scope :remote, -> { where.not(domain: nil) }
   scope :local, -> { where(domain: nil) }
   scope :partitioned, -> { order(Arel.sql('row_number() over (partition by domain)')) }
-  scope :silenced, -> { where.not(silenced_at: nil) }
-  scope :sensitized, -> { where.not(sensitized_at: nil) }
-  scope :without_silenced, -> { where(silenced_at: nil) }
   scope :without_instance_actor, -> { where.not(id: INSTANCE_ACTOR_ID) }
   scope :recent, -> { reorder(id: :desc) }
   scope :bots, -> { where(actor_type: AUTOMATED_ACTOR_TYPES) }
@@ -149,7 +148,14 @@ class Account < ApplicationRecord
   scope :by_recent_activity, -> { left_joins(:user, :account_stat).order(coalesced_activity_timestamps.desc).order(id: :desc) }
   scope :by_domain_and_subdomains, ->(domain) { where(domain: Instance.by_domain_and_subdomains(domain).select(:domain)) }
   scope :not_excluded_by_account, ->(account) { where.not(id: account.excluded_from_timeline_account_ids) }
-  scope :not_domain_blocked_by_account, ->(account) { where(arel_table[:domain].eq(nil).or(arel_table[:domain].not_in(account.excluded_from_timeline_domains))) }
+  scope :not_domain_blocked_by_account, lambda { |account, bubble_only = false|
+    exclude = arel_table[:domain].not_in(account.excluded_from_timeline_domains)
+    if bubble_only
+      where(arel_table[:domain].in(BubbleDomain.bubble_domains).and(exclude))
+    else
+      where(arel_table[:domain].eq(nil).or(exclude))
+    end
+  }
   scope :dormant, -> { joins(:account_stat).merge(AccountStat.without_recent_activity) }
   scope :with_username, ->(value) { where arel_table[:username].lower.eq(value.to_s.downcase) }
   scope :with_domain, ->(value) { where arel_table[:domain].lower.eq(value&.to_s&.downcase) }
@@ -242,30 +248,6 @@ class Account < ApplicationRecord
 
   def refresh!
     ResolveAccountService.new.call(acct) unless local?
-  end
-
-  def silenced?
-    silenced_at.present?
-  end
-
-  def silence!(date = Time.now.utc)
-    update!(silenced_at: date)
-  end
-
-  def unsilence!
-    update!(silenced_at: nil)
-  end
-
-  def sensitized?
-    sensitized_at.present?
-  end
-
-  def sensitize!(date = Time.now.utc)
-    update!(sensitized_at: date)
-  end
-
-  def unsensitize!
-    update!(sensitized_at: nil)
   end
 
   def memorialize!
@@ -398,6 +380,13 @@ class Account < ApplicationRecord
     return 'local' if local?
 
     @synchronization_uri_prefix ||= "#{uri[URL_PREFIX_RE]}/"
+  end
+
+  def remote_limit_reason
+    domain_block = DomainBlock.find_by(domain: domain)
+    return if domain_block.nil? || domain_block.public_comment.empty?
+
+    domain_block.public_comment
   end
 
   class << self

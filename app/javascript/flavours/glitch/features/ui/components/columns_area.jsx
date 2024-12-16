@@ -8,9 +8,10 @@ import { scrollRight } from '../../../scroll';
 import BundleContainer from '../containers/bundle_container';
 import {
   Compose,
-  NotificationsWrapper,
+  Notifications,
   HomeTimeline,
   CommunityTimeline,
+  BubbleTimeline,
   PublicTimeline,
   HashtagTimeline,
   DirectTimeline,
@@ -30,10 +31,11 @@ import NavigationPanel from './navigation_panel';
 const componentMap = {
   'COMPOSE': Compose,
   'HOME': HomeTimeline,
-  'NOTIFICATIONS': NotificationsWrapper,
+  'NOTIFICATIONS': Notifications,
   'PUBLIC': PublicTimeline,
   'REMOTE': PublicTimeline,
   'COMMUNITY': CommunityTimeline,
+  'BUBBLE': BubbleTimeline,
   'HASHTAG': HashtagTimeline,
   'DIRECT': DirectTimeline,
   'FAVOURITES': FavouritedStatuses,
