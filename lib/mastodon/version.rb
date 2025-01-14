@@ -21,11 +21,11 @@ module Mastodon
     end
 
     def prerelease
-      ENV['MASTODON_VERSION_PRERELEASE'].presence || default_prerelease
+      version_configuration[:prerelease].presence || default_prerelease
     end
 
     def build_metadata
-      ['chuckya', ENV.fetch('MASTODON_VERSION_METADATA', nil)].compact_blank.join('.')
+      version_configuration[:metadata]
     end
 
     def to_a
@@ -46,6 +46,7 @@ module Mastodon
     def api_versions
       {
         mastodon: 2,
+        chuckya: 1,
       }
     end
 
@@ -76,6 +77,10 @@ module Mastodon
 
     def user_agent
       @user_agent ||= "Mastodon/#{Version} (#{HTTP::Request::USER_AGENT}; +http#{Rails.configuration.x.use_https ? 's' : ''}://#{Rails.configuration.x.web_domain}/)"
+    end
+
+    def version_configuration
+      Rails.configuration.x.mastodon.version
     end
   end
 end

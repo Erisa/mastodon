@@ -14,7 +14,7 @@ import { HotKeys } from 'react-hotkeys';
 
 import { focusApp, unfocusApp, changeLayout } from 'flavours/glitch/actions/app';
 import { synchronouslySubmitMarkers, submitMarkers, fetchMarkers } from 'flavours/glitch/actions/markers';
-import { initializeNotifications } from 'flavours/glitch/actions/notifications_migration';
+import { fetchNotifications } from 'flavours/glitch/actions/notification_groups';
 import { INTRODUCTION_VERSION } from 'flavours/glitch/actions/onboarding';
 import { HoverCardController } from 'flavours/glitch/components/hover_card_controller';
 import { Permalink } from 'flavours/glitch/components/permalink';
@@ -26,7 +26,6 @@ import { WithRouterPropTypes } from 'flavours/glitch/utils/react_router';
 
 import { uploadCompose, resetCompose, changeComposeSpoilerness } from '../../actions/compose';
 import { clearHeight } from '../../actions/height_cache';
-import { notificationsSetVisibility } from '../../actions/notifications';
 import { fetchServer, fetchServerTranslationLanguages } from '../../actions/server';
 import { expandHomeTimeline } from '../../actions/timelines';
 import initialState, { me, owner, singleUserMode, trendsEnabled, trendsAsLanding, disableHoverCards } from '../../initial_state';
@@ -74,8 +73,10 @@ import {
   OnboardingProfile,
   OnboardingFollows,
   Explore,
+  Search,
   About,
   PrivacyPolicy,
+  TermsOfService,
 } from './util/async-components';
 import { ColumnsContextProvider } from './util/columns_context';
 import { WrappedSwitch, WrappedRoute } from './util/react_router_helpers';
@@ -132,9 +133,9 @@ const keyMap = {
   goToRequests: 'g r',
   toggleHidden: 'x',
   bookmark: 'd',
-  toggleCollapse: 'shift+x',
   toggleSensitive: 'h',
   openMedia: 'e',
+  onTranslate: 't',
 };
 
 class SwitchingColumnsArea extends PureComponent {
@@ -209,6 +210,7 @@ class SwitchingColumnsArea extends PureComponent {
             <WrappedRoute path='/keyboard-shortcuts' component={KeyboardShortcuts} content={children} />
             <WrappedRoute path='/about' component={About} content={children} />
             <WrappedRoute path='/privacy-policy' component={PrivacyPolicy} content={children} />
+            <WrappedRoute path='/terms-of-service' component={TermsOfService} content={children} />
 
             <WrappedRoute path={['/home', '/timelines/home']} component={HomeTimeline} content={children} />
             <Redirect from='/timelines/public' to='/public' exact />
@@ -235,7 +237,8 @@ class SwitchingColumnsArea extends PureComponent {
             <WrappedRoute path={['/start', '/start/profile']} exact component={OnboardingProfile} content={children} />
             <WrappedRoute path='/start/follows' component={OnboardingFollows} content={children} />
             <WrappedRoute path='/directory' component={Directory} content={children} />
-            <WrappedRoute path={['/explore', '/search']} component={Explore} content={children} />
+            <WrappedRoute path='/explore' component={Explore} content={children} />
+            <WrappedRoute path='/search' component={Search} content={children} />
             <WrappedRoute path={['/publish', '/statuses/new']} component={Compose} content={children} />
 
             <WrappedRoute path={['/@:acct', '/accounts/:id']} exact component={AccountTimeline} content={children} />
@@ -313,7 +316,6 @@ class UI extends PureComponent {
 
   handleVisibilityChange = () => {
     const visibility = !document[this.visibilityHiddenProp];
-    this.props.dispatch(notificationsSetVisibility(visibility));
     if (visibility) {
       this.props.dispatch(focusApp());
       this.props.dispatch(submitMarkers({ immediate: true }));
@@ -433,7 +435,7 @@ class UI extends PureComponent {
     if (signedIn) {
       this.props.dispatch(fetchMarkers());
       this.props.dispatch(expandHomeTimeline());
-      this.props.dispatch(initializeNotifications());
+      this.props.dispatch(fetchNotifications());
       this.props.dispatch(fetchServerTranslationLanguages());
 
       setTimeout(() => this.props.dispatch(fetchServer()), 3000);

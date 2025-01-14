@@ -31,7 +31,7 @@ RSpec.describe Settings::PicturesController do
           delete :destroy, params: { id: 'avatar' }
           expect(response).to redirect_to(settings_profile_path)
           expect(response).to have_http_status(303)
-          expect(service).to have_received(:call).with(user.account, { 'avatar' => nil, 'avatar_remote_url' => '' })
+          expect(service).to have_received(:call).with(user.account, { 'avatar' => nil, 'avatar_remote_url' => '', 'avatar_description' => '' })
         end
       end
 

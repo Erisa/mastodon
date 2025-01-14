@@ -5,6 +5,8 @@ en:
     glitch_only: glitch-soc
     hints:
       defaults:
+        avatar_description: A description of your profile picture for people who are blind or have low vision.
+        header_description: A description of your header picture for people who are blind or have low vision.
         setting_default_content_type_html: When writing toots, assume they are written in raw HTML, unless specified otherwise
         setting_default_content_type_markdown: When writing toots, assume they are using Markdown for rich text formatting, unless specified otherwise
         setting_default_content_type_plain: When writing toots, assume they are plain text with no special formatting, unless specified otherwise (default Mastodon behavior)
@@ -13,6 +15,8 @@ en:
         setting_skin: Reskins the selected Mastodon flavour
     labels:
       defaults:
+        avatar_description: Profile picture description
+        header_description: Header picture description
         setting_default_content_type: Default format for toots
         setting_default_content_type_html: HTML
         setting_default_content_type_markdown: Markdown

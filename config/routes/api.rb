@@ -123,6 +123,7 @@ namespace :api, format: false do
         resources :domain_blocks, only: [:index]
         resources :bubble_domains, only: [:index]
         resource :privacy_policy, only: [:show]
+        resource :terms_of_service, only: [:show]
         resource :extended_description, only: [:show]
         resource :translation_languages, only: [:show]
         resource :languages, only: [:show]

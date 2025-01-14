@@ -16,7 +16,7 @@ RSpec.describe 'Manifest' do
       expect(response.parsed_body)
         .to include(
           id: '/home',
-          name: 'Mastodon Glitch Edition'
+          name: 'Chuckya'
         )
     end
   end

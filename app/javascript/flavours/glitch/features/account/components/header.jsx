@@ -339,12 +339,12 @@ class Header extends ImmutablePureComponent {
             {info}
           </div>
 
-          {!(suspended || hidden) && <img src={autoPlayGif ? account.get('header') : account.get('header_static')} alt='' className='parallax' />}
+          {!(suspended || hidden) && <img src={autoPlayGif ? account.get('header') : account.get('header_static')} alt={account.get('header_description')} title={account.get('header_description')} className='parallax' />}
         </div>
 
         <div className='account__header__bar'>
           <div className='account__header__tabs'>
-            <a className='avatar' href={account.get('avatar')} rel='noopener noreferrer' target='_blank' onClick={this.handleAvatarClick}>
+            <a className='avatar' href={account.get('avatar')} rel='noopener' target='_blank' onClick={this.handleAvatarClick}>
               <Avatar account={suspended || hidden ? undefined : account} size={90} />
             </a>
 

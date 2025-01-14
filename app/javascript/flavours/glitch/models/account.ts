@@ -8,12 +8,11 @@ import type {
   ApiAccountRoleJSON,
   ApiAccountJSON,
 } from 'flavours/glitch/api_types/accounts';
-import type { ApiCustomEmojiJSON } from 'flavours/glitch/api_types/custom_emoji';
 import emojify from 'flavours/glitch/features/emoji/emoji';
 import { unescapeHTML } from 'flavours/glitch/utils/html';
 
-import { CustomEmojiFactory } from './custom_emoji';
-import type { CustomEmoji } from './custom_emoji';
+import { CustomEmojiFactory, makeEmojiMap } from './custom_emoji';
+import type { CustomEmoji, EmojiMap } from './custom_emoji';
 
 // AccountField
 interface AccountFieldShape extends Required<ApiAccountFieldJSON> {
@@ -64,6 +63,7 @@ export const accountDefaultValues: AccountShape = {
   acct: '',
   avatar: '',
   avatar_static: '',
+  avatar_description: '',
   bot: false,
   created_at: '',
   discoverable: false,
@@ -75,6 +75,7 @@ export const accountDefaultValues: AccountShape = {
   group: false,
   header: '',
   header_static: '',
+  header_description: '',
   id: '',
   last_status_at: '',
   locked: false,
@@ -102,15 +103,6 @@ export const accountDefaultValues: AccountShape = {
 };
 
 const AccountFactory = ImmutableRecord<AccountShape>(accountDefaultValues);
-
-type EmojiMap = Record<string, ApiCustomEmojiJSON>;
-
-function makeEmojiMap(emojis: ApiCustomEmojiJSON[]) {
-  return emojis.reduce<EmojiMap>((obj, emoji) => {
-    obj[`:${emoji.shortcode}:`] = emoji;
-    return obj;
-  }, {});
-}
 
 function createAccountField(
   jsonField: ApiAccountFieldJSON,

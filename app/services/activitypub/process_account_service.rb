@@ -127,12 +127,14 @@ class ActivityPub::ProcessAccountService < BaseService
     begin
       @account.avatar_remote_url = image_url('icon') || '' unless skip_download?
       @account.avatar = nil if @account.avatar_remote_url.blank?
+      @account.avatar_description = image_description('icon') || '' if @account.avatar_remote_url.present?
     rescue Mastodon::UnexpectedResponseError, *Mastodon::HTTP_CONNECTION_ERRORS
       RedownloadAvatarWorker.perform_in(rand(30..600).seconds, @account.id)
     end
     begin
       @account.header_remote_url = image_url('image') || '' unless skip_download?
       @account.header = nil if @account.header_remote_url.blank?
+      @account.header_description = image_description('image') || '' if @account.header_remote_url.present?
     rescue Mastodon::UnexpectedResponseError, *Mastodon::HTTP_CONNECTION_ERRORS
       RedownloadHeaderWorker.perform_in(rand(30..600).seconds, @account.id)
     end
@@ -209,6 +211,15 @@ class ActivityPub::ProcessAccountService < BaseService
 
     value = first_of_value(value['url']) if value.is_a?(Hash) && value['type'] == 'Image'
     value = value['href'] if value.is_a?(Hash)
+    value if value.is_a?(String)
+  end
+
+  def image_description(key)
+    value = first_of_value(@json[key])
+
+    return if value.nil? || value.is_a?(String)
+
+    value = first_of_value(value['summary']) || first_of_value(value['name']) if value.is_a?(Hash) && value['type'] == 'Image'
     value if value.is_a?(String)
   end
 

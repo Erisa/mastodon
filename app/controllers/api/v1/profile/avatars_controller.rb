@@ -6,7 +6,7 @@ class Api::V1::Profile::AvatarsController < Api::BaseController
 
   def destroy
     @account = current_account
-    UpdateAccountService.new.call(@account, { avatar: nil }, raise_error: true)
+    UpdateAccountService.new.call(@account, { avatar: nil, avatar_description: '' }, raise_error: true)
     ActivityPub::UpdateDistributionWorker.perform_async(@account.id)
     render json: @account, serializer: REST::CredentialAccountSerializer
   end

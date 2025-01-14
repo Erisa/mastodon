@@ -186,6 +186,10 @@ export function Explore () {
   return import(/* webpackChunkName: "flavours/glitch/async/explore" */'../../explore');
 }
 
+export function Search () {
+  return import(/* webpackChunkName: "features/glitch/async/explore" */'../../search');
+}
+
 export function FilterModal () {
   return import(/*webpackChunkName: "flavours/glitch/async/filter_modal" */'../components/filter_modal');
 }
@@ -208,6 +212,10 @@ export function About () {
 
 export function PrivacyPolicy () {
   return import(/*webpackChunkName: "features/glitch/async/privacy_policy" */'../../privacy_policy');
+}
+
+export function TermsOfService () {
+  return import(/*webpackChunkName: "features/glitch/async/terms_of_service" */'../../terms_of_service');
 }
 
 export function NotificationRequests () {
