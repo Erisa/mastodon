@@ -4,6 +4,7 @@ import { PureComponent } from 'react';
 import { Helmet } from 'react-helmet';
 
 import Base from 'flavours/glitch/components/modal_root';
+import { AltTextModal } from 'flavours/glitch/features/alt_text_modal';
 import {
   MuteModal,
   BlockModal,
@@ -37,11 +38,11 @@ import {
   ConfirmClearNotificationsModal,
   ConfirmLogOutModal,
   ConfirmFollowToListModal,
+  ConfirmMissingAltTextModal,
 } from './confirmation_modals';
 import DeprecatedSettingsModal from './deprecated_settings_modal';
 import DoodleModal from './doodle_modal';
 import { FavouriteModal } from './favourite_modal';
-import FocalPointModal from './focal_point_modal';
 import GIFModal from './gif_modal';
 import ImageModal from './image_modal';
 import MediaModal from './media_modal';
@@ -66,6 +67,7 @@ export const MODAL_COMPONENTS = {
   'CONFIRM_CLEAR_NOTIFICATIONS': () => Promise.resolve({ default: ConfirmClearNotificationsModal }),
   'CONFIRM_LOG_OUT': () => Promise.resolve({ default: ConfirmLogOutModal }),
   'CONFIRM_FOLLOW_TO_LIST': () => Promise.resolve({ default: ConfirmFollowToListModal }),
+  'CONFIRM_MISSING_ALT_TEXT': () => Promise.resolve({ default: ConfirmMissingAltTextModal }),
   'MUTE': MuteModal,
   'BLOCK': BlockModal,
   'DOMAIN_BLOCK': DomainBlockModal,
@@ -74,7 +76,7 @@ export const MODAL_COMPONENTS = {
   'DEPRECATED_SETTINGS': () => Promise.resolve({ default: DeprecatedSettingsModal }),
   'ACTIONS': () => Promise.resolve({ default: ActionsModal }),
   'EMBED': EmbedModal,
-  'FOCAL_POINT': () => Promise.resolve({ default: FocalPointModal }),
+  'FOCAL_POINT': () => Promise.resolve({ default: AltTextModal }),
   'LIST_ADDER': ListAdder,
   'COMPARE_HISTORY': CompareHistoryModal,
   'FILTER': FilterModal,
@@ -148,8 +150,7 @@ export default class ModalRoot extends PureComponent {
           <>
             <BundleContainer fetchComponent={MODAL_COMPONENTS[type]} loading={this.renderLoading} error={this.renderError} renderDelay={200}>
               {(SpecificComponent) => {
-                const ref = typeof SpecificComponent !== 'function' ? this.setModalRef : undefined;
-                return <SpecificComponent {...props} onChangeBackgroundColor={this.setBackgroundColor} onClose={this.handleClose} ref={ref} />;
+                return <SpecificComponent {...props} onChangeBackgroundColor={this.setBackgroundColor} onClose={this.handleClose} ref={this.setModalRef} />;
               }}
             </BundleContainer>
 

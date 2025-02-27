@@ -20,7 +20,7 @@ class Settings::ProfilesController < Settings::BaseController
   private
 
   def account_params
-    params.require(:account).permit(:display_name, :note, :avatar, :avatar_description, :header, :header_description, :bot, fields_attributes: [:name, :value])
+    params.expect(account: [:display_name, :note, :avatar, :avatar_description, :header, :header_description, :bot, fields_attributes: [[:name, :value]]])
   end
 
   def set_account

@@ -352,7 +352,7 @@ pt-PT:
       not_permitted: Não estás autorizado a executar esta ação
       overwrite: Substituir
       shortcode: Código de atalho
-      shortcode_hint: Pelo menos 2 caracteres, apenas caracteres alfanuméricos e traços inferiores
+      shortcode_hint: Pelo menos 2 caracteres, apenas caracteres alfanuméricos e traços inferiores (_)
       title: Emojis personalizados
       uncategorized: Não categorizados
       unlist: Não listar
@@ -844,7 +844,7 @@ pt-PT:
       no_status_selected: Nenhum estado foi alterado porque nenhum foi selecionado
       open: Abrir publicação
       original_status: Publicação original
-      reblogs: Reblogues
+      reblogs: Impulsos
       replied_to_html: Respondeu a %{acct_link}
       status_changed: Publicação alterada
       status_title: Publicado por @%{name}
@@ -1209,6 +1209,7 @@ pt-PT:
     too_fast: Formulário enviado demasiado rapidamente, tenta novamente.
     use_security_key: Usar chave de segurança
     user_agreement_html: Eu li e concordo com os <a href="%{terms_of_service_path}" target="_blank">termos do serviço</a> e <a href="%{privacy_policy_path}" target="_blank">política de privacidade</a>
+    user_privacy_agreement_html: Eu li e concordo com a <a href="%{privacy_policy_path}" target="_blank">política de privacidade</a>
   author_attribution:
     example_title: Texto de exemplo
     hint_html: Estás a escrever notícias ou artigos de blogue fora do Mastodon? Controla a forma como és creditados quando estes são partilhados no Mastodon.
@@ -1826,8 +1827,8 @@ pt-PT:
       private_long: Mostrar só aos seguidores
       public: Público
       public_long: Todos podem ver
-      unlisted: Não inventariado
-      unlisted_long: Todos podem ver, mas não será inventariado nas cronologias públicas
+      unlisted: Não listado
+      unlisted_long: Todos podem ver, mas não aparecerá nas cronologias públicas
   statuses_cleanup:
     enabled: Eliminar publicações antigas automaticamente
     enabled_hint: Elimina automaticamente as tuas publicações assim que atingirem um certo limite de tempo, a não ser que correspondam a uma das seguintes exceções
@@ -1945,7 +1946,7 @@ pt-PT:
       appeal: Submeter uma contestação
       appeal_description: Se achas que isto é um erro, podes submeter uma contestação para a equipa de %{instance}.
       categories:
-        spam: Spam
+        spam: Publicidade indesejada / spam
         violation: O conteúdo infringe as seguintes diretrizes da comunidade
       explanation:
         delete_statuses: Algumas das tuas mensagens foram consideradas como violando uma ou mais diretrizes da comunidade e foram subsequentemente removidas pelos moderadores do %{instance}.

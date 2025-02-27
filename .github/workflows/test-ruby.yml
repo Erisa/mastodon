@@ -106,7 +106,7 @@ jobs:
       DB_HOST: localhost
       DB_USER: postgres
       DB_PASS: postgres
-      DISABLE_SIMPLECOV: ${{ matrix.ruby-version != '.ruby-version' }}
+      COVERAGE: ${{ matrix.ruby-version == '.ruby-version' }}
       RAILS_ENV: test
       ALLOW_NOPAM: true
       PAM_ENABLED: true
@@ -207,7 +207,7 @@ jobs:
       DB_HOST: localhost
       DB_USER: postgres
       DB_PASS: postgres
-      DISABLE_SIMPLECOV: ${{ matrix.ruby-version != '.ruby-version' }}
+      COVERAGE: ${{ matrix.ruby-version == '.ruby-version' }}
       RAILS_ENV: test
       ALLOW_NOPAM: true
       PAM_ENABLED: true
@@ -294,7 +294,6 @@ jobs:
       DB_HOST: localhost
       DB_USER: postgres
       DB_PASS: postgres
-      DISABLE_SIMPLECOV: true
       RAILS_ENV: test
       BUNDLE_WITH: test
       LOCAL_DOMAIN: localhost:3000
@@ -410,7 +409,6 @@ jobs:
       DB_HOST: localhost
       DB_USER: postgres
       DB_PASS: postgres
-      DISABLE_SIMPLECOV: true
       RAILS_ENV: test
       BUNDLE_WITH: test
       ES_ENABLED: true

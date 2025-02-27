@@ -131,6 +131,8 @@ class Account < ApplicationRecord
     validates :uri, absence: true
   end
 
+  validates :domain, exclusion: { in: [''] }
+
   normalizes :username, with: ->(username) { username.squish }
 
   scope :without_internal, -> { where(id: 1...) }
@@ -199,7 +201,7 @@ class Account < ApplicationRecord
   end
 
   def remote?
-    domain.present?
+    !domain.nil?
   end
 
   def moved?

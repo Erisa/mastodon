@@ -17,7 +17,7 @@ module Mastodon
     end
 
     def default_prerelease
-      'alpha.1'
+      'alpha.2'
     end
 
     def prerelease
@@ -45,22 +45,22 @@ module Mastodon
 
     def api_versions
       {
-        mastodon: 2,
+        mastodon: 3,
         chuckya: 1,
       }
     end
 
     def repository
-      ENV.fetch('GITHUB_REPOSITORY', 'TheEssem/mastodon')
+      source_configuration[:repository]
     end
 
     def source_base_url
-      ENV.fetch('SOURCE_BASE_URL', "https://github.com/#{repository}")
+      source_configuration[:base_url] || "https://github.com/#{repository}"
     end
 
     # specify git tag or commit hash here
     def source_tag
-      ENV.fetch('SOURCE_TAG', nil)
+      source_configuration[:tag]
     end
 
     def source_url
@@ -80,7 +80,15 @@ module Mastodon
     end
 
     def version_configuration
-      Rails.configuration.x.mastodon.version
+      mastodon_configuration.version
+    end
+
+    def source_configuration
+      mastodon_configuration.source
+    end
+
+    def mastodon_configuration
+      Rails.configuration.x.mastodon
     end
   end
 end
