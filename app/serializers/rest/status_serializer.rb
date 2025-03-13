@@ -7,7 +7,7 @@ class REST::StatusSerializer < ActiveModel::Serializer
 
   attributes :id, :created_at, :in_reply_to_id, :in_reply_to_account_id,
              :sensitive, :spoiler_text, :visibility, :language,
-             :uri, :url, :replies_count, :reblogs_count,
+             :uri, :url, :replies_count, :reblogs_count, :media_attachments,
              :favourites_count, :reactions_count, :edited_at, :conversation_id
 
   attribute :favourited, if: :current_user?
@@ -26,7 +26,6 @@ class REST::StatusSerializer < ActiveModel::Serializer
   belongs_to :application, if: :show_application?
   belongs_to :account, serializer: REST::AccountSerializer
 
-  has_many :ordered_media_attachments, key: :media_attachments, serializer: REST::MediaAttachmentSerializer
   has_many :ordered_mentions, key: :mentions
   has_many :tags
   has_many :emojis, serializer: REST::CustomEmojiSerializer
@@ -169,6 +168,10 @@ class REST::StatusSerializer < ActiveModel::Serializer
     else
       object.reactions(current_user&.account&.id)
     end
+  end
+
+  def media_attachments
+    ActiveModel::SerializableResource.new(object.ordered_media_attachments, each_serializer: REST::MediaAttachmentSerializer, discord_hack: instance_options[:discord_hack])
   end
 
   private

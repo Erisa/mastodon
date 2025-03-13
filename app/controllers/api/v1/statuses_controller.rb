@@ -33,7 +33,7 @@ class Api::V1::StatusesController < Api::BaseController
   def show
     cache_if_unauthenticated!
     @status = preload_collection([@status], Status).first
-    render json: @status, serializer: REST::StatusSerializer
+    render json: @status, serializer: REST::StatusSerializer, discord_hack: request.user_agent.include?('Discordbot/2.0')
   end
 
   def context
@@ -58,6 +58,8 @@ class Api::V1::StatusesController < Api::BaseController
     statuses = [@status] + @context.ancestors + @context.descendants
 
     render json: @context, serializer: REST::ContextSerializer, relationships: StatusRelationshipsPresenter.new(statuses, current_user&.account_id)
+
+    ActivityPub::FetchAllRepliesWorker.perform_async(@status.id) if !current_account.nil? && @status.should_fetch_replies?
   end
 
   def create
