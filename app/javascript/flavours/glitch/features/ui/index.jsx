@@ -48,6 +48,7 @@ import {
   HomeTimeline,
   Followers,
   Following,
+  Reactions,
   Reblogs,
   Favourites,
   DirectTimeline,
@@ -214,7 +215,7 @@ class SwitchingColumnsArea extends PureComponent {
             <WrappedRoute path='/keyboard-shortcuts' component={KeyboardShortcuts} content={children} />
             <WrappedRoute path='/about' component={About} content={children} />
             <WrappedRoute path='/privacy-policy' component={PrivacyPolicy} content={children} />
-            <WrappedRoute path='/terms-of-service' component={TermsOfService} content={children} />
+            <WrappedRoute path='/terms-of-service/:date?' component={TermsOfService} content={children} />
 
             <WrappedRoute path={['/home', '/timelines/home']} component={HomeTimeline} content={children} />
             <Redirect from='/timelines/public' to='/public' exact />
@@ -252,6 +253,7 @@ class SwitchingColumnsArea extends PureComponent {
             <WrappedRoute path={['/accounts/:id/following', '/users/:acct/following', '/@:acct/following']} component={Following} content={children} />
             <WrappedRoute path={['/@:acct/media', '/accounts/:id/media']} component={AccountGallery} content={children} />
             <WrappedRoute path='/@:acct/:statusId' exact component={Status} content={children} />
+            <WrappedRoute path='/@:acct/:statusId/reactions' component={Reactions} content={children} />
             <WrappedRoute path='/@:acct/:statusId/reblogs' component={Reblogs} content={children} />
             <WrappedRoute path='/@:acct/:statusId/favourites' component={Favourites} content={children} />
 

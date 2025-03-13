@@ -562,11 +562,17 @@ body > [data-popper-placement] {
 }
 
 .autosuggest-account .account__avatar,
+.account__emoji,
 .autosuggest-emoji img {
   display: block;
   width: 24px;
   height: 24px;
   flex: 0 0 auto;
+
+  img {
+    height: 100%;
+    width: 100%;
+  }
 }
 
 .compose-form {
@@ -7195,6 +7201,8 @@ img.modal-warning {
   }
 
   &--layout-3 {
+    min-height: calc(64px * 2 + 8px);
+
     & > .media-gallery__item:nth-child(1) {
       border-end-end-radius: 0;
       border-start-end-radius: 0;
@@ -7214,6 +7222,8 @@ img.modal-warning {
   }
 
   &--layout-4 {
+    min-height: calc(64px * 2 + 8px);
+
     & > .media-gallery__item:nth-child(1) {
       border-end-end-radius: 0;
       border-start-end-radius: 0;
@@ -7819,7 +7829,8 @@ img.modal-warning {
     border-radius: 0;
   }
 
-  .load-more {
+  .load-more,
+  .timeline-hint {
     grid-column: span 3;
   }
 }

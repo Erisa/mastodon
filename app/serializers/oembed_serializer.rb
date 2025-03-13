@@ -53,7 +53,7 @@ class OEmbedSerializer < ActiveModel::Serializer
   end
 
   def author_name
-    (attachment_types(object)[:video]).positive? ? status_description(object) : (object.account.display_name.presence || object.account.username)
+    attachment_types(object)[:video].positive? ? status_description(object) : (object.account.display_name.presence || object.account.username)
   end
 
   def author_url

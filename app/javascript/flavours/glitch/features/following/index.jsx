@@ -10,9 +10,10 @@ import { debounce } from 'lodash';
 
 import { Account } from 'flavours/glitch/components/account';
 import { TimelineHint } from 'flavours/glitch/components/timeline_hint';
+import { AccountHeader } from 'flavours/glitch/features/account_timeline/components/account_header';
 import BundleColumnError from 'flavours/glitch/features/ui/components/bundle_column_error';
 import { normalizeForLookup } from 'flavours/glitch/reducers/accounts_map';
-import { getAccountHidden } from 'flavours/glitch/selectors';
+import { getAccountHidden } from 'flavours/glitch/selectors/accounts';
 import { useAppSelector } from 'flavours/glitch/store';
 
 import {
@@ -25,7 +26,6 @@ import { LoadingIndicator } from '../../components/loading_indicator';
 import ScrollableList from '../../components/scrollable_list';
 import ProfileColumnHeader from '../account/components/profile_column_header';
 import { LimitedAccountHint } from '../account_timeline/components/limited_account_hint';
-import HeaderContainer from '../account_timeline/containers/header_container';
 import Column from '../ui/components/column';
 
 const mapStateToProps = (state, { params: { acct, id } }) => {
@@ -48,6 +48,7 @@ const mapStateToProps = (state, { params: { acct, id } }) => {
     suspended: state.getIn(['accounts', accountId, 'suspended'], false),
     hideCollections: state.getIn(['accounts', accountId, 'hide_collections'], false),
     hidden: getAccountHidden(state, accountId),
+    instanceHideReason: state.getIn(['accounts', accountId, 'remote_limit_reason']),
   };
 };
 
@@ -84,6 +85,7 @@ class Following extends ImmutablePureComponent {
     isAccount: PropTypes.bool,
     suspended: PropTypes.bool,
     hidden: PropTypes.bool,
+    instanceHideReason: PropTypes.string,
     remote: PropTypes.bool,
     remoteUrl: PropTypes.string,
     multiColumn: PropTypes.bool,
@@ -129,7 +131,7 @@ class Following extends ImmutablePureComponent {
   };
 
   render () {
-    const { accountId, accountIds, hasMore, isAccount, multiColumn, isLoading, suspended, hidden, remote, remoteUrl, hideCollections } = this.props;
+    const { accountId, accountIds, hasMore, isAccount, multiColumn, isLoading, suspended, hidden, remote, remoteUrl, hideCollections, instanceHideReason } = this.props;
 
     if (!isAccount) {
       return (
@@ -152,7 +154,7 @@ class Following extends ImmutablePureComponent {
     if (suspended) {
       emptyMessage = <FormattedMessage id='empty_column.account_suspended' defaultMessage='Account suspended' />;
     } else if (hidden) {
-      emptyMessage = <LimitedAccountHint accountId={accountId} />;
+      emptyMessage = <LimitedAccountHint accountId={accountId} reason={instanceHideReason} />;
     } else if (hideCollections && accountIds.isEmpty()) {
       emptyMessage = <FormattedMessage id='empty_column.account_hides_collections' defaultMessage='This user has chosen to not make this information available' />;
     } else if (remote && accountIds.isEmpty()) {
@@ -172,7 +174,7 @@ class Following extends ImmutablePureComponent {
           hasMore={!forceEmptyState && hasMore}
           isLoading={isLoading}
           onLoadMore={this.handleLoadMore}
-          prepend={<HeaderContainer accountId={this.props.accountId} hideTabs />}
+          prepend={<AccountHeader accountId={this.props.accountId} hideTabs />}
           alwaysPrepend
           append={remoteMessage}
           emptyMessage={emptyMessage}
