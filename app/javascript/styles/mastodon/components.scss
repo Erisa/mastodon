@@ -6902,6 +6902,10 @@ a.status-card {
       filter: var(--overlay-icon-shadow);
     }
   }
+
+  &--error img {
+    visibility: hidden;
+  }
 }
 
 .media-gallery__item-thumbnail {
@@ -9288,6 +9292,7 @@ noscript {
   border: 1px solid $highlight-text-color;
   background: rgba($highlight-text-color, 0.15);
   overflow: hidden;
+  flex-shrink: 0;
 
   &__background-image {
     width: 125%;

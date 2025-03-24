@@ -19,7 +19,10 @@ class REST::MediaAttachmentSerializer < ActiveModel::Serializer
     elsif object.needs_redownload?
       media_proxy_url(object.id, :original)
     elsif instance_options[:discord_hack]
-      redirect_asset_url(full_asset_url(object.file.url(:original)))
+      source = full_asset_url(object.file.url(:original))
+      Request.new(:head, source, follow: false).perform do |res|
+        res.code == 301 ? res.headers['location'] : source
+      end
     else
       full_asset_url(object.file.url(:original))
     end

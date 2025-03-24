@@ -14,6 +14,7 @@ gem 'haml-rails', '~>2.0'
 gem 'pg', '~> 1.5'
 gem 'pghero'
 
+gem 'aws-sdk-core', '< 3.216.0', require: false # TODO: https://github.com/mastodon/mastodon/pull/34173#issuecomment-2733378873
 gem 'aws-sdk-s3', '~> 1.123', require: false
 gem 'blurhash', '~> 0.1'
 gem 'fog-core', '<= 2.6.0'
@@ -84,6 +85,7 @@ gem 'scenic', '~> 1.7'
 gem 'sidekiq', '~> 6.5'
 gem 'sidekiq-bulk', '~> 0.2.0'
 gem 'sidekiq-scheduler', '~> 5.0'
+gem 'sidekiq-undertaker', '~> 1.6'
 gem 'sidekiq-unique-jobs', '~> 7.1'
 gem 'simple_form', '~> 5.2'
 gem 'simple-navigation', '~> 4.4'

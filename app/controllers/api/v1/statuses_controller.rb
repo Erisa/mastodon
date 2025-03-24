@@ -33,7 +33,7 @@ class Api::V1::StatusesController < Api::BaseController
   def show
     cache_if_unauthenticated!
     @status = preload_collection([@status], Status).first
-    render json: @status, serializer: REST::StatusSerializer, discord_hack: request.user_agent.include?('Discordbot/2.0')
+    render json: @status, serializer: REST::StatusSerializer, discord_hack: request.user_agent && request.user_agent.include?('Discordbot/2.0')
   end
 
   def context

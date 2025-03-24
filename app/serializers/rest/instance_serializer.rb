@@ -102,6 +102,10 @@ class REST::InstanceSerializer < ActiveModel::Serializer
         enabled: TranslationService.configured?,
       },
 
+      gif_search: {
+        enabled: GifService.configured?,
+      },
+
       reactions: {
         max_reactions: StatusReactionValidator::LIMIT,
       },
@@ -113,6 +117,7 @@ class REST::InstanceSerializer < ActiveModel::Serializer
       enabled: registrations_enabled?,
       approval_required: Setting.registrations_mode == 'approved',
       message: registrations_enabled? ? nil : registrations_message,
+      min_age: Setting.min_age.presence,
       url: ENV.fetch('SSO_ACCOUNT_SIGN_UP', nil),
     }
   end

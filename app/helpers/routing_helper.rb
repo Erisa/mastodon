@@ -14,12 +14,6 @@ module RoutingHelper
     end
   end
 
-  def redirect_asset_url(source)
-    Request.new(:head, source, follow: false).perform do |res|
-      res.code == 301 ? res.headers['location'] : source
-    end
-  end
-
   def full_asset_url(source, **)
     source = ActionController::Base.helpers.asset_url(source, **) unless use_storage?
 

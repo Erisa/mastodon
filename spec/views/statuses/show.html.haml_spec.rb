@@ -43,7 +43,6 @@ RSpec.describe 'statuses/show.html.haml' do
       def site_title = 'example site'
       def site_hostname = 'example.com'
       def full_asset_url(_) = '//asset.host/image.svg'
-      def redirect_asset_url(source) = full_asset_url(source)
       def current_account = nil
       def current_flavour = 'glitch'
       def single_user_mode? = false
