@@ -13,7 +13,6 @@
   "account.blocked": "முடக்கப்பட்டது",
   "account.cancel_follow_request": "Withdraw follow request",
   "account.disable_notifications": "@{name} பதிவிட்டல் எனக்கு தெரியபடுத்த வேண்டாம்",
-  "account.domain_blocked": "மறைக்கப்பட்டத் தளங்கள்",
   "account.edit_profile": "சுயவிவரத்தை மாற்று",
   "account.enable_notifications": "@{name} பதிவிட்டல் எனக்குத் தெரியப்படுத்தவும்",
   "account.endorse": "சுயவிவரத்தில் வெளிப்படுத்து",
@@ -367,8 +366,6 @@
   "video.expand": "வீடியோவை விரிவாக்கு",
   "video.fullscreen": "முழுத்திரை",
   "video.hide": "வீடியோவை மறை",
-  "video.mute": "ஒலி முடக்கவும்",
   "video.pause": "இடைநிறுத்து",
-  "video.play": "விளையாடு",
-  "video.unmute": "ஒலி மெளனமாக இல்லை"
+  "video.play": "விளையாடு"
 }

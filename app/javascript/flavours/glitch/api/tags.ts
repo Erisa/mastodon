@@ -1,4 +1,8 @@
-import { apiRequestPost, apiRequestGet } from 'flavours/glitch/api';
+import api, {
+  getLinks,
+  apiRequestPost,
+  apiRequestGet,
+} from 'flavours/glitch/api';
 import type { ApiHashtagJSON } from 'flavours/glitch/api_types/tags';
 
 export const apiGetTag = (tagId: string) =>
@@ -9,3 +13,15 @@ export const apiFollowTag = (tagId: string) =>
 
 export const apiUnfollowTag = (tagId: string) =>
   apiRequestPost<ApiHashtagJSON>(`v1/tags/${tagId}/unfollow`);
+
+export const apiGetFollowedTags = async (url?: string) => {
+  const response = await api().request<ApiHashtagJSON[]>({
+    method: 'GET',
+    url: url ?? '/api/v1/followed_tags',
+  });
+
+  return {
+    tags: response.data,
+    links: getLinks(response),
+  };
+};

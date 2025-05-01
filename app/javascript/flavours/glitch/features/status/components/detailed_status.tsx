@@ -4,9 +4,9 @@
                   @typescript-eslint/no-unsafe-assignment */
 
 import type { CSSProperties } from 'react';
-import React, { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback } from 'react';
 
-import { FormattedDate, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
@@ -14,7 +14,9 @@ import { Link } from 'react-router-dom';
 import { AnimatedNumber } from 'flavours/glitch/components/animated_number';
 import AttachmentList from 'flavours/glitch/components/attachment_list';
 import { ContentWarning } from 'flavours/glitch/components/content_warning';
-import EditedTimestamp from 'flavours/glitch/components/edited_timestamp';
+import { EditedTimestamp } from 'flavours/glitch/components/edited_timestamp';
+import { FilterWarning } from 'flavours/glitch/components/filter_warning';
+import { FormattedDateWrapper } from 'flavours/glitch/components/formatted_date';
 import type { StatusLike } from 'flavours/glitch/components/hashtag_bar';
 import { getHashtagBarForStatus } from 'flavours/glitch/components/hashtag_bar';
 import { IconLogo } from 'flavours/glitch/components/logo';
@@ -22,6 +24,7 @@ import { MentionsPlaceholder } from 'flavours/glitch/components/mentions_placeho
 import { Permalink } from 'flavours/glitch/components/permalink';
 import PictureInPicturePlaceholder from 'flavours/glitch/components/picture_in_picture_placeholder';
 import { VisibilityIcon } from 'flavours/glitch/components/visibility_icon';
+import { Video } from 'flavours/glitch/features/video';
 import { useIdentity } from 'flavours/glitch/identity_context';
 import { useAppSelector } from 'flavours/glitch/store';
 
@@ -33,7 +36,6 @@ import { StatusReactions } from '../../../components/status_reactions';
 import { visibleReactions } from '../../../initial_state';
 import Audio from '../../audio';
 import scheduleIdleTask from '../../ui/util/schedule_idle_task';
-import Video from '../../video';
 
 import Card from './card';
 
@@ -41,7 +43,6 @@ interface VideoModalOptions {
   startTime: number;
   autoPlay?: boolean;
   defaultVolume: number;
-  componentIndex: number;
 }
 
 export const DetailedStatus: React.FC<{
@@ -81,6 +82,7 @@ export const DetailedStatus: React.FC<{
 }) => {
   const properStatus = status?.get('reblog') ?? status;
   const [height, setHeight] = useState(0);
+  const [showDespiteFilter, setShowDespiteFilter] = useState(false);
   const nodeRef = useRef<HTMLDivElement>();
   const { signedIn } = useIdentity();
 
@@ -109,6 +111,10 @@ export const DetailedStatus: React.FC<{
     },
     [onOpenVideo, status],
   );
+
+  const handleFilterToggle = useCallback(() => {
+    setShowDespiteFilter(!showDespiteFilter);
+  }, [showDespiteFilter, setShowDespiteFilter]);
 
   const handleExpandedToggle = useCallback(() => {
     if (onToggleHidden) onToggleHidden(status);
@@ -192,6 +198,7 @@ export const DetailedStatus: React.FC<{
           onOpenMedia={onOpenMedia}
           visible={showMedia}
           onToggleVisibility={onToggleMediaVisibility}
+          matchedFilters={status.get('matched_media_filters')}
         />
       );
       mediaIcons.push('picture-o');
@@ -219,6 +226,7 @@ export const DetailedStatus: React.FC<{
           blurhash={attachment.get('blurhash')}
           height={150}
           onToggleVisibility={onToggleMediaVisibility}
+          matchedFilters={status.get('matched_media_filters')}
         />
       );
       mediaIcons.push('music');
@@ -237,16 +245,13 @@ export const DetailedStatus: React.FC<{
           src={attachment.get('url')}
           alt={description}
           lang={language}
-          inline
-          width={300}
-          height={150}
           onOpenVideo={handleOpenVideo}
           sensitive={status.get('sensitive')}
           visible={showMedia}
           onToggleVisibility={onToggleMediaVisibility}
+          matchedFilters={status.get('matched_media_filters')}
           letterbox={letterboxMedia}
           fullwidth={fullwidthMedia}
-          preventPlayback={!expanded}
         />
       );
       mediaIcons.push('video-camera');
@@ -344,7 +349,11 @@ export const DetailedStatus: React.FC<{
     status as StatusLike,
   );
 
-  expanded ||= status.get('spoiler_text').length === 0;
+  const matchedFilters = status.get('matched_filters');
+
+  expanded =
+    (!matchedFilters || showDespiteFilter) &&
+    (expanded || status.get('spoiler_text').length === 0);
 
   return (
     <div style={outerStyle}>
@@ -378,16 +387,25 @@ export const DetailedStatus: React.FC<{
           )}
         </Permalink>
 
-        {status.get('spoiler_text').length > 0 && (
-          <ContentWarning
-            text={
-              status.getIn(['translation', 'spoilerHtml']) ||
-              status.get('spoilerHtml')
-            }
-            expanded={expanded}
-            onClick={handleExpandedToggle}
+        {matchedFilters && (
+          <FilterWarning
+            title={matchedFilters.join(', ')}
+            expanded={showDespiteFilter}
+            onClick={handleFilterToggle}
           />
         )}
+
+        {status.get('spoiler_text').length > 0 &&
+          (!matchedFilters || showDespiteFilter) && (
+            <ContentWarning
+              text={
+                status.getIn(['translation', 'spoilerHtml']) ||
+                status.get('spoilerHtml')
+              }
+              expanded={expanded}
+              onClick={handleExpandedToggle}
+            />
+          )}
 
         {expanded && (
           <>
@@ -425,7 +443,7 @@ export const DetailedStatus: React.FC<{
               target='_blank'
               rel='noopener noreferrer'
             >
-              <FormattedDate
+              <FormattedDateWrapper
                 value={new Date(status.get('created_at') as string)}
                 year='numeric'
                 month='short'

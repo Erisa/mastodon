@@ -5,7 +5,6 @@
   "account.block_domain": "{domain} నుంచి అన్నీ దాచిపెట్టు",
   "account.blocked": "బ్లాక్ అయినవి",
   "account.cancel_follow_request": "Withdraw follow request",
-  "account.domain_blocked": "డొమైన్ దాచిపెట్టబడినది",
   "account.edit_profile": "ప్రొఫైల్ని సవరించండి",
   "account.endorse": "ప్రొఫైల్లో చూపించు",
   "account.follow": "అనుసరించు",
@@ -257,8 +256,6 @@
   "video.expand": "వీడియోను విస్తరించండి",
   "video.fullscreen": "పూర్తి స్క్రీన్",
   "video.hide": "వీడియోను దాచు",
-  "video.mute": "ధ్వనిని మ్యూట్ చేయి",
   "video.pause": "పాజ్ చేయి",
-  "video.play": "ప్లే చేయి",
-  "video.unmute": "ధ్వనిని అన్మ్యూట్ చేయి"
+  "video.play": "ప్లే చేయి"
 }

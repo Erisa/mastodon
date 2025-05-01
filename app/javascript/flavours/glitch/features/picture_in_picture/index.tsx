@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 import { removePictureInPicture } from 'flavours/glitch/actions/picture_in_picture';
 import Audio from 'flavours/glitch/features/audio';
-import Video from 'flavours/glitch/features/video';
+import { Video } from 'flavours/glitch/features/video';
 import {
   useAppDispatch,
   useAppSelector,
@@ -46,6 +46,10 @@ export const PictureInPicture: React.FC = () => {
     accentColor,
   } = pipState;
 
+  if (!src) {
+    return null;
+  }
+
   let player;
 
   switch (type) {
@@ -53,11 +57,10 @@ export const PictureInPicture: React.FC = () => {
       player = (
         <Video
           src={src}
-          currentTime={currentTime}
-          volume={volume}
-          muted={muted}
-          autoPlay
-          inline
+          startTime={currentTime}
+          startVolume={volume}
+          startMuted={muted}
+          startPlaying
           alwaysVisible
         />
       );

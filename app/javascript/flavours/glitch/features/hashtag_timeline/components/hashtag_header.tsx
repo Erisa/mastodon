@@ -12,8 +12,8 @@ import {
 } from 'flavours/glitch/actions/tags_typed';
 import type { ApiHashtagJSON } from 'flavours/glitch/api_types/tags';
 import { Button } from 'flavours/glitch/components/button';
+import { Dropdown } from 'flavours/glitch/components/dropdown_menu';
 import { ShortNumber } from 'flavours/glitch/components/short_number';
-import DropdownMenu from 'flavours/glitch/containers/dropdown_menu_container';
 import { useIdentity } from 'flavours/glitch/identity_context';
 import { PERMISSION_MANAGE_TAXONOMIES } from 'flavours/glitch/permissions';
 import { useAppDispatch } from 'flavours/glitch/store';
@@ -153,13 +153,11 @@ export const HashtagHeader: React.FC<{
 
         <div className='hashtag-header__header__buttons'>
           {menu.length > 0 && (
-            <DropdownMenu
+            <Dropdown
               disabled={menu.length === 0}
               items={menu}
               icon='ellipsis-v'
               iconComponent={MoreHorizIcon}
-              size={24}
-              direction='right'
             />
           )}
 

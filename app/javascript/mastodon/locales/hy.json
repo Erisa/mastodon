@@ -17,7 +17,6 @@
   "account.cancel_follow_request": "Withdraw follow request",
   "account.direct": "Մասնաւոր յիշատակում @{name}",
   "account.disable_notifications": "Ծանուցումները անջատել @{name} գրառումների համար",
-  "account.domain_blocked": "Տիրոյթը արգելափակուած է",
   "account.edit_profile": "Խմբագրել հաշիւը",
   "account.enable_notifications": "Ծանուցել ինձ @{name} գրառումների մասին",
   "account.endorse": "Ցուցադրել անձնական էջում",
@@ -473,8 +472,6 @@
   "video.expand": "Ընդարձակել տեսագրութիւնը",
   "video.fullscreen": "Լիաէկրան",
   "video.hide": "Թաքցնել տեսագրութիւնը",
-  "video.mute": "Լռեցնել ձայնը",
   "video.pause": "Դադար տալ",
-  "video.play": "Նուագել",
-  "video.unmute": "Միացնել ձայնը"
+  "video.play": "Նուագել"
 }

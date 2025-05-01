@@ -18,7 +18,6 @@
   "account.blocked": "Geblokkeer",
   "account.cancel_follow_request": "Herroep volgversoek",
   "account.disable_notifications": "Hou op om my van @{name} se plasings te laat weet",
-  "account.domain_blocked": "Domein geblokkeer",
   "account.edit_profile": "Redigeer profiel",
   "account.enable_notifications": "Laat weet my wanneer @{name} iets plaas",
   "account.endorse": "Toon op profiel",
@@ -278,7 +277,5 @@
   "tabs_bar.notifications": "Kennisgewings",
   "trends.counter_by_accounts": "{count, plural, one {{counter} person} other {{counter} people}} in the past {days, plural, one {day} other {# days}}",
   "upload_progress.label": "Uploading…",
-  "video.fullscreen": "Volskerm",
-  "video.mute": "Klank afskakel",
-  "video.unmute": "Klank aanskakel"
+  "video.fullscreen": "Volskerm"
 }

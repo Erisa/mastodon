@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 import { getAverageFromBlurhash } from 'flavours/glitch/blurhash';
 import Footer from 'flavours/glitch/features/picture_in_picture/components/footer';
-import Video from 'flavours/glitch/features/video';
+import { Video } from 'flavours/glitch/features/video';
 
 const mapStateToProps = (state, { statusId }) => ({
   status: state.getIn(['statuses', statusId]),
@@ -55,9 +55,9 @@ class VideoModal extends ImmutablePureComponent {
             frameRate={media.getIn(['meta', 'original', 'frame_rate'])}
             blurhash={media.get('blurhash')}
             src={media.get('url')}
-            currentTime={options.startTime}
-            autoPlay={options.autoPlay}
-            volume={options.defaultVolume}
+            startTime={options.startTime}
+            startPlaying={options.autoPlay}
+            startVolume={options.defaultVolume}
             onCloseVideo={onClose}
             autoFocus
             detailed

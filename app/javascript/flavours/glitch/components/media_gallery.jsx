@@ -12,6 +12,7 @@ import { debounce } from 'lodash';
 
 import { AltTextBadge } from 'flavours/glitch/components/alt_text_badge';
 import { Blurhash } from 'flavours/glitch/components/blurhash';
+import { SpoilerButton } from 'flavours/glitch/components/spoiler_button';
 import { formatTime } from 'flavours/glitch/features/video';
 
 import { autoPlayGif, displayMedia, useBlurhash } from '../initial_state';
@@ -242,6 +243,7 @@ class MediaGallery extends PureComponent {
     visible: PropTypes.bool,
     autoplay: PropTypes.bool,
     onToggleVisibility: PropTypes.func,
+    matchedFilters: PropTypes.arrayOf(PropTypes.string),
   };
 
   static defaultProps = {
@@ -325,14 +327,14 @@ class MediaGallery extends PureComponent {
   }
 
   render () {
-    const { media, lang, sensitive, letterbox, fullwidth, defaultWidth, autoplay } = this.props;
+    const { media, lang, sensitive, letterbox, fullwidth, defaultWidth, autoplay, matchedFilters } = this.props;
     const { visible } = this.state;
     const size     = media.size;
     const uncached = media.every(attachment => attachment.get('type') === 'unknown');
 
     const width = this.state.width || defaultWidth;
 
-    let children, spoilerButton;
+    let children;
 
     const style = {};
 
@@ -355,35 +357,11 @@ class MediaGallery extends PureComponent {
       children = media.map((attachment, i) => <Item key={attachment.get('id')} autoplay={autoplay} onClick={this.handleClick} attachment={attachment} index={i} lang={lang} size={size} letterbox={letterbox} displayWidth={width} visible={visible || uncached} />);
     }
 
-    if (uncached) {
-      spoilerButton = (
-        <button type='button' disabled className='spoiler-button__overlay'>
-          <span className='spoiler-button__overlay__label'>
-            <FormattedMessage id='status.uncached_media_warning' defaultMessage='Preview not available' />
-            <span className='spoiler-button__overlay__action'><FormattedMessage id='status.media.open' defaultMessage='Click to open' /></span>
-          </span>
-        </button>
-      );
-    } else if (!visible) {
-      spoilerButton = (
-        <button type='button' onClick={this.handleOpen} className='spoiler-button__overlay'>
-          <span className='spoiler-button__overlay__label'>
-            {sensitive ? <FormattedMessage id='status.sensitive_warning' defaultMessage='Sensitive content' /> : <FormattedMessage id='status.media_hidden' defaultMessage='Media hidden' />}
-            <span className='spoiler-button__overlay__action'><FormattedMessage id='status.media.show' defaultMessage='Click to show' /></span>
-          </span>
-        </button>
-      );
-    }
-
     return (
       <div className={computedClass} style={style} ref={this.handleRef}>
         {children}
 
-        {(!visible || uncached) && (
-          <div className={classNames('spoiler-button', { 'spoiler-button--click-thru': uncached })}>
-            {spoilerButton}
-          </div>
-        )}
+        {(!visible || uncached) && <SpoilerButton uncached={uncached} sensitive={sensitive} onClick={this.handleOpen} matchedFilters={matchedFilters} />}
 
         {(visible && !uncached) && (
           <div className='media-gallery__actions'>
