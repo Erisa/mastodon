@@ -1,7 +1,6 @@
 import { createPollFromServerJSON } from 'flavours/glitch/models/poll';
 
-import { importAccounts } from '../accounts_typed';
-
+import { importAccounts } from './accounts';
 import { normalizeStatus } from './normalizer';
 import { importPolls } from './polls';
 

@@ -59,6 +59,8 @@ class ActivityPub::Activity
         ActivityPub::Activity::Remove
       when 'Move'
         ActivityPub::Activity::Move
+      when 'QuoteRequest'
+        ActivityPub::Activity::QuoteRequest
       end
     end
   end

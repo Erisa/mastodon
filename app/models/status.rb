@@ -30,6 +30,7 @@
 #  trendable                    :boolean
 #  ordered_media_attachment_ids :bigint(8)        is an Array
 #  fetched_replies_at           :datetime
+#  quote_approval_policy        :integer          default(0), not null
 #
 
 class Status < ApplicationRecord
@@ -46,6 +47,13 @@ class Status < ApplicationRecord
 
   MEDIA_ATTACHMENTS_LIMIT = (ENV['MAX_MEDIA_ATTACHMENTS'] || 4).to_i
   REMOTE_MEDIA_ATTACHMENTS_LIMIT = (ENV['MAX_REMOTE_MEDIA_ATTACHMENTS'] || 16).to_i
+
+  QUOTE_APPROVAL_POLICY_FLAGS = {
+    unknown: (1 << 0),
+    public: (1 << 1),
+    followers: (1 << 2),
+    followed: (1 << 3),
+  }.freeze
 
   rate_limit by: :account, family: :statuses
 
