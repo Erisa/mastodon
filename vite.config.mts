@@ -4,7 +4,6 @@ import { readdir } from 'node:fs/promises';
 import { optimizeLodashImports } from '@optimize-lodash/rollup-plugin';
 import legacy from '@vitejs/plugin-legacy';
 import react from '@vitejs/plugin-react';
-import glob from 'fast-glob';
 import postcssPresetEnv from 'postcss-preset-env';
 import Compress from 'rollup-plugin-gzip';
 import { visualizer } from 'rollup-plugin-visualizer';
@@ -22,8 +21,9 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 
 import { MastodonServiceWorkerLocales } from './config/vite/plugin-sw-locales';
 import { MastodonEmojiCompressed } from './config/vite/plugin-emoji-compressed';
-import { GlitchThemes } from './config/vite/plugin-glitch-themes';
+import { GlitchThemes as MastodonThemes } from './config/vite/plugin-glitch-themes';
 import { MastodonNameLookup } from './config/vite/plugin-name-lookup';
+import { MastodonAssetsManifest } from './config/vite/plugin-assets-manifest';
 
 const jsRoot = path.resolve(__dirname, 'app/javascript');
 
@@ -119,7 +119,8 @@ export const config: UserConfigFnPromise = async ({ mode, command }) => {
           plugins: ['formatjs', 'transform-react-remove-prop-types'],
         },
       }),
-      GlitchThemes(),
+      MastodonThemes(),
+      MastodonAssetsManifest(),
       viteStaticCopy({
         targets: [
           {
@@ -144,7 +145,7 @@ export const config: UserConfigFnPromise = async ({ mode, command }) => {
       isProdBuild && (Compress() as PluginOption),
       command === 'build' &&
         manifestSRI({
-          manifestPaths: ['.vite/manifest.json', '.vite/manifest-assets.json'],
+          manifestPaths: ['.vite/manifest.json'],
         }),
       VitePWA({
         srcDir: path.resolve(jsRoot, 'mastodon/service_worker'),
@@ -209,21 +210,6 @@ async function findEntrypoints() {
         file.name,
       );
     }
-  }
-
-  // Lastly other assets
-  const assetEntrypoints = await glob('{fonts,icons,images}/**/*', {
-    cwd: jsRoot,
-    absolute: true,
-  });
-  const excludeExts = ['', '.md'];
-  for (const file of assetEntrypoints) {
-    const ext = path.extname(file);
-    if (excludeExts.includes(ext)) {
-      continue;
-    }
-    const name = path.basename(file);
-    entrypoints[name] = path.resolve(jsRoot, file);
   }
 
   return entrypoints;

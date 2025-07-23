@@ -1,9 +1,8 @@
 import { useMemo } from 'react';
 
-import { HotKeys } from 'react-hotkeys';
-
 import { navigateToProfile } from 'flavours/glitch/actions/accounts';
 import { mentionComposeById } from 'flavours/glitch/actions/compose';
+import { Hotkeys } from 'flavours/glitch/components/hotkeys';
 import type { NotificationGroup as NotificationGroupModel } from 'flavours/glitch/models/notification_group';
 import { useAppSelector, useAppDispatch } from 'flavours/glitch/store';
 
@@ -165,5 +164,5 @@ export const NotificationGroup: React.FC<{
       return null;
   }
 
-  return <HotKeys handlers={handlers}>{content}</HotKeys>;
+  return <Hotkeys handlers={handlers}>{content}</Hotkeys>;
 };
