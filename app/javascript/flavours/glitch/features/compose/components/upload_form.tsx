@@ -120,6 +120,10 @@ export const UploadForm: React.FC = () => {
     [dispatch, setActiveId],
   );
 
+  const handleDragCancel = useCallback(() => {
+    setActiveId(null);
+  }, [setActiveId]);
+
   const accessibility: {
     screenReaderInstructions: ScreenReaderInstructions;
     announcements: Announcements;
@@ -172,32 +176,44 @@ export const UploadForm: React.FC = () => {
           className={`compose-form__uploads media-gallery media-gallery--layout-${mediaIds.size}`}
           style={style}
         >
-          <DndContext
-            sensors={sensors}
-            collisionDetection={closestCenter}
-            onDragStart={handleDragStart}
-            onDragEnd={handleDragEnd}
-            accessibility={accessibility}
-          >
-            <SortableContext
-              items={mediaIds.toArray()}
-              strategy={rectSortingStrategy}
+          {mediaIds.size === 1 ? (
+            <Upload
+              id={mediaIds.first()}
+              dragging={false}
+              draggable={false}
+              size={mediaIds.size}
+              index={0}
+            />
+          ) : (
+            <DndContext
+              sensors={sensors}
+              collisionDetection={closestCenter}
+              onDragStart={handleDragStart}
+              onDragEnd={handleDragEnd}
+              onDragCancel={handleDragCancel}
+              onDragAbort={handleDragCancel}
+              accessibility={accessibility}
             >
-              {mediaIds.map((id, idx) => (
-                <Upload
-                  key={id}
-                  id={id}
-                  dragging={id === activeId}
-                  size={mediaIds.size}
-                  index={idx}
-                />
-              ))}
-            </SortableContext>
+              <SortableContext
+                items={mediaIds.toArray()}
+                strategy={rectSortingStrategy}
+              >
+                {mediaIds.map((id, idx) => (
+                  <Upload
+                    key={id}
+                    id={id}
+                    dragging={id === activeId}
+                    size={mediaIds.size}
+                    index={idx}
+                  />
+                ))}
+              </SortableContext>
 
-            <DragOverlay>
-              {activeId ? <Upload id={activeId as string} overlay /> : null}
-            </DragOverlay>
-          </DndContext>
+              <DragOverlay>
+                {activeId ? <Upload id={activeId as string} overlay /> : null}
+              </DragOverlay>
+            </DndContext>
+          )}
         </div>
       )}
 

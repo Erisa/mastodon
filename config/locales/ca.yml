@@ -578,6 +578,12 @@ ca:
         all: Totes
         limited: Limitades
         title: Moderació
+      moderation_notes:
+        create: Afegeix una nota de moderació
+        created_msg: S'ha creat la nota de moderació d'instància.
+        description_html: Mireu i deixeu notes per als altres moderadors i per a un mateix
+        destroyed_msg: S'ha esborrat la nota de moderació d'instància.
+        title: Notes de moderació
       private_comment: Comentari privat
       public_comment: Comentari públic
       purge: Purga
@@ -786,17 +792,25 @@ ca:
       title: Rols
     rules:
       add_new: Afegir norma
+      add_translation: Afegeix traducció
       delete: Elimina
-      description_html: Tot i que molts diuen que han llegit les normes i estan d'acord amb els termes del servei, normalment no les llegeixen fins que surgeix un problema. <strong>Fes que sigui més fàcil veure les normes del teu servidor d'una ullada proporcionant-les en una llista de punts.</strong> Intenta mantenir les normes individuals curtes i senzilles però sense dividir-les en massa parts separades.
+      description_html: Tot i que molts diuen que han llegit les normes i estan d'acord amb les condicions de servei, normalment no les llegeixen fins que surgeix un problema. <strong>Fes que sigui més fàcil veure les normes del teu servidor d'una ullada proporcionant-les en una llista de punts.</strong> Intenta mantenir les normes individuals curtes i senzilles però sense dividir-les en massa parts separades.
       edit: Edita la norma
       empty: Encara no s'han definit les normes del servidor.
+      move_down: Mou cap avall
+      move_up: Mou cap amunt
       title: Normes del servidor
+      translation: Traducció
+      translations: Traduccions
+      translations_explanation: Teniu l'opció d'afegir traduccions a les regles. Si no hi ha cap traducció a l'abast, es mostrarà el valor per defecte. Assegureu-vos que tota traducció se sincronitzi sempre amb el valor per defecte.
     settings:
       about:
         manage_rules: Gestiona les normes del servidor
         preamble: Proporciona informació detallada sobre com funciona, com es modera i com es financia el servidor.
         rules_hint: Hi ha un àrea dedicada a les normes a les que s'espera que els teus usuaris s'hi adhereixin.
         title: Quant a
+      allow_referrer_origin:
+        title: Permeteu que llocs externs vegin el vostre servidor de Mastodon com a font de trànsit
       appearance:
         preamble: Personalitza l'interfície web de Mastodon.
         title: Aparença
@@ -816,9 +830,9 @@ ca:
       discovery:
         follow_recommendations: Seguir les recomanacions
         preamble: L'aparició de contingut interessant és fonamental per atraure els nous usuaris que podrien no saber res de Mastodon. Controla com funcionen diverses opcions de descobriment en el teu servidor.
+        privacy: Privacitat
         profile_directory: Directori de perfils
         public_timelines: Línies de temps públiques
-        publish_discovered_servers: Publica els servidors descoberts
         publish_statistics: Publica estadístiques
         title: Descobriment
         trends: Tendències
@@ -1246,7 +1260,7 @@ ca:
       view_strikes: Veure accions del passat contra el teu compte
     too_fast: Formulari enviat massa ràpid, torna a provar-ho.
     use_security_key: Usa clau de seguretat
-    user_agreement_html: He llegit i estic d'acord amb les <a href="%{terms_of_service_path}" target="_blank">condicions de servei</a> i la <a href="%{privacy_policy_path}" target="_blank">política de privadesa</a>
+    user_agreement_html: He llegit i estic d'acord amb les <a href="%{terms_of_service_path}" target="_blank">condicions de servei</a> i la <a href="%{privacy_policy_path}" target="_blank">política de privacitat</a>
     user_privacy_agreement_html: He llegit i estic d'acord amb la <a href="%{privacy_policy_path}" target="_blank">política de privacitat</a>
   author_attribution:
     example_title: Text d'exemple
@@ -1296,7 +1310,7 @@ ca:
       email_contact_html: Si encara no arriba, podeu enviar un correu-e a <a href="mailto:%{email}">%{email}</a> per a demanar ajuda
       email_reconfirmation_html: Si no rebeu el correu electrònic de confirmació <a href="%{path}">, podeu tornar-lo a demanar</a>
       irreversible: No seràs capaç de restaurar o reactivar el teu compte
-      more_details_html: Per a més detalls, llegeix la <a href="%{terms_path}">política de privadesa</a>.
+      more_details_html: Per a més detalls, llegeix la <a href="%{terms_path}">política de privacitat</a>.
       username_available: El teu nom d'usuari esdevindrà altre cop disponible
       username_unavailable: El teu nom d'usuari quedarà inutilitzable
   disputes:
@@ -1333,6 +1347,10 @@ ca:
     basic_information: Informació bàsica
     hint_html: "<strong>Personalitza el que la gent veu en el teu perfil públic i a prop dels teus tuts..</strong> És més probable que altres persones et segueixin i interaccionin amb tu quan tens emplenat el teu perfil i amb la teva imatge."
     other: Altres
+  emoji_styles:
+    auto: Automàtic
+    native: Nadiu
+    twemoji: Twemoji
   errors:
     '400': La sol·licitud que vas emetre no era vàlida o no era correcta.
     '403': No tens permís per a veure aquesta pàgina.
@@ -1468,6 +1486,28 @@ ca:
       lists_html:
         one: Esteu a punt de <strong>reemplaçar les vostres llistes</strong> amb contactes de <strong>%{filename}</strong>. S'afegirà <strong>%{count} compte</strong> a les noves llistes.
         other: Esteu a punt de <strong>reemplaçar les vostres llistes</strong> amb contactes de <strong>%{filename}</strong>. S'afegiran fins a <strong>%{count} comptes</strong> a les noves llistes.
+      muting_html:
+        one: Esteu a punt de <strong>reemplaçar la vostra llista de comptes silenciats</strong> amb fins a <strong>%{count} compte</strong> de <strong>%{filename}</strong>.
+        other: Esteu a punt de <strong>reemplaçar la vostra llista de comptes silenciats</strong> amb fins a <strong>%{count} comptes</strong> de <strong>%{filename}</strong>.
+    preambles:
+      blocking_html:
+        one: Esteu a punt de <strong>blocar</strong> fins a <strong>%{count} compte</strong> de <strong>%{filename}</strong>.
+        other: Esteu a punt de <strong>blocar</strong> fins a <strong>%{count} comptes</strong> de <strong>%{filename}</strong>.
+      bookmarks_html:
+        one: Esteu a punt d'afegir fins a <strong>%{count} publicació</strong> de <strong>%{filename}</strong> als vostres <strong>marcadors</strong>.
+        other: Esteu a punt d'afegir fins a <strong>%{count} publicacions</strong> de <strong>%{filename}</strong> als vostres <strong>marcadors</strong>.
+      domain_blocking_html:
+        one: Esteu a punt de <strong>blocar</strong> fins a <strong>%{count} domini</strong> de <strong>%{filename}</strong>.
+        other: Esteu a punt de <strong>blocar</strong> fins a <strong>%{count} dominis</strong> de <strong>%{filename}</strong>.
+      following_html:
+        one: Esteu a punt de <strong>seguir</strong> fins a <strong>%{count} compte</strong> de <strong>%{filename}</strong>.
+        other: Esteu a punt de <strong>seguir</strong> fins a <strong>%{count} comptes</strong> de <strong>%{filename}</strong>.
+      lists_html:
+        one: Esteu a punt d'afegir <strong>%{count} compte</strong> de <strong>%{filename}</strong> a les vostres <strong>llistes</strong>. Es crearan noves llistes si no n'hi ha cap on afegir-lo.
+        other: Esteu a punt d'afegir <strong>%{count} comptes</strong> de <strong>%{filename}</strong> a les vostres <strong>llistes</strong>. Es crearan noves llistes si no n'hi ha cap on afegir-los.
+      muting_html:
+        one: Esteu a punt de <strong>silenciar</strong> fins a <strong>%{count} compte</strong> de <strong>%{filename}</strong>.
+        other: Esteu a punt de <strong>silenciar</strong> fins a <strong>%{count} comptes</strong> de <strong>%{filename}</strong>.
     preface: Pots importar algunes les dades que has exportat des d'un altre servidor, com ara el llistat de les persones que estàs seguint o bloquejant.
     recent_imports: Importacions recents
     states:
@@ -1893,6 +1933,11 @@ ca:
     does_not_match_previous_name: no coincideix amb el nom anterior
   terms_of_service:
     title: Condicions de servei
+  terms_of_service_interstitial:
+    future_preamble_html: Hem fet canvis a les condicions de servei que entraran en efecte el <strong>%{date}</strong>. Us recomanem que hi doneu un cop d'ull.
+    past_preamble_html: Hem fet canvis a les condicions de servei des de la vostra darrera visita. Us recomanem que hi doneu un cop d'ull.
+    review_link: Revisió de les condicions de servei
+    title: Les condicions de servei de %{domain} han canviat
   themes:
     contrast: Mastodon (alt contrast)
     default: Mastodon (fosc)
@@ -1960,6 +2005,8 @@ ca:
     terms_of_service_changed:
       agreement: En continuar fent servir %{domain} accepteu aquestes condicions. Si no esteu d'acord amb els nous termes, podeu acabar el vostre acord amb %{domain} tot esborrant el vostre compte.
       changelog: 'En un cop d''ull, això és el que aquest canvi us implica:'
+      description: 'Heu rebut aquest correu-e perquè hem fet alguns canvis a les condicions de servei de %{domain}. Aquests canvis tindran efecte el %{date}. Us recomanem que hi doneu un cop d''ull:'
+      description_html: Heu rebut aquest correu-e perquè hem fet alguns canvis a les condicions de servei de %{domain}. Aquests canvis tindran efecte el <strong>%{date}</strong>. Us recomanem que<a href="%{path}" target="_blank"> hi doneu un cop d'ull</a>.
       sign_off: L'equip de %{domain}
       subject: Actualitzacions de les condicions de servei
       subtitle: Les condicions de servei de %{domain} canvien
@@ -2030,7 +2077,6 @@ ca:
       post_action: Redacteu
       post_step: Saludeu el món amb text, fotos, vídeos o enquestes.
       post_title: Feu la primera publicació
-      share_action: Compartiu
       share_step: Permeteu als vostres amics de saber com trobar-vos a Mastodon.
       share_title: Compartiu el perfil
       sign_in_action: Inicieu sessió

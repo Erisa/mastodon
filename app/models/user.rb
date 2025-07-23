@@ -15,9 +15,6 @@
 #  current_sign_in_at        :datetime
 #  disabled                  :boolean          default(FALSE), not null
 #  email                     :string           default(""), not null
-#  encrypted_otp_secret      :string
-#  encrypted_otp_secret_iv   :string
-#  encrypted_otp_secret_salt :string
 #  encrypted_password        :string           default(""), not null
 #  last_emailed_at           :datetime
 #  last_sign_in_at           :datetime
@@ -25,6 +22,7 @@
 #  otp_backup_codes          :string           is an Array
 #  otp_required_for_login    :boolean          default(FALSE), not null
 #  otp_secret                :string
+#  require_tos_interstitial  :boolean          default(FALSE), not null
 #  reset_password_sent_at    :datetime
 #  reset_password_token      :string
 #  settings                  :text
@@ -45,14 +43,17 @@
 
 class User < ApplicationRecord
   self.ignored_columns += %w(
+    admin
+    current_sign_in_ip
+    encrypted_otp_secret
+    encrypted_otp_secret_iv
+    encrypted_otp_secret_salt
+    filtered_languages
+    last_sign_in_ip
+    moderator
     remember_created_at
     remember_token
-    current_sign_in_ip
-    last_sign_in_ip
     skip_sign_in_token
-    filtered_languages
-    admin
-    moderator
   )
 
   include LanguagesHelper
@@ -72,10 +73,7 @@ class User < ApplicationRecord
   ACTIVE_DURATION = ENV.fetch('USER_ACTIVE_DAYS', 7).to_i.days.freeze
 
   devise :two_factor_authenticatable,
-         otp_secret_encryption_key: Rails.configuration.x.otp_secret,
          otp_secret_length: 32
-
-  include LegacyOtpSecret # Must be after the above `devise` line in order to override the legacy method
 
   devise :two_factor_backupable,
          otp_number_of_backup_codes: 10
@@ -92,6 +90,7 @@ class User < ApplicationRecord
   has_many :applications, class_name: 'Doorkeeper::Application', as: :owner, dependent: nil
   has_many :backups, inverse_of: :user, dependent: nil
   has_many :invites, inverse_of: :user, dependent: nil
+  has_many :login_activities, inverse_of: :user, dependent: :destroy
   has_many :markers, inverse_of: :user, dependent: :destroy
   has_many :webauthn_credentials, dependent: :destroy
   has_many :ips, class_name: 'UserIp', inverse_of: :user, dependent: nil
@@ -223,6 +222,12 @@ class User < ApplicationRecord
       skip_confirmation!
       save!
     end
+  end
+
+  def email_domain
+    Mail::Address.new(email).domain
+  rescue Mail::Field::ParseError
+    nil
   end
 
   def update_sign_in!(new_sign_in: false)
@@ -533,7 +538,11 @@ class User < ApplicationRecord
   end
 
   def regenerate_feed!
-    RegenerationWorker.perform_async(account_id) if redis.set("account:#{account_id}:regeneration", true, nx: true, ex: 1.day.seconds)
+    home_feed = HomeFeed.new(account)
+    unless home_feed.regenerating?
+      home_feed.regeneration_in_progress!
+      RegenerationWorker.perform_async(account_id)
+    end
   end
 
   def needs_feed_update?

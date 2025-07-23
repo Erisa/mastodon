@@ -24,10 +24,11 @@ const colCount = (size: number) => Math.max(Math.ceil(Math.sqrt(size)), 2);
 export const Upload: React.FC<{
   id: string;
   dragging?: boolean;
+  draggable?: boolean;
   overlay?: boolean;
   size?: number;
   index?: number;
-}> = ({ id, dragging, overlay, size, index }) => {
+}> = ({ id, dragging, draggable = true, overlay, size, index }) => {
   const dispatch = useAppDispatch();
   const media = useAppSelector((state) =>
     (
@@ -90,6 +91,7 @@ export const Upload: React.FC<{
     <div
       className={classNames('compose-form__upload media-gallery__item', {
         dragging,
+        draggable,
         overlay,
         'media-gallery__item--tall': tall,
         'media-gallery__item--wide': wide,

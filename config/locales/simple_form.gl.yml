@@ -61,6 +61,7 @@ gl:
         setting_display_media_default: Ocultar medios marcados como sensibles
         setting_display_media_hide_all: Ocultar sempre os medios
         setting_display_media_show_all: Mostrar sempre os medios marcados como sensibles
+        setting_emoji_style: Forma de mostrar emojis. «Auto» intentará usar os emojis nativos, e se falla recurrirase a Twemoji en navegadores antigos.
         setting_system_scrollbars_ui: Aplícase só en navegadores de escritorio baseados en Safari e Chrome
         setting_use_blurhash: Os gradientes toman as cores da imaxe oculta pero esvaecendo tódolos detalles
         setting_use_pending_items: Agochar actualizacións da cronoloxía tras un click no lugar de desprazar automáticamente os comentarios
@@ -98,7 +99,7 @@ gl:
         site_contact_username: De que xeito se pode contactar contigo en Mastodon.
         site_extended_description: Calquera información adicional que poida ser útil para visitantes e usuarias. Pode utilizarse sintaxe Markdown.
         site_short_description: Breve descrición que axuda a identificar de xeito único o teu servidor. Quen o xestiona, a quen vai dirixido?
-        site_terms: Escribe a túa propia política de privacidade ou usa o valor por defecto. Podes usar sintaxe Markdow.
+        site_terms: Escribe a túa propia directiva de privacidade ou usa o valor por defecto. Podes usar sintaxe Markdown.
         site_title: De que xeito se pode referir o teu servidor ademáis do seu nome de dominio.
         status_page_url: URL dunha páxina onde se pode ver o estado deste servidor cando non está a funcionar
         theme: Decorado que verán visitantes e novas usuarias.
@@ -150,8 +151,8 @@ gl:
       user:
         chosen_languages: Se ten marca, só as publicacións nos idiomas seleccionados serán mostrados en cronoloxías públicas
         date_of_birth:
-          one: Temos que confirmar que tes %{count} anos polo menos para usar Mastodon. Non gardamos este dato.
-          other: Temos que confirmar que tes %{count} anos polo menos para usar Mastodon. Non gardamos este dato.
+          one: Temos que confirmar que tes %{count} anos polo menos para usar %{domain}. Non gardamos este dato.
+          other: Temos que confirmar que tes %{count} anos polo menos para usar %{domain}. Non gardamos este dato.
         role: Os roles establecen os permisos que ten a usuaria.
       user_role:
         color: Cor que se usará para o rol a través da IU, como RGB en formato hex
@@ -241,6 +242,7 @@ gl:
         setting_display_media_default: Por defecto
         setting_display_media_hide_all: Ocultar todo
         setting_display_media_show_all: Mostrar todo
+        setting_emoji_style: Estilo dos emojis
         setting_expand_spoilers: Despregar sempre as publicacións marcadas con avisos de contido
         setting_hide_network: Non mostrar contactos
         setting_missing_alt_text_modal: Mostrar mensaxe de confirmación antes de publicar multimedia sen texto descritivo
@@ -290,7 +292,7 @@ gl:
         site_contact_username: Nome do contacto
         site_extended_description: Descrición ampla
         site_short_description: Descrición do servidor
-        site_terms: Política de Privacidade
+        site_terms: Directiva de Privacidade
         site_title: Nome do servidor
         status_page_url: URL da páxina do estado
         theme: Decorado predeterminado

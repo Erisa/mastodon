@@ -61,6 +61,7 @@ cs:
         setting_display_media_default: Skrývat média označená jako citlivá
         setting_display_media_hide_all: Vždy skrývat média
         setting_display_media_show_all: Vždy zobrazovat média
+        setting_emoji_style: Jak se budou zobrazovat emoji. "Auto" zkusí použít výchozí emoji, ale pro starší prohlížeče použije Twemoji.
         setting_system_scrollbars_ui: Platí pouze pro desktopové prohlížeče založené na Safari nebo Chrome
         setting_use_blurhash: Gradienty jsou vytvořeny na základě barvev skrytých médií, ale zakrývají veškeré detaily
         setting_use_pending_items: Aktualizovat časovou osu až po kliknutí namísto automatického rolování kanálu
@@ -150,10 +151,10 @@ cs:
       user:
         chosen_languages: Po zaškrtnutí budou ve veřejných časových osách zobrazeny pouze příspěvky ve zvolených jazycích
         date_of_birth:
-          few: Musíme se ujistit, že je Vám alespoň %{count}, abyste mohli používat Mastodon. Nebudeme to ukládat.
-          many: Musíme se ujistit, že je Vám alespoň %{count} let, abyste mohli používat Mastodon. Nebudeme to ukládat.
-          one: Musíme se ujistit, že je Vám alespoň %{count} rok, abyste mohli používat Mastodon. Nebudeme to ukládat.
-          other: Musíme se ujistit, že je Vám alespoň %{count} let, abyste mohli používat Mastodon. Nebudeme to ukládat.
+          few: Musíme se ujistit, že je Vám alespoň %{count}, abyste mohli používat %{domain}. Nebudeme to ukládat.
+          many: Musíme se ujistit, že je Vám alespoň %{count} let, abyste mohli používat %{domain}. Nebudeme to ukládat.
+          one: Musíme se ujistit, že je Vám alespoň %{count} rok, abyste mohli používat %{domain}. Nebudeme to ukládat.
+          other: Musíme se ujistit, že je Vám alespoň %{count}, abyste mohli používat %{domain}. Nebudeme to ukládat.
         role: Role určuje, která oprávnění uživatel má.
       user_role:
         color: Barva, která má být použita pro roli v celém UI, jako RGB v hex formátu
@@ -243,6 +244,7 @@ cs:
         setting_display_media_default: Výchozí
         setting_display_media_hide_all: Skrýt vše
         setting_display_media_show_all: Zobrazit vše
+        setting_emoji_style: Styl emoji
         setting_expand_spoilers: Vždy rozbalit příspěvky označené varováními o obsahu
         setting_hide_network: Skrýt mou síť
         setting_missing_alt_text_modal: Zobrazit potvrzovací dialog před odesláním médií bez alt textu

@@ -14,7 +14,6 @@ interface Props {
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   onMouseDown?: React.MouseEventHandler<HTMLButtonElement>;
   onKeyDown?: React.KeyboardEventHandler<HTMLButtonElement>;
-  onKeyPress?: React.KeyboardEventHandler<HTMLButtonElement>;
   active?: boolean;
   expanded?: boolean;
   style?: React.CSSProperties;
@@ -27,6 +26,7 @@ interface Props {
   counter?: number;
   href?: string;
   ariaHidden?: boolean;
+  ariaControls?: string;
   label?: string;
   obfuscateCount?: boolean;
 }
@@ -46,7 +46,6 @@ export const IconButton = forwardRef<HTMLButtonElement, Props>(
       activeStyle,
       onClick,
       onKeyDown,
-      onKeyPress,
       onMouseDown,
       active = false,
       disabled = false,
@@ -54,6 +53,7 @@ export const IconButton = forwardRef<HTMLButtonElement, Props>(
       overlay = false,
       tabIndex = 0,
       ariaHidden = false,
+      ariaControls,
       label,
       obfuscateCount,
     },
@@ -86,16 +86,6 @@ export const IconButton = forwardRef<HTMLButtonElement, Props>(
       },
       [disabled, onClick],
     );
-
-    const handleKeyPress: React.KeyboardEventHandler<HTMLButtonElement> =
-      useCallback(
-        (e) => {
-          if (!disabled) {
-            onKeyPress?.(e);
-          }
-        },
-        [disabled, onKeyPress],
-      );
 
     const handleMouseDown: React.MouseEventHandler<HTMLButtonElement> =
       useCallback(
@@ -158,12 +148,12 @@ export const IconButton = forwardRef<HTMLButtonElement, Props>(
         aria-label={title}
         aria-expanded={expanded}
         aria-hidden={ariaHidden}
+        aria-controls={ariaControls}
         title={title}
         className={classes}
         onClick={handleClick}
         onMouseDown={handleMouseDown}
         onKeyDown={handleKeyDown}
-        onKeyPress={handleKeyPress} // eslint-disable-line @typescript-eslint/no-deprecated
         style={buttonStyle}
         tabIndex={tabIndex}
         disabled={disabled}

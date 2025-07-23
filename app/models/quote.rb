@@ -7,6 +7,7 @@
 #  id                :bigint(8)        not null, primary key
 #  activity_uri      :string
 #  approval_uri      :string
+#  legacy            :boolean          default(FALSE), not null
 #  state             :integer          default("pending"), not null
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
@@ -30,7 +31,7 @@ class Quote < ApplicationRecord
   belongs_to :quoted_account, class_name: 'Account', optional: true
 
   before_validation :set_accounts
-
+  before_validation :set_activity_uri, only: :create, if: -> { account.local? && quoted_account&.remote? }
   validates :activity_uri, presence: true, if: -> { account.local? && quoted_account&.remote? }
   validate :validate_visibility
 
@@ -44,6 +45,10 @@ class Quote < ApplicationRecord
     elsif !revoked?
       update!(state: :rejected)
     end
+  end
+
+  def acceptable?
+    accepted? || !legacy?
   end
 
   def schedule_refresh_if_stale!
@@ -63,5 +68,9 @@ class Quote < ApplicationRecord
     return if account_id == quoted_account_id || quoted_status.nil? || quoted_status.distributable?
 
     errors.add(:quoted_status_id, :visibility_mismatch)
+  end
+
+  def set_activity_uri
+    self.activity_uri = [ActivityPub::TagManager.instance.uri_for(account), '/quote_requests/', SecureRandom.uuid].join
   end
 end

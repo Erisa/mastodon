@@ -61,6 +61,7 @@ es:
         setting_display_media_default: Ocultar contenido multimedia marcado como sensible
         setting_display_media_hide_all: Siempre ocultar todo el contenido multimedia
         setting_display_media_show_all: Mostrar siempre contenido multimedia marcado como sensible
+        setting_emoji_style: Cómo se mostrarán los emojis. "Auto" intentará usar emojis nativos, cambiando a Twemoji en navegadores antiguos.
         setting_system_scrollbars_ui: Solo aplica para navegadores de escritorio basados en Safari y Chrome
         setting_use_blurhash: Los gradientes se basan en los colores de las imágenes ocultas pero haciendo borrosos los detalles
         setting_use_pending_items: Ocultar nuevas publicaciones detrás de un clic en lugar de desplazar automáticamente el feed
@@ -150,8 +151,8 @@ es:
       user:
         chosen_languages: Cuando se marca, solo se mostrarán las publicaciones en los idiomas seleccionados en las líneas de tiempo públicas
         date_of_birth:
-          one: Tenemos que asegurarnos de que tienes al menos %{count} años para usar Mastodon. No guardaremos este dato.
-          other: Tenemos que asegurarnos de que tienes al menos %{count} años para usar Mastodon. No guardaremos este dato.
+          one: Tenemos que asegurarnos de que tienes al menos %{count} para usar %{domain}. No guardaremos esta información.
+          other: Tenemos que asegurarnos de que tienes al menos %{count} para usar %{domain}. No guardaremos esta información.
         role: El rol controla qué permisos tiene el usuario.
       user_role:
         color: Color que se utilizará para el rol a lo largo de la interfaz de usuario, como RGB en formato hexadecimal
@@ -241,6 +242,7 @@ es:
         setting_display_media_default: Por defecto
         setting_display_media_hide_all: Ocultar todo
         setting_display_media_show_all: Mostrar todo
+        setting_emoji_style: Estilo de emoji
         setting_expand_spoilers: Siempre expandir las publicaciones marcadas con advertencias de contenido
         setting_hide_network: Ocultar tu red
         setting_missing_alt_text_modal: Mostrar diálogo de confirmación antes de publicar medios sin texto alternativo

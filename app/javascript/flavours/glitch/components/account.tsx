@@ -10,9 +10,14 @@ import {
   unblockAccount,
   muteAccount,
   unmuteAccount,
+  followAccountSuccess,
+  unpinAccount,
+  pinAccount,
 } from 'flavours/glitch/actions/accounts';
+import { showAlertForError } from 'flavours/glitch/actions/alerts';
 import { openModal } from 'flavours/glitch/actions/modal';
 import { initMuteModal } from 'flavours/glitch/actions/mutes';
+import { apiFollowAccount } from 'flavours/glitch/api/accounts';
 import { Avatar } from 'flavours/glitch/components/avatar';
 import { AvatarOverlay } from 'flavours/glitch/components/avatar_overlay';
 import { Button } from 'flavours/glitch/components/button';
@@ -24,6 +29,8 @@ import { RelativeTimestamp } from 'flavours/glitch/components/relative_timestamp
 import { ShortNumber } from 'flavours/glitch/components/short_number';
 import { Skeleton } from 'flavours/glitch/components/skeleton';
 import { VerifiedBadge } from 'flavours/glitch/components/verified_badge';
+import { useIdentity } from 'flavours/glitch/identity_context';
+import { me } from 'flavours/glitch/initial_state';
 import type { MenuItem } from 'flavours/glitch/models/dropdown_menu';
 import type { StatusReaction } from 'flavours/glitch/models/reaction';
 import { useAppSelector, useAppDispatch } from 'flavours/glitch/store';
@@ -60,7 +67,7 @@ const messages = defineMessages({
   },
 });
 
-export const Account: React.FC<{
+interface AccountProps {
   size?: number;
   overlayEmoji?: StatusReaction;
   id: string;
@@ -68,7 +75,10 @@ export const Account: React.FC<{
   minimal?: boolean;
   defaultAction?: 'block' | 'mute';
   withBio?: boolean;
-}> = ({
+  withMenu?: boolean;
+}
+
+export const Account: React.FC<AccountProps> = ({
   id,
   size = 46,
   overlayEmoji = { name: null },
@@ -76,12 +86,15 @@ export const Account: React.FC<{
   minimal,
   defaultAction,
   withBio,
+  withMenu = true,
 }) => {
   const intl = useIntl();
+  const { signedIn } = useIdentity();
   const account = useAppSelector((state) => state.accounts.get(id));
   const relationship = useAppSelector((state) => state.relationships.get(id));
   const dispatch = useAppDispatch();
   const accountUrl = account?.url;
+  const isRemote = account?.acct !== account?.username;
 
   const handleBlock = useCallback(() => {
     if (relationship?.blocking) {
@@ -124,37 +137,91 @@ export const Account: React.FC<{
         },
       ];
     } else if (defaultAction !== 'block') {
-      const handleAddToLists = () => {
-        dispatch(
-          openModal({
-            modalType: 'LIST_ADDER',
-            modalProps: {
-              accountId: id,
-            },
-          }),
-        );
-      };
+      if (isRemote && accountUrl) {
+        arr.push({
+          text: intl.formatMessage(messages.openOriginalPage),
+          href: accountUrl,
+        });
+      }
 
-      arr = [
-        {
+      if (signedIn) {
+        const handleAddToLists = () => {
+          const openAddToListModal = () => {
+            dispatch(
+              openModal({
+                modalType: 'LIST_ADDER',
+                modalProps: {
+                  accountId: id,
+                },
+              }),
+            );
+          };
+          if (relationship?.following || relationship?.requested || id === me) {
+            openAddToListModal();
+          } else {
+            dispatch(
+              openModal({
+                modalType: 'CONFIRM_FOLLOW_TO_LIST',
+                modalProps: {
+                  accountId: id,
+                  onConfirm: () => {
+                    apiFollowAccount(id)
+                      .then((relationship) => {
+                        dispatch(
+                          followAccountSuccess({
+                            relationship,
+                            alreadyFollowing: false,
+                          }),
+                        );
+                        openAddToListModal();
+                      })
+                      .catch((err: unknown) => {
+                        dispatch(showAlertForError(err));
+                      });
+                  },
+                },
+              }),
+            );
+          }
+        };
+
+        arr.push({
           text: intl.formatMessage(messages.addToLists),
           action: handleAddToLists,
-        },
-      ];
+        });
 
-      if (accountUrl) {
-        arr.unshift(
-          {
-            text: intl.formatMessage(messages.openOriginalPage),
-            href: accountUrl,
-          },
-          null,
-        );
+        if (id !== me && (relationship?.following || relationship?.requested)) {
+          const handleEndorseToggle = () => {
+            if (relationship.endorsed) {
+              dispatch(unpinAccount(id));
+            } else {
+              dispatch(pinAccount(id));
+            }
+          };
+          arr.push({
+            text: intl.formatMessage(
+              // Defined in features/account_timeline/components/account_header.tsx
+              relationship.endorsed
+                ? { id: 'account.unendorse' }
+                : { id: 'account.endorse' },
+            ),
+            action: handleEndorseToggle,
+          });
+        }
       }
     }
 
     return arr;
-  }, [dispatch, intl, id, accountUrl, relationship, defaultAction]);
+  }, [
+    dispatch,
+    intl,
+    id,
+    accountUrl,
+    relationship,
+    defaultAction,
+    isRemote,
+    signedIn,
+  ]);
 
   if (hidden) {
     return (
@@ -165,9 +232,10 @@ export const Account: React.FC<{
     );
   }
 
-  let button: React.ReactNode, dropdown: React.ReactNode;
+  let button: React.ReactNode;
+  let dropdown: React.ReactNode;
 
-  if (menu.length > 0) {
+  if (menu.length > 0 && withMenu) {
     dropdown = (
       <Dropdown
         items={menu}
@@ -226,39 +294,65 @@ export const Account: React.FC<{
   }
 
   return (
-    <div className={classNames('account', { 'account--minimal': minimal })}>
-      <div className='account__wrapper'>
-        <Permalink
-          className='account__display-name'
-          title={account?.acct}
-          href={account?.url}
-          to={`/@${account?.acct}`}
-          data-hover-card-account={id}
-        >
-          <div className='account__avatar-wrapper'>
-            {account ? statusAvatar : <Skeleton width={size} height={size} />}
-          </div>
+    <div
+      className={classNames('account', {
+        'account--minimal': minimal,
+      })}
+    >
+      <div
+        className={classNames('account__wrapper', {
+          'account__wrapper--with-bio': account && withBio,
+        })}
+      >
+        <div className='account__info-wrapper'>
+          <Permalink
+            className='account__display-name'
+            title={account?.acct}
+            href={account?.url}
+            to={`/@${account?.acct}`}
+            data-hover-card-account={id}
+          >
+            <div className='account__avatar-wrapper'>
+              {account ? statusAvatar : <Skeleton width={size} height={size} />}
+            </div>
 
-          <div className='account__contents'>
-            <DisplayName account={account} />
+            <div className='account__contents'>
+              <DisplayName account={account} />
 
-            {!minimal && (
-              <div className='account__details'>
-                {account ? (
-                  <>
-                    <ShortNumber
-                      value={account.followers_count}
-                      renderer={FollowersCounter}
-                    />{' '}
-                    {verification} {muteTimeRemaining}
-                  </>
-                ) : (
-                  <Skeleton width='7ch' />
-                )}
+              {!minimal && (
+                <div className='account__details'>
+                  {account ? (
+                    <>
+                      <ShortNumber
+                        value={account.followers_count}
+                        renderer={FollowersCounter}
+                      />{' '}
+                      {verification} {muteTimeRemaining}
+                    </>
+                  ) : (
+                    <Skeleton width='7ch' />
+                  )}
+                </div>
+              )}
+            </div>
+          </Permalink>
+
+          {account &&
+            withBio &&
+            (account.note.length > 0 ? (
+              <div
+                className='account__note translate'
+                dangerouslySetInnerHTML={{ __html: account.note_emojified }}
+              />
+            ) : (
+              <div className='account__note account__note--missing'>
+                <FormattedMessage
+                  id='account.no_bio'
+                  defaultMessage='No description provided.'
+                />
               </div>
-            )}
-          </div>
-        </Permalink>
+            ))}
+        </div>
 
         {!minimal && (
           <div className='account__relationship'>
@@ -267,22 +361,6 @@ export const Account: React.FC<{
           </div>
         )}
       </div>
-
-      {account &&
-        withBio &&
-        (account.note.length > 0 ? (
-          <div
-            className='account__note translate'
-            dangerouslySetInnerHTML={{ __html: account.note_emojified }}
-          />
-        ) : (
-          <div className='account__note account__note--missing'>
-            <FormattedMessage
-              id='account.no_bio'
-              defaultMessage='No description provided.'
-            />
-          </div>
-        ))}
     </div>
   );
 };

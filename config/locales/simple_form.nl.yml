@@ -61,6 +61,7 @@ nl:
         setting_display_media_default: Als gevoelig gemarkeerde media verbergen
         setting_display_media_hide_all: Media altijd verbergen
         setting_display_media_show_all: Media altijd tonen
+        setting_emoji_style: Waarmee moeten emojis worden weergegeven. ‘Auto’ probeert de systeemeigen emojis te gebruiken, maar valt terug op Twemoji voor oudere webbrowsers.
         setting_system_scrollbars_ui: Alleen van toepassing op desktopbrowsers gebaseerd op Safari en Chrome
         setting_use_blurhash: Wazige kleurovergangen zijn gebaseerd op de kleuren van de verborgen media, waarmee elk detail verdwijnt
         setting_use_pending_items: De tijdlijn wordt bijgewerkt door op het aantal nieuwe items te klikken, in plaats van dat deze automatisch wordt bijgewerkt
@@ -150,8 +151,8 @@ nl:
       user:
         chosen_languages: Alleen berichten in de aangevinkte talen worden op de openbare tijdlijnen getoond
         date_of_birth:
-          one: We moeten er zeker van zijn dat je tenminste %{count} bent om Mastodon te mogen gebruiken. Deze informatie wordt niet door ons opgeslagen.
-          other: We moeten er zeker van zijn dat je tenminste %{count} bent om Mastodon te mogen gebruiken. Deze informatie wordt niet door ons opgeslagen.
+          one: We moeten er zeker van zijn dat je tenminste %{count} bent om %{domain} te mogen gebruiken. Deze informatie wordt niet door ons opgeslagen.
+          other: We moeten er zeker van zijn dat je tenminste %{count} bent om %{domain} te mogen gebruiken. Deze informatie wordt niet door ons opgeslagen.
         role: De rol bepaalt welke rechten de gebruiker heeft.
       user_role:
         color: Kleur die gebruikt wordt voor de rol in de UI, als RGB in hexadecimale formaat
@@ -241,6 +242,7 @@ nl:
         setting_display_media_default: Standaard
         setting_display_media_hide_all: Alles verbergen
         setting_display_media_show_all: Alles tonen
+        setting_emoji_style: Emoji-stijl
         setting_expand_spoilers: Berichten met inhoudswaarschuwingen altijd uitklappen
         setting_hide_network: Jouw volgers en wie je volgt verbergen
         setting_missing_alt_text_modal: Bevestigingsvenster tonen voor het plaatsen van media zonder alt-tekst

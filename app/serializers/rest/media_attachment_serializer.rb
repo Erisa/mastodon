@@ -16,13 +16,8 @@ class REST::MediaAttachmentSerializer < ActiveModel::Serializer
   def url
     if object.not_processed?
       nil
-    elsif object.needs_redownload?
+    elsif object.needs_redownload? || object.discarded?
       media_proxy_url(object.id, :original)
-    elsif instance_options[:discord_hack]
-      source = full_asset_url(object.file.url(:original))
-      Request.new(:head, source, follow: false).perform do |res|
-        res.code == 301 ? res.headers['location'] : source
-      end
     else
       full_asset_url(object.file.url(:original))
     end
@@ -33,7 +28,7 @@ class REST::MediaAttachmentSerializer < ActiveModel::Serializer
   end
 
   def preview_url
-    if object.needs_redownload?
+    if object.needs_redownload? || object.discarded?
       media_proxy_url(object.id, :small)
     elsif object.thumbnail.present?
       full_asset_url(object.thumbnail.url(:original))
