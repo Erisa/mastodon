@@ -77,6 +77,9 @@ class Notification < ApplicationRecord
     'admin.report': {
       filterable: false,
     }.freeze,
+    quote: {
+      filterable: true,
+    }.freeze,
   }.freeze
 
   TYPES = PROPERTIES.keys.freeze
@@ -85,6 +88,7 @@ class Notification < ApplicationRecord
     status: :status,
     reblog: [status: :reblog],
     mention: [mention: :status],
+    quote: [quote: :status],
     favourite: [favourite: :status],
     reaction: [status_reaction: :status],
     poll: [poll: :status],
@@ -108,6 +112,7 @@ class Notification < ApplicationRecord
     belongs_to :account_relationship_severance_event, inverse_of: false
     belongs_to :account_warning, inverse_of: false
     belongs_to :generated_annual_report, inverse_of: false
+    belongs_to :quote, inverse_of: :notification
   end
 
   validates :type, inclusion: { in: TYPES }
@@ -130,6 +135,8 @@ class Notification < ApplicationRecord
       status_reaction&.status
     when :mention
       mention&.status
+    when :quote
+      quote&.status
     when :poll
       poll&.status
     end
@@ -184,6 +191,8 @@ class Notification < ApplicationRecord
           notification.mention.status = cached_status
         when :poll
           notification.poll.status = cached_status
+        when :quote
+          notification.quote.status = cached_status
         end
       end
 
@@ -204,7 +213,7 @@ class Notification < ApplicationRecord
     return unless new_record?
 
     case activity_type
-    when 'Status', 'Follow', 'Favourite', 'StatusReaction', 'FollowRequest', 'Poll', 'Report'
+    when 'Status', 'Follow', 'Favourite', 'StatusReaction', 'FollowRequest', 'Poll', 'Report', 'Quote'
       self.from_account_id = activity&.account_id
     when 'Mention'
       self.from_account_id = activity&.status&.account_id
