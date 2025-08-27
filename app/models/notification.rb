@@ -31,6 +31,7 @@ class Notification < ApplicationRecord
     'Favourite' => :favourite,
     'StatusReaction' => :reaction,
     'Poll' => :poll,
+    'Quote' => :quote,
   }.freeze
 
   # Please update app/javascript/api_types/notification.ts if you change this

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import { defineMessages, injectIntl, FormattedMessage } from 'react-intl';
+import { defineMessages, injectIntl } from 'react-intl';
 
 import classNames from 'classnames';
 import { Helmet } from 'react-helmet';
@@ -16,7 +16,6 @@ import VisibilityOffIcon from '@/material-icons/400-24px/visibility_off.svg?reac
 import { Hotkeys }  from 'flavours/glitch/components/hotkeys';
 import { Icon }  from 'flavours/glitch/components/icon';
 import { LoadingIndicator } from 'flavours/glitch/components/loading_indicator';
-import { TimelineHint } from 'flavours/glitch/components/timeline_hint';
 import ScrollContainer from 'flavours/glitch/containers/scroll_container';
 import BundleColumnError from 'flavours/glitch/features/ui/components/bundle_column_error';
 import { identityContextPropShape, withIdentity } from 'flavours/glitch/identity_context';
@@ -53,6 +52,7 @@ import {
   translateStatus,
   undoStatusTranslation,
 } from '../../actions/statuses';
+import { setStatusQuotePolicy } from '../../actions/statuses_typed';
 import ColumnHeader from '../../components/column_header';
 import { textForScreenReader, defaultMediaVisibility } from '../../components/status';
 import { StatusQuoteManager } from '../../components/status_quoted';
@@ -304,6 +304,23 @@ class Status extends ImmutablePureComponent {
     }
   };
 
+  handleRevokeQuoteClick = (status) => {
+    const { dispatch } = this.props;
+
+    dispatch(openModal({ modalType: 'CONFIRM_REVOKE_QUOTE', modalProps: { statusId: status.get('id'), quotedStatusId: status.getIn(['quote', 'quoted_status']) }}));
+  };
+
+  handleQuotePolicyChange = (status) => {
+    const statusId = status.get('id');
+    const { dispatch } = this.props;
+    const handleChange = (_, quotePolicy) => {
+      dispatch(
+        setStatusQuotePolicy({ policy: quotePolicy, statusId }),
+      );
+    }
+    dispatch(openModal({ modalType: 'COMPOSE_PRIVACY', modalProps: { statusId, onChange: handleChange } }));
+  };
+
   handleEditClick = (status) => {
     const { dispatch, askReplyConfirmation } = this.props;
 
@@ -410,14 +427,6 @@ class Status extends ImmutablePureComponent {
     this.handleToggleMediaVisibility();
   };
 
-  handleHotkeyMoveUp = () => {
-    this.handleMoveUp(this.props.status.get('id'));
-  };
-
-  handleHotkeyMoveDown = () => {
-    this.handleMoveDown(this.props.status.get('id'));
-  };
-
   handleHotkeyReply = e => {
     e.preventDefault();
     this.handleReplyClick(this.props.status);
@@ -448,54 +457,6 @@ class Status extends ImmutablePureComponent {
     this.handleTranslate(this.props.status);
   };
 
-  handleMoveUp = id => {
-    const { status, ancestorsIds, descendantsIds } = this.props;
-
-    if (id === status.get('id')) {
-      this._selectChild(ancestorsIds.length - 1, true);
-    } else {
-      let index = ancestorsIds.indexOf(id);
-
-      if (index === -1) {
-        index = descendantsIds.indexOf(id);
-        this._selectChild(ancestorsIds.length + index, true);
-      } else {
-        this._selectChild(index - 1, true);
-      }
-    }
-  };
-
-  handleMoveDown = id => {
-    const { status, ancestorsIds, descendantsIds } = this.props;
-
-    if (id === status.get('id')) {
-      this._selectChild(ancestorsIds.length + 1, false);
-    } else {
-      let index = ancestorsIds.indexOf(id);
-
-      if (index === -1) {
-        index = descendantsIds.indexOf(id);
-        this._selectChild(ancestorsIds.length + index + 2, false);
-      } else {
-        this._selectChild(index + 1, false);
-      }
-    }
-  };
-
-  _selectChild (index, align_top) {
-    const container = this.node;
-    const element = container.querySelectorAll('.focusable')[index];
-
-    if (element) {
-      if (align_top && container.scrollTop > element.offsetTop) {
-        element.scrollIntoView(true);
-      } else if (!align_top && container.scrollTop + container.clientHeight < element.offsetTop + element.offsetHeight) {
-        element.scrollIntoView(false);
-      }
-      element.focus();
-    }
-  }
-
   handleHeaderClick = () => {
     this.column.scrollTop();
   };
@@ -508,8 +469,6 @@ class Status extends ImmutablePureComponent {
         key={id}
         id={id}
         expanded={this.state.threadExpanded}
-        onMoveUp={this.handleMoveUp}
-        onMoveDown={this.handleMoveDown}
         contextType='thread'
         previousId={i > 0 ? list[i - 1] : undefined}
         nextId={list[i + 1] || (ancestors && statusId)}
@@ -626,8 +585,6 @@ class Status extends ImmutablePureComponent {
     }
 
     const handlers = {
-      moveUp: this.handleHotkeyMoveUp,
-      moveDown: this.handleHotkeyMoveDown,
       reply: this.handleHotkeyReply,
       favourite: this.handleHotkeyFavourite,
       boost: this.handleHotkeyBoost,
@@ -655,7 +612,7 @@ class Status extends ImmutablePureComponent {
         />
 
         <ScrollContainer scrollKey='thread' shouldUpdateScroll={this.shouldUpdateScroll}>
-          <div className={classNames('scrollable', { fullscreen })} ref={this.setContainerRef}>
+          <div className={classNames('scrollable item-list', { fullscreen })} ref={this.setContainerRef}>
             {ancestors}
 
             <Hotkeys handlers={handlers}>
@@ -686,6 +643,8 @@ class Status extends ImmutablePureComponent {
                   onReblog={this.handleReblogClick}
                   onBookmark={this.handleBookmarkClick}
                   onDelete={this.handleDeleteClick}
+                  onRevokeQuote={this.handleRevokeQuoteClick}
+                  onQuotePolicyChange={this.handleQuotePolicyChange}
                   onEdit={this.handleEditClick}
                   onDirect={this.handleDirectClick}
                   onMention={this.handleMentionClick}

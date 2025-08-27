@@ -1687,6 +1687,10 @@ el:
       title: Νέα επισήμανση
     poll:
       subject: Μια δημοσκόπηση του %{name} έληξε
+    quote:
+      body: 'Η ανάρτησή σου παρατέθηκε από %{name}:'
+      subject: Ο/Η %{name} έκανε παράθεση της ανάρτησής σου
+      title: Νέα παράθεση
     reblog:
       body: 'Η ανάρτησή σου ενισχύθηκε από τον/την %{name}:'
       subject: Ο/Η %{name} ενίσχυσε την ανάρτηση σου
@@ -1905,10 +1909,12 @@ el:
       ownership: Δεν μπορείς να καρφιτσώσεις ανάρτηση κάποιου άλλου
       reblog: Οι ενισχύσεις δεν καρφιτσώνονται
     quote_policies:
+      followers: Μόνο οι ακόλουθοί σου
+      nobody: Κανένας
       public: Όλοι
     title: '%{name}: "%{quote}"'
     visibilities:
-      direct: Άμεση
+      direct: Ιδιωτική επισήμανση
       private: Μόνο ακόλουθοι
       private_long: Εμφάνιση μόνο σε ακόλουθους
       public: Δημόσιο

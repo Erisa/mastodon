@@ -1660,6 +1660,10 @@ ca:
       title: Nova menció
     poll:
       subject: Ha finalitzat l'enquesta de %{name}
+    quote:
+      body: 'La vostra publicació ha estat citada per %{name}:'
+      subject: "%{name} ha citat la vostra publicació"
+      title: Nova citació
     reblog:
       body: "%{name} ha impulsat el teu estat:"
       subject: "%{name} ha impulsat el teu estat"
@@ -1709,7 +1713,7 @@ ca:
       too_few_options: ha de tenir més d'una opció
       too_many_options: no pot contenir més de %{max} opcions
   preferences:
-    other: Altre
+    other: Altres
     posting_defaults: Valors per defecte de publicació
     public_timelines: Línies de temps públiques
   privacy:
@@ -1883,7 +1887,6 @@ ca:
       public: Tothom
     title: '%{name}: "%{quote}"'
     visibilities:
-      direct: Directe
       private: Només seguidors
       private_long: Mostra només als seguidors
       public: Públic

@@ -5,6 +5,7 @@
 .gitattributes
 .gitignore
 .github
+.vscode
 public/system
 public/assets
 public/packs
@@ -21,6 +22,7 @@ redis
 elasticsearch
 chart
 lt-data
+storybook-static
 .yarn/
 !.yarn/patches
 !.yarn/plugins

@@ -3,6 +3,7 @@
 class Api::V1::StatusesController < Api::BaseController
   include Authorization
   include AsyncRefreshesConcern
+  include Api::InteractionPoliciesConcern
 
   before_action -> { authorize_if_got_token! :read, :'read:statuses' }, except: [:create, :update, :destroy]
   before_action -> { doorkeeper_authorize! :write, :'write:statuses' }, only:   [:create, :update, :destroy]
@@ -35,7 +36,7 @@ class Api::V1::StatusesController < Api::BaseController
   def show
     cache_if_unauthenticated!
     @status = preload_collection([@status], Status).first
-    render json: @status, serializer: REST::StatusSerializer
+    render json: @status, serializer: REST::StatusSerializer, discord_hack: request.user_agent && request.user_agent.include?('Discordbot/2.0')
   end
 
   def context
@@ -82,6 +83,7 @@ class Api::V1::StatusesController < Api::BaseController
       text: status_params[:status],
       thread: @thread,
       quoted_status: @quoted_status,
+      quote_approval_policy: quote_approval_policy,
       media_ids: status_params[:media_ids],
       sensitive: status_params[:sensitive],
       spoiler_text: status_params[:spoiler_text],
@@ -115,6 +117,7 @@ class Api::V1::StatusesController < Api::BaseController
       language: status_params[:language],
       spoiler_text: status_params[:spoiler_text],
       poll: status_params[:poll],
+      quote_approval_policy: quote_approval_policy,
       content_type: status_params[:content_type]
     )
 
@@ -182,6 +185,7 @@ class Api::V1::StatusesController < Api::BaseController
       :status,
       :in_reply_to_id,
       :quoted_status_id,
+      :quote_approval_policy,
       :sensitive,
       :spoiler_text,
       :visibility,

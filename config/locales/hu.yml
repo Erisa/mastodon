@@ -1687,6 +1687,10 @@ hu:
       title: Új említés
     poll:
       subject: "%{name} szavazása véget ért"
+    quote:
+      body: 'A bejegyzésedet %{name} idézte:'
+      subject: "%{name} idézte a bejegyzésedet"
+      title: Új idézet
     reblog:
       body: 'A bejegyzésedet %{name} megtolta:'
       subject: "%{name} megtolta a bejegyzésedet"
@@ -1905,10 +1909,12 @@ hu:
       ownership: Nem tűzheted ki valaki más bejegyzését
       reblog: Megtolt bejegyzést nem tudsz kitűzni
     quote_policies:
+      followers: Csak a követőid
+      nobody: Senki
       public: Mindenki
     title: "%{name}: „%{quote}”"
     visibilities:
-      direct: Közvetlen
+      direct: Privát említés
       private: Csak követőknek
       private_long: Csak a követőidnek jelenik meg
       public: Nyilvános
