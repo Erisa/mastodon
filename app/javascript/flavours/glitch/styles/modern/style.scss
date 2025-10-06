@@ -497,12 +497,6 @@ a:focus-visible,
   max-height: unset !important;
   height: 100%;
 }
-.compose-panel > * {
-  padding-inline: 0;
-}
-.compose-panel > .navigation-bar {
-  padding-top: 0 !important;
-}
 .compose-panel .search,
 .drawer .search {
   margin-bottom: 25px;
@@ -517,14 +511,8 @@ a:focus-visible,
   border-radius: var(--radius);
   margin-inline: -5px;
 }
-.search label {
-  box-sizing: border-box;
-}
 .search input {
   border-radius: var(--radius-round) !important;
-}
-.search .search__icon > i {
-  margin-inline: 5px;
 }
 .search__popout {
   border-radius: var(--radius);
@@ -534,32 +522,11 @@ a:focus-visible,
   margin-inline: 4px;
   width: calc(100% - 8px);
 }
-.navigation-bar .icon-button {
-  width: auto !important;
-  height: auto !important;
-  padding: 8px;
-}
 .compose-form {
   min-height: unset;
   overflow: unset;
   gap: 15px;
   flex: 1 0 auto !important;
-}
-.compose-form > * {
-  margin: 0 !important;
-}
-.compose-form > [aria-hidden="true"] {
-  display: none;
-}
-.compose-form > .navigation-bar {
-  margin-top: 10px;
-}
-.compose-form .reply-indicator {
-  position: relative;
-  transition: min-height 0.1s;
-}
-.compose-form .reply-indicator__display-name {
-  padding: 0;
 }
 .compose-form .spoiler-input__border {
   display: none;
@@ -567,37 +534,17 @@ a:focus-visible,
 .compose-form #cw-spoiler-input {
   padding-inline: 12px;
 }
-.compose-form .compose-form__autosuggest-wrapper,
-.compose-form .autosuggest-textarea__textarea {
-  border-radius: var(--radius) var(--radius) 0 0 !important;
-  border-bottom: 0;
-}
-.compose-form .compose-form__buttons-wrapper {
-  border-radius: 0 0 var(--radius) var(--radius) !important;
-}
-.compose-form .compose-form__publish-button-wrapper {
-  overflow: visible !important;
-  max-width: 100%;
-  padding: 0;
-}
-.compose-form .compose-form__upload__actions {
-  z-index: 5;
-  position: relative;
-}
-.compose-form .compose-form__upload__actions button {
-  background: none;
-}
 .compose-form .compose-form__upload__thumbnail {
   display: flex;
   flex-direction: column;
+}
+.compose-form .compose-form__upload__actions {
+  z-index: 10;
 }
 .compose-form .compose-form__upload__warning {
   position: relative;
   flex-grow: 1;
   display: flex;
-}
-.compose-form .compose-form__upload__warning button {
-  margin-top: auto;
 }
 .compose-form .compose-form__upload__warning button.active {
   box-shadow: 0 0 0 100px rgba(0,0,0,0.75);
@@ -605,7 +552,6 @@ a:focus-visible,
   height: 100%;
   font-weight: bold;
   font-size: 1.1em;
-  color: inherit;
   transition: background 0.2s, transform 0.2s cubic-bezier(0, 0, 0, 1) !important;
 }
 .compose-form .compose-form__upload__warning button.active svg {
@@ -618,16 +564,33 @@ a:focus-visible,
 }
 .compose-form__highlightable {
   border-radius: var(--radius);
-  overflow: visible !important;
+/* 			.character-counter {
+      position absolute
+      inset-inline-end 0
+      bottom calc(100%)
+      padding 4px
+      font-size 13px
+    } */
 }
-.compose-form__highlightable #cw-spoiler-input {
-  border-radius: 0 !important;
+.compose-form__highlightable > .compose-form__dropdowns button {
+  border: 0;
+  padding: 4px;
+  transition: background 0.2s;
 }
-.compose-form__highlightable textarea {
-  background: none !important;
+.compose-form__highlightable > .compose-form__dropdowns button::after {
+  content: "";
+  border: 0.3em solid currentcolor;
+  border-top-color: transparent;
+  border-left-color: transparent;
+  transform: rotate(45deg);
+  margin-top: -0.2em;
+  margin-inline: 0px 2px;
 }
-.compose-form__highlightable .compose-form__dropdowns {
-  max-width: calc(100% - 7ch);
+.compose-form__highlightable > .compose-form__dropdowns button:hover:not(.active) {
+  background: var(--hover-color);
+}
+.compose-form__highlightable .compose-form__dropdowns + .autosuggest-textarea textarea {
+  padding-top: 0;
 }
 .compose-form__highlightable .compose-form__actions {
   position: relative;
@@ -636,29 +599,27 @@ a:focus-visible,
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  gap: 0;
+  gap: 4px;
   flex-grow: 9999;
 }
-.compose-form__highlightable .compose-form__buttons * {
+.compose-form__highlightable .compose-form__buttons :not(.character-counter) {
   display: flex;
+  justify-content: center;
   flex-grow: 1;
+  aspect-ratio: 1;
+  padding: 0;
+  border-radius: 6px;
 }
 .compose-form__highlightable .compose-form__buttons label {
-  display: none;
+  display: none !important;
 }
-.compose-form__highlightable .compose-form__buttons button {
-  flex-grow: 1;
-  padding: 5px;
+.compose-form__highlightable .compose-form__buttons .character-counter {
+  flex-grow: 0;
+  min-width: 4ch;
+  padding-inline: 10px 4px;
 }
 .compose-form__highlightable .compose-form__submit button {
   padding: 8px 16px;
-}
-.compose-form__highlightable .character-counter {
-  position: absolute;
-  inset-inline-end: 0;
-  bottom: calc(100% + 12px);
-  padding: 4px;
-  font-size: 13px;
 }
 .server-banner .server-banner__hero {
   border-radius: var(--radius);
@@ -1409,10 +1370,6 @@ a:focus-visible,
 .status-card:not(.expanded) .status-card__image img {
   border-radius: 0;
 }
-.status-card:not(.interactive) .status-card__image {
-  position: relative;
-  aspect-ratio: unset !important;
-}
 .status-card__content {
   margin-block: auto;
   padding: 15px;
@@ -1424,7 +1381,6 @@ a:focus-visible,
 }
 .status-card__title {
   font-size: 1em;
-  margin-top: 0.2em;
   margin-bottom: 0;
   line-height: 1.4;
 }
@@ -1605,12 +1561,8 @@ a:focus-visible,
   background: var(--elevated-color);
   color: inherit;
 }
-.notification-ungrouped {
-  padding: 0;
-}
 .notification-ungrouped__header {
-  padding-top: 16px;
-  margin-bottom: 0;
+  margin-bottom: 10px;
 }
 .notification-ungrouped .status__wrapper {
   margin-inline: 0;
@@ -1619,9 +1571,6 @@ a:focus-visible,
 .notification-ungrouped .status__wrapper::before,
 .notification-ungrouped .status__wrapper::after {
   content: unset;
-}
-.notification-ungrouped .status {
-  padding: 16px !important;
 }
 .notification-group {
   padding: 16px;

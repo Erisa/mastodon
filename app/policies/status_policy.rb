@@ -41,10 +41,6 @@ class StatusPolicy < ApplicationPolicy
     owned?
   end
 
-  def list_quotes?
-    owned?
-  end
-
   alias unreblog? destroy?
 
   def update?

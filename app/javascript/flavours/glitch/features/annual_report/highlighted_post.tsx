@@ -6,6 +6,7 @@ import { useCallback } from 'react';
 
 import { FormattedMessage } from 'react-intl';
 
+import { DisplayName } from '@/flavours/glitch/components/display_name';
 import { toggleStatusSpoilers } from 'flavours/glitch/actions/statuses';
 import { DetailedStatus } from 'flavours/glitch/features/status/components/detailed_status';
 import { me } from 'flavours/glitch/initial_state';
@@ -82,11 +83,7 @@ export const HighlightedPost: React.FC<{
           id='annual_report.summary.highlighted_post.possessive'
           defaultMessage="{name}'s"
           values={{
-            name: account && (
-              <bdi
-                dangerouslySetInnerHTML={{ __html: account.display_name_html }}
-              />
-            ),
+            name: <DisplayName account={account} variant='simple' />,
           }}
         />
       </strong>

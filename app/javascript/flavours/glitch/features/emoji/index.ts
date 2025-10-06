@@ -1,4 +1,4 @@
-import initialState from '@/flavours/glitch/initial_state';
+import { initialState } from '@/flavours/glitch/initial_state';
 import { loadWorker } from '@/flavours/glitch/utils/workers';
 
 import { toSupportedLocale } from './locale';

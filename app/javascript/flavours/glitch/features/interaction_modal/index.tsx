@@ -7,6 +7,7 @@ import classNames from 'classnames';
 import { escapeRegExp } from 'lodash';
 import { useDebouncedCallback } from 'use-debounce';
 
+import { DisplayName } from '@/flavours/glitch/components/display_name';
 import { openModal, closeModal } from 'flavours/glitch/actions/modal';
 import { apiRequest } from 'flavours/glitch/api';
 import { Button } from 'flavours/glitch/components/button';
@@ -404,15 +405,13 @@ const InteractionModal: React.FC<{
   url: string;
 }> = ({ accountId, url }) => {
   const dispatch = useAppDispatch();
-  const displayNameHtml = useAppSelector(
-    (state) => state.accounts.get(accountId)?.display_name_html ?? '',
-  );
   const signupUrl = useAppSelector(
     (state) =>
       (state.server.getIn(['server', 'registrations', 'url'], null) ||
         '/auth/sign_up') as string,
   );
-  const name = <bdi dangerouslySetInnerHTML={{ __html: displayNameHtml }} />;
+  const account = useAppSelector((state) => state.accounts.get(accountId));
+  const name = <DisplayName account={account} variant='simple' />;
 
   const handleSignupClick = useCallback(() => {
     dispatch(
