@@ -226,6 +226,10 @@ code {
       list-style: disc;
       margin-inline-start: 18px;
     }
+
+    .icon {
+      vertical-align: -3px;
+    }
   }
 
   ul.hint {
@@ -301,7 +305,7 @@ code {
       color: $primary-text-color;
       display: block;
       margin-bottom: 8px;
-      word-wrap: break-word;
+      overflow-wrap: break-word;
       font-weight: 500;
     }
 
@@ -591,11 +595,14 @@ code {
   }
 
   .stacked-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     margin-top: 30px;
     margin-bottom: 15px;
   }
 
-  button:not(.button, .link-button, .help-button) {
+  .btn {
     display: block;
     width: 100%;
     border: 0;
@@ -612,8 +619,6 @@ code {
     cursor: pointer;
     font-weight: 500;
     outline: 0;
-    margin-bottom: 10px;
-    margin-inline-end: 10px;
 
     &:last-child {
       margin-inline-end: 0;
@@ -753,6 +758,12 @@ code {
 
   &.hidden {
     display: none;
+  }
+
+  &.hidden-on-touch-devices {
+    @media screen and (pointer: coarse) {
+      display: none;
+    }
   }
 
   a {

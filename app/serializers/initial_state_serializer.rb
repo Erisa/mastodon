@@ -37,6 +37,7 @@ class InitialStateSerializer < ActiveModel::Serializer
       store[:me]                = object_account.id.to_s
       store[:boost_modal]       = object_account_user.setting_boost_modal
       store[:favourite_modal]   = object_account_user.setting_favourite_modal
+      store[:quick_boosting]    = object_account_user.setting_quick_boosting
       store[:delete_modal]      = object_account_user.setting_delete_modal
       store[:missing_alt_text_modal] = object_account_user.settings['web.missing_alt_text_modal']
       store[:auto_play_gif]     = object_account_user.setting_auto_play_gif
@@ -133,13 +134,18 @@ class InitialStateSerializer < ActiveModel::Serializer
       sso_redirect: sso_redirect,
       status_page_url: Setting.status_page_url,
       streaming_api_base_url: Rails.configuration.x.streaming_api_base_url,
-      timeline_preview: Setting.timeline_preview,
       title: instance_presenter.title,
       trends_as_landing_page: Setting.trends_as_landing_page,
       trends_enabled: Setting.trends,
       version: instance_presenter.version,
       visible_reactions: Setting.visible_reactions,
       terms_of_service_enabled: TermsOfService.current.present?,
+      local_live_feed_access: Setting.local_live_feed_access,
+      bubble_live_feed_access: Setting.bubble_live_feed_access,
+      remote_live_feed_access: Setting.remote_live_feed_access,
+      local_topic_feed_access: Setting.local_topic_feed_access,
+      bubble_topic_feed_access: Setting.bubble_topic_feed_access,
+      remote_topic_feed_access: Setting.remote_topic_feed_access,
     }
   end
 

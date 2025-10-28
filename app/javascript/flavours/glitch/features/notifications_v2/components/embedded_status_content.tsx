@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import { useHistory } from 'react-router-dom';
 
@@ -6,16 +6,22 @@ import type { List } from 'immutable';
 
 import type { History } from 'history';
 
+import type { ApiMentionJSON } from '@/flavours/glitch/api_types/statuses';
+import { EmojiHTML } from '@/flavours/glitch/components/emoji/html';
+import { useElementHandledLink } from '@/flavours/glitch/components/status/handled_link';
+import type { Status } from '@/flavours/glitch/models/status';
+import { isModernEmojiEnabled } from '@/flavours/glitch/utils/environment';
+
 import type { Mention } from './embedded_status';
 
 const handleMentionClick = (
   history: History,
-  mention: Mention,
+  mention: ApiMentionJSON,
   e: MouseEvent,
 ) => {
   if (e.button === 0 && !(e.ctrlKey || e.metaKey)) {
     e.preventDefault();
-    history.push(`/@${mention.get('acct')}`);
+    history.push(`/@${mention.acct}`);
   }
 };
 
@@ -31,16 +37,29 @@ const handleHashtagClick = (
 };
 
 export const EmbeddedStatusContent: React.FC<{
-  content: string;
-  mentions: List<Mention>;
-  language: string;
+  status: Status;
   className?: string;
-}> = ({ content, mentions, language, className }) => {
+}> = ({ status, className }) => {
   const history = useHistory();
+
+  const mentions = useMemo(
+    () => (status.get('mentions') as List<Mention>).toJS(),
+    [status],
+  );
+  const hrefToMention = useCallback(
+    (href: string) => {
+      return mentions.find((item) => item.url === href);
+    },
+    [mentions],
+  );
+  const htmlHandlers = useElementHandledLink({
+    hashtagAccountId: status.get('account') as string | undefined,
+    hrefToMention,
+  });
 
   const handleContentRef = useCallback(
     (node: HTMLDivElement | null) => {
-      if (!node) {
+      if (!node || isModernEmojiEnabled()) {
         return;
       }
 
@@ -53,7 +72,7 @@ export const EmbeddedStatusContent: React.FC<{
 
         link.classList.add('status-link');
 
-        const mention = mentions.find((item) => link.href === item.get('url'));
+        const mention = mentions.find((item) => link.href === item.url);
 
         if (mention) {
           link.addEventListener(
@@ -61,8 +80,8 @@ export const EmbeddedStatusContent: React.FC<{
             handleMentionClick.bind(null, history, mention),
             false,
           );
-          link.setAttribute('title', `@${mention.get('acct')}`);
-          link.setAttribute('href', `/@${mention.get('acct')}`);
+          link.setAttribute('title', `@${mention.acct}`);
+          link.setAttribute('href', `/@${mention.acct}`);
         } else if (
           link.textContent.startsWith('#') ||
           link.previousSibling?.textContent?.endsWith('#')
@@ -83,11 +102,12 @@ export const EmbeddedStatusContent: React.FC<{
   );
 
   return (
-    <div
+    <EmojiHTML
+      {...htmlHandlers}
       className={className}
       ref={handleContentRef}
-      lang={language}
-      dangerouslySetInnerHTML={{ __html: content }}
+      lang={status.get('language') as string}
+      htmlString={status.get('contentHtml') as string}
     />
   );
 };

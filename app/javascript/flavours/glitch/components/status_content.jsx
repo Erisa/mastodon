@@ -19,6 +19,7 @@ import { decode as decodeIDNA } from 'flavours/glitch/utils/idna';
 import { isModernEmojiEnabled } from '../utils/environment';
 
 import { EmojiHTML } from './emoji/html';
+import { HandledLink } from './status/handled_link';
 
 const MAX_HEIGHT = 706; // 22px * 32 (+ 2px padding at the top)
 
@@ -83,9 +84,6 @@ const isLinkMisleading = (link) => {
  * @returns {string}
  */
 export function getStatusContent(status) {
-  if (isModernEmojiEnabled()) {
-    return status.getIn(['translation', 'content']) || status.get('content');
-  }
   return status.getIn(['translation', 'contentHtml']) || status.get('contentHtml');
 }
 
@@ -163,6 +161,23 @@ class StatusContent extends PureComponent {
     }
 
     const { status, onCollapsedToggle } = this.props;
+    if (status.get('collapsed', null) === null && onCollapsedToggle) {
+      const { collapsible, onClick } = this.props;
+
+      const collapsed =
+          collapsible
+          && onClick
+          && node.clientHeight > MAX_HEIGHT
+          && status.get('spoiler_text').length === 0;
+
+      onCollapsedToggle(collapsed);
+    }
+
+    // Exit if modern emoji is enabled, as it handles links using the HandledLink component.
+    if (isModernEmojiEnabled()) {
+      return;
+    }
+
     const links = node.querySelectorAll('a');
 
     let link, mention;
@@ -225,18 +240,6 @@ class StatusContent extends PureComponent {
         }
       }
     }
-
-    if (status.get('collapsed', null) === null && onCollapsedToggle) {
-      const { collapsible, onClick } = this.props;
-
-      const collapsed =
-          collapsible
-          && onClick
-          && node.clientHeight > MAX_HEIGHT
-          && status.get('spoiler_text').length === 0;
-
-      onCollapsedToggle(collapsed);
-    }
   }
 
   componentDidMount () {
@@ -298,6 +301,27 @@ class StatusContent extends PureComponent {
     this.node = c;
   };
 
+  handleElement = (element, { key, ...props }, children) => {
+    if (element instanceof HTMLAnchorElement) {
+      const mention = this.props.status.get('mentions').find(item => element.href === item.get('url'));
+      return (
+        <HandledLink
+          {...props}
+          href={element.href}
+          text={element.innerText}
+          hashtagAccountId={this.props.status.getIn(['account', 'id'])}
+          mention={mention?.toJSON()}
+          key={key}
+        >
+          {children}
+        </HandledLink>
+      );
+    } else if (element.classList.contains('quote-inline')) {
+      return null;
+    }
+    return undefined;
+  }
+
   render () {
     const { status, intl, statusContent } = this.props;
 
@@ -342,6 +366,7 @@ class StatusContent extends PureComponent {
               lang={language}
               htmlString={content}
               extraEmojis={status.get('emojis')}
+              onElement={this.handleElement}
             />
 
             {poll}
@@ -359,6 +384,7 @@ class StatusContent extends PureComponent {
             lang={language}
             htmlString={content}
             extraEmojis={status.get('emojis')}
+            onElement={this.handleElement}
           />
 
           {poll}

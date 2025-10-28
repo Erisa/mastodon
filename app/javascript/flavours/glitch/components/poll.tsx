@@ -8,6 +8,7 @@ import classNames from 'classnames';
 import { animated, useSpring } from '@react-spring/web';
 import escapeTextContentForBrowser from 'escape-html';
 
+import { EmojiHTML } from '@/flavours/glitch/components/emoji/html';
 import CheckIcon from '@/material-icons/400-24px/check.svg?react';
 import { openModal } from 'flavours/glitch/actions/modal';
 import { fetchPoll, vote } from 'flavours/glitch/actions/polls';
@@ -305,10 +306,11 @@ const PollOption: React.FC<PollOptionProps> = (props) => {
           </span>
         )}
 
-        <span
+        <EmojiHTML
           className='poll__option__text translate'
           lang={lang}
-          dangerouslySetInnerHTML={{ __html: titleHtml }}
+          htmlString={titleHtml}
+          extraEmojis={poll.emojis}
         />
 
         {!!voted && (

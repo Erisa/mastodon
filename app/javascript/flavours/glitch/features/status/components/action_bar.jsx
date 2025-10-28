@@ -20,9 +20,10 @@ import { accountAdminLink, statusAdminLink } from 'flavours/glitch/utils/backend
 
 import { IconButton } from '../../../components/icon_button';
 import { Dropdown } from 'flavours/glitch/components/dropdown_menu';
-import { me, maxReactions } from '../../../initial_state';
+import { me, maxReactions, quickBoosting } from '../../../initial_state';
 import EmojiPickerDropdown from '../../compose/containers/emoji_picker_dropdown_container';
 import { BoostButton } from '@/flavours/glitch/components/status/boost_button';
+import { quoteItemState, selectStatusState } from '@/flavours/glitch/components/status/boost_button_utils';
 
 const messages = defineMessages({
   delete: { id: 'status.delete', defaultMessage: 'Delete' },
@@ -59,6 +60,7 @@ const mapStateToProps = (state, { status }) => {
   const quotedStatusId = status.getIn(['quote', 'quoted_status']);
   return ({
     quotedAccountId: quotedStatusId ? state.getIn(['statuses', quotedStatusId, 'account']) : null,
+    statusQuoteState: selectStatusState(state, status),
   });
 };
 
@@ -66,6 +68,7 @@ class ActionBar extends PureComponent {
   static propTypes = {
     identity: identityContextPropShape,
     status: ImmutablePropTypes.map.isRequired,
+    statusQuoteState: PropTypes.object,
     quotedAccountId: ImmutablePropTypes.string,
     onReply: PropTypes.func.isRequired,
     onReblog: PropTypes.func.isRequired,
@@ -113,6 +116,10 @@ class ActionBar extends PureComponent {
 
   handleRevokeQuoteClick = () => {
     this.props.onRevokeQuote(this.props.status);
+  };
+
+  handleQuoteClick = () => {
+    this.props.onQuote(this.props.status);
   };
 
   handleQuotePolicyChange = () => {
@@ -171,7 +178,7 @@ class ActionBar extends PureComponent {
   };
 
   render () {
-    const { status, quotedAccountId, intl } = this.props;
+    const { status, statusQuoteState, quotedAccountId, intl } = this.props;
     const { signedIn, permissions } = this.props.identity;
 
     const publicStatus       = ['public', 'unlisted'].includes(status.get('visibility'));
@@ -194,6 +201,19 @@ class ActionBar extends PureComponent {
 
     if (publicStatus && (signedIn || !isRemote)) {
       menu.push({ text: intl.formatMessage(messages.embed), action: this.handleEmbed });
+    }
+
+    if (quickBoosting && signedIn) {
+      const quoteItem = quoteItemState(statusQuoteState);
+      menu.push(null);
+      menu.push({
+        text: intl.formatMessage(quoteItem.title),
+        description: quoteItem.meta
+          ? intl.formatMessage(quoteItem.meta)
+          : undefined,
+        disabled: quoteItem.disabled,
+        action: this.handleQuoteClick,
+      });
     }
 
     if (signedIn) {

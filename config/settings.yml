@@ -12,7 +12,12 @@ defaults: &defaults
   registrations_mode: 'none'
   profile_directory: true
   closed_registrations_message: ''
-  timeline_preview: false
+  local_live_feed_access: 'authenticated'
+  bubble_live_feed_access: 'authenticated'
+  remote_live_feed_access: 'authenticated'
+  local_topic_feed_access: 'authenticated'
+  bubble_topic_feed_access: 'authenticated'
+  remote_topic_feed_access: 'authenticated'
   show_staff_badge: true
   preview_sensitive_media: false
   noindex: false
@@ -40,7 +45,7 @@ defaults: &defaults
   captcha_enabled: false
   reject_pattern: ''
   reject_blurhash: ''
-  allow_referer_origin: false
+  allow_referrer_origin: false
 
 development:
   <<: *defaults

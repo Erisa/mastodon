@@ -2,7 +2,7 @@ import type { FC } from 'react';
 import { useContext, useEffect, useState } from 'react';
 
 import { EMOJI_TYPE_CUSTOM } from '@/flavours/glitch/features/emoji/constants';
-import { useEmojiAppState } from '@/flavours/glitch/features/emoji/hooks';
+import { useEmojiAppState } from '@/flavours/glitch/features/emoji/mode';
 import { unicodeHexToUrl } from '@/flavours/glitch/features/emoji/normalize';
 import {
   isStateLoaded,

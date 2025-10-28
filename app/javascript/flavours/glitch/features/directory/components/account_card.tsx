@@ -1,5 +1,6 @@
 import { FormattedMessage } from 'react-intl';
 
+import { EmojiHTML } from '@/flavours/glitch/components/emoji/html';
 import { Avatar } from 'flavours/glitch/components/avatar';
 import { DisplayName } from 'flavours/glitch/components/display_name';
 import { FollowButton } from 'flavours/glitch/components/follow_button';
@@ -42,9 +43,10 @@ export const AccountCard: React.FC<{ accountId: string }> = ({ accountId }) => {
       </Permalink>
 
       {account.get('note').length > 0 && (
-        <div
-          className='account-card__bio translate animate-parent'
-          dangerouslySetInnerHTML={{ __html: account.get('note_emojified') }}
+        <EmojiHTML
+          className='account-card__bio translate'
+          htmlString={account.get('note_emojified')}
+          extraEmojis={account.get('emojis')}
         />
       )}
 

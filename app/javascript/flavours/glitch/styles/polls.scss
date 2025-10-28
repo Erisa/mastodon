@@ -6,12 +6,6 @@
   margin-top: 16px;
   font-size: 14px;
 
-  ul,
-  .e-content & ul {
-    margin: 0;
-    list-style: none;
-  }
-
   li {
     margin-bottom: 10px;
     position: relative;
@@ -66,7 +60,6 @@
 
     &__text {
       display: inline-block;
-      word-wrap: break-word;
       overflow-wrap: break-word;
       max-width: calc(100% - 45px - 25px);
     }

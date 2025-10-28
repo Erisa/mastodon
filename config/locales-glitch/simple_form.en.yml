@@ -26,6 +26,9 @@ en:
         setting_skin: Skin
         setting_system_emoji_font: Use system's default font for emojis (applies to Glitch flavour only)
         setting_visible_reactions: Number of visible emoji reactions
+      form_admin_settings:
+        bubble_live_feed_access: Access to live feeds featuring bubble posts
+        bubble_topic_feed_access: Access to hashtag and link feeds featuring bubble posts
       notification_emails:
         reaction: Someone reacted to your post
         trending_link: New trending link requires review

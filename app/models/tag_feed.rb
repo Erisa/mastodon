@@ -10,6 +10,7 @@ class TagFeed < PublicFeed
   # @option [Enumerable<String>] :all
   # @option [Enumerable<String>] :none
   # @option [Boolean] :local
+  # @option [Boolean] :bubble
   # @option [Boolean] :remote
   # @option [Boolean] :only_media
   def initialize(tag, account, options = {})
@@ -23,6 +24,8 @@ class TagFeed < PublicFeed
   # @param [Integer] min_id
   # @return [Array<Status>]
   def get(limit, max_id = nil, since_id = nil, min_id = nil)
+    return [] if incompatible_feed_settings?
+
     scope = public_scope
 
     scope.merge!(without_local_only_scope) unless local_account?
@@ -39,6 +42,18 @@ class TagFeed < PublicFeed
   end
 
   private
+
+  def local_feed_setting
+    Setting.local_topic_feed_access
+  end
+
+  def bubble_feed_setting
+    Setting.bubble_topic_feed_access
+  end
+
+  def remote_feed_setting
+    Setting.remote_topic_feed_access
+  end
 
   def tagged_with_any_scope
     Status.group(:id).tagged_with(tags_for(Array(@tag.name) | Array(options[:any])))
