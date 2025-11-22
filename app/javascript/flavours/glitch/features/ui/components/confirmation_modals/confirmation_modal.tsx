@@ -26,6 +26,7 @@ export const ConfirmationModal: React.FC<
     onSecondary?: () => void;
     onConfirm: () => void;
     closeWhenConfirm?: boolean;
+    extraContent?: React.ReactNode;
   } & BaseConfirmationModalProps
 > = ({
   title,
@@ -37,6 +38,7 @@ export const ConfirmationModal: React.FC<
   secondary,
   onSecondary,
   closeWhenConfirm = true,
+  extraContent,
 }) => {
   const handleClick = useCallback(() => {
     if (closeWhenConfirm) {
@@ -57,12 +59,14 @@ export const ConfirmationModal: React.FC<
         <div className='safety-action-modal__confirmation'>
           <h1>{title}</h1>
           {message && <p>{message}</p>}
+
+          {extraContent}
         </div>
       </div>
 
       <div className='safety-action-modal__bottom'>
         <div className='safety-action-modal__actions'>
-          <button onClick={onClose} className='link-button'>
+          <button onClick={onClose} className='link-button' type='button'>
             {cancel ?? (
               <FormattedMessage
                 id='confirmation_modal.cancel'
@@ -74,7 +78,11 @@ export const ConfirmationModal: React.FC<
           {secondary && (
             <>
               <div className='spacer' />
-              <button onClick={handleSecondary} className='link-button'>
+              <button
+                onClick={handleSecondary}
+                className='link-button'
+                type='button'
+              >
                 {secondary}
               </button>
             </>

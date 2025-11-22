@@ -824,6 +824,8 @@ he:
         view_dashboard_description: אפשר למשתמשים לגשת ללוח המחוונים
         view_devops: DevOps
         view_devops_description: מאפשר למשתמשים לגשת ללוחות המחוונים של Sidekiq ושל pgHero
+        view_feeds: צפיה בפיד החי ונושאים
+        view_feeds_description: מאפשר למשמתמשיםות גישה לפיד החי ופיד נושאים בלי קשר להגדרות השרת
       title: תפקידים
     rules:
       add_new: הוספת כלל
@@ -879,7 +881,13 @@ he:
       feed_access:
         modes:
           authenticated: משתמשים מאומתים בלבד
+          disabled: נדרש תפקיד משתמש מסוים
           public: כולם
+      landing_page:
+        values:
+          about: אודות
+          local_feed: פיד מקומי
+          trends: נושאים חמים
       registrations:
         moderation_recommandation: יש לוודא שלאתר יש צוות מנחות ומנחי שיחה מספק ושירותי בטרם תבחרו לפתוח הרשמה לכולם!
         preamble: שליטה בהרשאות יצירת חשבון בשרת שלך.
@@ -1742,7 +1750,7 @@ he:
       disabled_account: חשבונך הנוכחי לא יהיה שמיש לחלוטין לאחר מכן. עם זאת, ניתן יהיה לגשת ליצוא המידע, וכמו כן להפעילו מחדש.
       followers: פעולה זו תעביר את כל העוקבים מהחשבון הנוכחי לחשבון החדש
       only_redirect_html: לחילופין, ניתן להסתפק ב<a href="%{path}">הכוונה מחדש בפרופילך</a>.
-      other_data: שום מידע לא יועבר אוטומטית
+      other_data: אף מידע נוסף לא יועבר אוטומטית (ובכלל זה הודעותיך ורשימת נעקביך)
       redirect: פרופיל חשבונך הנוכחי יעודכן עם הודעת הכוונה מחדש ויוחרג מחיפושים
   moderation:
     title: ניהול קהילה
@@ -2007,6 +2015,7 @@ he:
     errors:
       in_reply_not_found: נראה שההודעה שנסית להגיב לה לא קיימת.
       quoted_status_not_found: נראה שההודעה שנסית לצטט לא קיימת.
+      quoted_user_not_mentioned: לא ניתן לצטט משתמש שאיננו מאוזכר בהודעה פרטית.
     over_character_limit: חריגה מגבול התווים של %{max}
     pin_errors:
       direct: לא ניתן לקבע הודעות שנראותן מוגבלת למכותבים בלבד

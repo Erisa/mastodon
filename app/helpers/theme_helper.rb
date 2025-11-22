@@ -6,8 +6,8 @@ module ThemeHelper
 
     if theme == 'system'
       ''.html_safe.tap do |tags|
-        tags << vite_stylesheet_tag("skins/#{flavour}/mastodon-light", type: :virtual, media: 'not all and (prefers-color-scheme: dark)', crossorigin: 'anonymous')
-        tags << vite_stylesheet_tag("skins/#{flavour}/default", type: :virtual, media: '(prefers-color-scheme: dark)', crossorigin: 'anonymous')
+        tags << vite_stylesheet_tag(theme_path_for(flavour, 'mastodon-light'), type: :virtual, media: 'not all and (prefers-color-scheme: dark)', crossorigin: 'anonymous')
+        tags << vite_stylesheet_tag(theme_path_for(flavour, 'default'), type: :virtual, media: '(prefers-color-scheme: dark)', crossorigin: 'anonymous')
       end
     elsif theme == 'system-modern'
       ''.html_safe.tap do |tags|
@@ -15,7 +15,7 @@ module ThemeHelper
         tags << vite_stylesheet_tag("skins/#{flavour}/modern-dark", type: :virtual, media: '(prefers-color-scheme: dark)', crossorigin: 'anonymous')
       end
     else
-      vite_stylesheet_tag "skins/#{flavour}/#{theme}", type: :virtual, media: 'all', crossorigin: 'anonymous'
+      vite_stylesheet_tag theme_path_for(flavour, theme), type: :virtual, media: 'all', crossorigin: 'anonymous'
     end
   end
 
@@ -61,5 +61,9 @@ module ThemeHelper
 
   def theme_color_for(theme)
     ['mastodon-light', 'modern-light'].include?(theme) ? Themes::THEME_COLORS[:light] : Themes::THEME_COLORS[:dark]
+  end
+
+  def theme_path_for(flavour, theme)
+    "skins/#{flavour}/#{theme}"
   end
 end

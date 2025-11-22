@@ -50,10 +50,9 @@ class InitialStateSerializer < ActiveModel::Serializer
       store[:use_blurhash]      = object_account_user.setting_use_blurhash
       store[:use_pending_items] = object_account_user.setting_use_pending_items
       store[:default_content_type] = object_account_user.setting_default_content_type
-      store[:system_emoji_font] = object_account_user.setting_system_emoji_font
       store[:show_trends]       = Setting.trends && object_account_user.setting_trends
       store[:visible_reactions] = object_account_user.setting_visible_reactions
-      store[:emoji_style]       = object_account_user.settings['web.emoji_style'] if Mastodon::Feature.modern_emojis_enabled?
+      store[:emoji_style]       = object_account_user.settings['web.emoji_style']
     else
       store[:auto_play_gif] = Setting.auto_play_gif
       store[:display_media] = Setting.display_media
@@ -135,7 +134,7 @@ class InitialStateSerializer < ActiveModel::Serializer
       status_page_url: Setting.status_page_url,
       streaming_api_base_url: Rails.configuration.x.streaming_api_base_url,
       title: instance_presenter.title,
-      trends_as_landing_page: Setting.trends_as_landing_page,
+      landing_page: Setting.landing_page,
       trends_enabled: Setting.trends,
       version: instance_presenter.version,
       visible_reactions: Setting.visible_reactions,

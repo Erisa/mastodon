@@ -12,7 +12,6 @@ import Overlay from 'react-overlays/Overlay';
 
 import MoodIcon from '@/material-icons/400-20px/mood.svg?react';
 import { IconButton } from 'flavours/glitch/components/icon_button';
-import { useSystemEmojiFont } from 'flavours/glitch/initial_state';
 
 import { buildCustomEmojis, categoriesFromEmojis } from '../../emoji/emoji';
 import { EmojiPicker as EmojiPickerAsync } from '../../ui/util/async-components';
@@ -99,12 +98,12 @@ class ModifierPickerMenu extends PureComponent {
 
     return (
       <div className='emoji-picker-dropdown__modifiers__menu' style={{ display: active ? 'block' : 'none' }} ref={this.setRef}>
-        <button type='button' onClick={this.handleClick} data-index={1}><Emoji emoji='fist' size={22} skin={1} native={useSystemEmojiFont} /></button>
-        <button type='button' onClick={this.handleClick} data-index={2}><Emoji emoji='fist' size={22} skin={2} native={useSystemEmojiFont} /></button>
-        <button type='button' onClick={this.handleClick} data-index={3}><Emoji emoji='fist' size={22} skin={3} native={useSystemEmojiFont} /></button>
-        <button type='button' onClick={this.handleClick} data-index={4}><Emoji emoji='fist' size={22} skin={4} native={useSystemEmojiFont} /></button>
-        <button type='button' onClick={this.handleClick} data-index={5}><Emoji emoji='fist' size={22} skin={5} native={useSystemEmojiFont} /></button>
-        <button type='button' onClick={this.handleClick} data-index={6}><Emoji emoji='fist' size={22} skin={6} native={useSystemEmojiFont} /></button>
+        <button type='button' onClick={this.handleClick} data-index={1}><Emoji emoji='fist' size={22} skin={1} /></button>
+        <button type='button' onClick={this.handleClick} data-index={2}><Emoji emoji='fist' size={22} skin={2} /></button>
+        <button type='button' onClick={this.handleClick} data-index={3}><Emoji emoji='fist' size={22} skin={3} /></button>
+        <button type='button' onClick={this.handleClick} data-index={4}><Emoji emoji='fist' size={22} skin={4} /></button>
+        <button type='button' onClick={this.handleClick} data-index={5}><Emoji emoji='fist' size={22} skin={5} /></button>
+        <button type='button' onClick={this.handleClick} data-index={6}><Emoji emoji='fist' size={22} skin={6} /></button>
       </div>
     );
   }
@@ -134,12 +133,12 @@ class ModifierPicker extends PureComponent {
     this.props.onClose();
   };
 
-  render () {
+  render() {
     const { active, modifier } = this.props;
 
     return (
       <div className='emoji-picker-dropdown__modifiers'>
-        <Emoji emoji='fist' size={22} skin={modifier} onClick={this.handleClick} native={useSystemEmojiFont} />
+        <Emoji emoji='fist' size={22} skin={modifier} onClick={this.handleClick} />
         <ModifierPickerMenu active={active} onSelect={this.handleSelect} onClose={this.props.onClose} />
       </div>
     );
@@ -291,7 +290,6 @@ class EmojiPickerMenuImpl extends PureComponent {
           notFound={notFoundFn}
           autoFocus={this.state.readyToFocus}
           emojiTooltip
-          native={useSystemEmojiFont}
         />
 
         <ModifierPicker

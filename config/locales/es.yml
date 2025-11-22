@@ -517,13 +517,13 @@ es:
         title: Fediverse Auxiliary Service Providers (Proveedores de Servicio Auxiliares del Fediverso)
       title: FASP
     follow_recommendations:
-      description_html: "<strong>Las recomendaciones de cuentas ayudan a los nuevos usuarios a encontrar rápidamente contenido interesante</strong>. Cuando un usuario no ha interactuado con otros lo suficiente como para suscitar recomendaciones personalizadas de cuentas a las que seguir, en su lugar se le recomiendan estas cuentas. Se recalculan diariamente a partir de una mezcla de cuentas con el mayor número de interacciones recientes y con el mayor número de seguidores locales con un idioma determinado."
+      description_html: "<strong>Las recomendaciones de cuentas a las que seguir ayudan a los nuevos usuarios a encontrar rápidamente contenido interesante</strong>. Cuando un usuario no ha interactuado con otros lo suficiente como para formar recomendaciones personalizadas de seguimiento, estas cuentas se recomiendan en su lugar. Se recalculan diariamente a partir de una mezcla de cuentas con las interacciones más recientes y el mayor número de seguidores para un idioma determinado."
       language: Para el idioma
       status: Estado
-      suppress: Suprimir recomendación de cuentas
+      suppress: Eliminar recomendación de cuentas a las que seguir
       suppressed: Suprimida
-      title: Recomendaciones de cuentas
-      unsuppress: Restaurar recomendaciones de cuentas
+      title: Recomendaciones de cuentas a las que seguir
+      unsuppress: Restaurar recomendaciones de cuentas a las que seguir
     instances:
       audit_log:
         title: Registros de auditoría recientes
@@ -796,6 +796,8 @@ es:
         view_dashboard_description: Permite a los usuarios acceder al panel de control y varias métricas
         view_devops: DevOps
         view_devops_description: Permite a los usuarios acceder a los paneles de control Sidekiq y pgHero
+        view_feeds: Visualización de cronologías y tendencias
+        view_feeds_description: Permitir a los usuarios acceder a las cronologías públicas y tendencias sin importar la configuración del servidor
       title: Roles
     rules:
       add_new: Añadir norma
@@ -851,7 +853,13 @@ es:
       feed_access:
         modes:
           authenticated: Solo usuarios autenticados
+          disabled: Requerir un rol de usuario específico
           public: Todos
+      landing_page:
+        values:
+          about: Acerca de
+          local_feed: Cronología local
+          trends: Tendencias
       registrations:
         moderation_recommandation: Por favor, ¡asegúrate de tener un equipo de moderación adecuado y reactivo antes de abrir los registros a todo el mundo!
         preamble: Controla quién puede crear una cuenta en tu servidor.
@@ -1664,7 +1672,7 @@ es:
       disabled_account: Tu cuenta actual no será completamente utilizable después. Sin embargo, tendrás acceso a la exportación de datos así como a la reactivación.
       followers: Esta acción migrará a todos los seguidores de la cuenta actual a la nueva cuenta
       only_redirect_html: Alternativamente, solo puedes <a href="%{path}">poner una redirección en tu perfil</a>.
-      other_data: No se moverán otros datos automáticamente
+      other_data: Ningún otro dato se moverá automáticamente (esto incluye tus publicaciones y la lista de cuentas que sigues)
       redirect: El perfil de tu cuenta actual se actualizará con un aviso de redirección y será excluido de las búsquedas
   moderation:
     title: Moderación
@@ -1921,6 +1929,7 @@ es:
     errors:
       in_reply_not_found: La publicación a la que intentas responder no existe.
       quoted_status_not_found: La publicación que estás intentando citar no parece existir.
+      quoted_user_not_mentioned: No se puede citar a un usuario no mencionado en una Mención Privada.
     over_character_limit: Límite de caracteres de %{max} superado
     pin_errors:
       direct: Las publicaciones que son visibles solo para los usuarios mencionados no pueden fijarse

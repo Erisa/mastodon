@@ -5,8 +5,10 @@ import { defineMessages, useIntl } from 'react-intl';
 
 import classNames from 'classnames';
 
-import { changeComposeVisibility } from '@/flavours/glitch/actions/compose';
-import { setComposeQuotePolicy } from '@/flavours/glitch/actions/compose_typed';
+import {
+  changeComposeVisibility,
+  setComposeQuotePolicy,
+} from '@/flavours/glitch/actions/compose_typed';
 import { openModal } from '@/flavours/glitch/actions/modal';
 import type { ApiQuotePolicy } from '@/flavours/glitch/api_types/quotes';
 import type { StatusVisibility } from '@/flavours/glitch/api_types/statuses';

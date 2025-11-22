@@ -73,7 +73,6 @@ ja:
       featured_tag:
         name: 最近使用したハッシュタグ
       filters:
-        action: 投稿がフィルタに一致したときに実行するアクションを選択
         actions:
           blur: メディアは警告して非表示にするが、テキストは表示する
           hide: フィルタに一致した投稿を完全に非表示にします
@@ -82,7 +81,6 @@ ja:
         activity_api_enabled: 週単位でローカルで公開された投稿数、アクティブユーザー数、新規登録者数を表示します
         app_icon: モバイル端末で表示されるデフォルトのアプリアイコンを独自のアイコンで上書きします。WEBP、PNG、GIF、JPGが利用可能です。
         backups_retention_period: ユーザーには、後でダウンロードするために投稿のアーカイブを生成する機能があります。正の値に設定すると、これらのアーカイブは指定された日数後に自動的にストレージから削除されます。
-        bootstrap_timeline_accounts: これらのアカウントは、新しいユーザー向けのおすすめユーザーの一番上にピン留めされます。
         closed_registrations_message: アカウント作成を停止している時に表示されます
         content_cache_retention_period: 他のサーバーからのすべての投稿（ブーストや返信を含む）は、指定された日数が経過すると、ローカルユーザーとのやりとりに関係なく削除されます。これには、ローカルユーザーがブックマークやお気に入りとして登録した投稿も含まれます。異なるサーバーのユーザー間の非公開な返信も失われ、復元することは不可能です。この設定の使用は特別な目的のインスタンスのためのものであり、一般的な目的のサーバーで使用した場合、多くのユーザーの期待を裏切ることになります。
         custom_css: ウェブ版のMastodonでカスタムスタイルを適用できます。
@@ -104,7 +102,6 @@ ja:
         thumbnail: サーバー情報と共に表示される、アスペクト比が約 2:1 の画像。
         trendable_by_default: トレンドの審査を省略します。トレンドは掲載後でも個別に除外できます。
         trends: トレンドは、サーバー上で人気を集めている投稿、ハッシュタグ、ニュース記事などが表示されます。
-        trends_as_landing_page: ログインしていないユーザーに対して、サーバーの説明の代わりにトレンドコンテンツを表示します。トレンドを有効にする必要があります。
       form_challenge:
         current_password: セキュリティ上重要なエリアにアクセスしています
       imports:
@@ -237,6 +234,7 @@ ja:
         setting_emoji_style: 絵文字スタイル
         setting_expand_spoilers: 閲覧注意としてマークされた投稿を常に展開する
         setting_hide_network: 繋がりを隠す
+        setting_quick_boosting: クイックブーストの有効化
         setting_reduce_motion: アニメーションの動きを減らす
         setting_system_font_ui: システムのデフォルトフォントを使う
         setting_system_scrollbars_ui: システムのデフォルトのスクロールバーを使う
@@ -290,7 +288,6 @@ ja:
         thumbnail: サーバーのサムネイル
         trendable_by_default: 審査前のトレンドの掲載を許可する
         trends: トレンドを有効にする
-        trends_as_landing_page: 新規登録画面にトレンドを表示する
       interactions:
         must_be_follower: フォロワー以外からの通知をブロック
         must_be_following: フォローしていないユーザーからの通知をブロック
@@ -351,9 +348,7 @@ ja:
         jurisdiction: 裁判管轄
         min_age: 登録可能な最低年齢
       user:
-        date_of_birth_1i: 日
         date_of_birth_2i: 月
-        date_of_birth_3i: 年
         role: ロール
         time_zone: タイムゾーン
       user_role:

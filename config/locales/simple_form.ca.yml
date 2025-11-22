@@ -76,7 +76,7 @@ ca:
       featured_tag:
         name: 'Aquí estan algunes de les etiquetes que més has usat recentment:'
       filters:
-        action: Tria quina acció cal executar quan un apunt coincideixi amb el filtre
+        action: Trieu quina acció executar quan una publicació coincideixi amb el filtre
         actions:
           blur: Amaga el contingut multimèdia rere un avís, sense amagar el text en si
           hide: Ocultar completament el contingut filtrat, comportant-se com si no existís
@@ -85,7 +85,6 @@ ca:
         activity_api_enabled: Contador de tuts publicats localment, usuaris actius i registres nous en períodes setmanals
         app_icon: WEBP, PNG, GIF o JPG. Canvia la icona per defecte de l'app en dispositius mòbils per una de personalitzada.
         backups_retention_period: Els usuaris poden generar arxius de les seves publicacions per a baixar-los més endavant. Quan tingui un valor positiu, els arxius s'esborraran del vostre emmagatzematge després del nombre donat de dies.
-        bootstrap_timeline_accounts: Aquests comptes es fixaran en la part superior de les recomanacions de seguiment dels nous usuaris.
         closed_registrations_message: Es mostra quan el registres estan tancats
         content_cache_retention_period: S'esborraran totes les publicacions d'altres servidors (impulsos i respostes inclosos) passats els dies indicats, sense tenir en consideració les interaccions d'usuaris locals amb aquestes publicacions. Això inclou les publicacions que un usuari local hagi marcat com a favorites. També es perdran, i no es podran recuperar, les mencions privades entre usuaris d'instàncies diferents. Aquest paràmetre està pensat per a instàncies amb un propòsit especial i trencarà les expectatives dels usuaris si s'utilitza en una instància convencional.
         custom_css: Pots aplicar estils personalitzats en la versió web de Mastodon.
@@ -107,7 +106,6 @@ ca:
         thumbnail: Una imatge d'aproximadament 2:1 que es mostra al costat la informació del teu servidor.
         trendable_by_default: Omet la revisió manual del contingut en tendència. Els articles individuals poden encara ser eliminats després del fet.
         trends: Les tendències mostren quins tuts, etiquetes i notícies estan guanyant força en el teu servidor.
-        trends_as_landing_page: Mostra el contingut en tendència als usuaris i visitants no autenticats enlloc de la descripció d'aquest servidor. Requereix que les tendències estiguin activades.
       form_challenge:
         current_password: Estàs entrant en una àrea segura
       imports:
@@ -295,7 +293,6 @@ ca:
         thumbnail: Miniatura del servidor
         trendable_by_default: Permet tendències sense revisió prèvia
         trends: Activa les tendències
-        trends_as_landing_page: Fer servir les tendències com a pàgina inicial
       interactions:
         must_be_follower: Bloqueja les notificacions de persones que no em segueixen
         must_be_following: Bloqueja les notificacions de persones no seguides
@@ -356,9 +353,7 @@ ca:
         jurisdiction: Jurisdicció
         min_age: Edat mínima
       user:
-        date_of_birth_1i: Dia
         date_of_birth_2i: Mes
-        date_of_birth_3i: Any
         role: Rol
         time_zone: Zona horària
       user_role:

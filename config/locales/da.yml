@@ -477,7 +477,7 @@ da:
       no_file: Ingen fil valgt
     export_domain_blocks:
       import:
-        description_html: En liste over domæneblokeringer er ved at blive importeret. Gennemgå listen meget nøje, især hvis man ikke selv har oprettet den.
+        description_html: Du er ved at importere en liste over domæneblokeringer. Gennemgå denne liste meget omhyggeligt, især hvis du ikke selv har udarbejdet den.
         existing_relationships_warning: Eksisterende følge-relationer
         private_comment_description_html: 'For at man lettere kan holde styr på, hvorfra importerede blokeringer kommer, oprettes disse med flg. private kommentar: <q>%{comment}</q>'
         private_comment_template: Importeret fra %{source} d. %{date}
@@ -514,7 +514,7 @@ da:
         select_capabilities: Vælg kapaciteter
         sign_in: Log ind
         status: Status
-        title: Fediverse Auxiliary Service Providers
+        title: Udbydere af Fediverse-hjælpetjenester
       title: FASP
     follow_recommendations:
       description_html: "<strong>Følg-anbefalinger hjælpe nye brugere til hurtigt at finde interessant indhold</strong>. Når en bruger ikke har interageret nok med andre til at generere personlige følg-anbefalinger, anbefales disse konti i stedet. De revurderes dagligt baseret på en blanding af konti med de flest nylige engagementer og fleste lokale følger-antal for et givet sprog."
@@ -796,6 +796,8 @@ da:
         view_dashboard_description: Tillader brugere at tilgå Dashboard'et og forskellige målinger
         view_devops: DevOps
         view_devops_description: Tillader brugere at tilgå Sidekiq- og pgHero-dashboards
+        view_feeds: Se live- og emne-feeds
+        view_feeds_description: Giver brugerne adgang til live- og emne-feeds uanset serverindstillinger
       title: Roller
     rules:
       add_new: Tilføj regel
@@ -851,7 +853,13 @@ da:
       feed_access:
         modes:
           authenticated: Kun godkendte brugere
+          disabled: Kræv specifik brugerrolle
           public: Alle
+      landing_page:
+        values:
+          about: Om
+          local_feed: Lokalt feed
+          trends: Trends
       registrations:
         moderation_recommandation: Sørg for, at der er et tilstrækkeligt og reaktivt moderationsteam, før registrering åbnes for alle!
         preamble: Styr, hvem der kan oprette en konto på serveren.
@@ -1178,7 +1186,7 @@ da:
       new_trending_statuses:
         title: Indlæg, der trender
       new_trending_tags:
-        title: Hashtags, der trender
+        title: Populære hashtags
       subject: Nye tendenser klar til gennemgang på %{instance}
   aliases:
     add_new: Opret alias
@@ -1664,7 +1672,7 @@ da:
       disabled_account: Efterfølgende er din nuværende konto ikke fuldt funktionsdygtig, der er dog adgang til dataeksport samt genaktivering.
       followers: Denne handling vil flytte alle følgere fra den aktuelle konto til den nye konto
       only_redirect_html: Alternativt kan du <a href="%{path}">oprette en omdirigering for din profil alene</a>.
-      other_data: Ingen øvrige data flyttes automatisk
+      other_data: Ingen andre data flyttes automatisk (herunder dine indlæg og listen over konti, du følger)
       redirect: Din nuværende kontoprofil opdateres med en omdirigeringsnotits og ekskluderes fra søgninger
   moderation:
     title: Moderation
@@ -1921,6 +1929,7 @@ da:
     errors:
       in_reply_not_found: Indlægget, der forsøges besvaret, ser ikke ud til at eksistere.
       quoted_status_not_found: Indlægget, du forsøger at citere, ser ikke ud til at eksistere.
+      quoted_user_not_mentioned: Kan ikke citere en ikke-omtalt bruger i et privat omtale-indlæg.
     over_character_limit: grænsen på %{max} tegn overskredet
     pin_errors:
       direct: Indlæg, som kun kan ses af omtalte brugere, kan ikke fastgøres

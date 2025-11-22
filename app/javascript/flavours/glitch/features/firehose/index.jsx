@@ -25,6 +25,14 @@ import StatusListContainer from '../ui/containers/status_list_container';
 
 const messages = defineMessages({
   title: { id: 'column.firehose', defaultMessage: 'Live feeds' },
+  title_local: {
+    id: 'column.firehose_local',
+    defaultMessage: 'Live feed for this server',
+  },
+  title_singular: {
+    id: 'column.firehose_singular',
+    defaultMessage: 'Live feed',
+  },
   filter_regex: { id: 'home.column_settings.filter_regex', defaultMessage: 'Filter out by regular expressions' },
 });
 
@@ -222,13 +230,23 @@ const Firehose = ({ feedType, multiColumn }) => {
     />
   );
 
+  let title;
+
+  if (canViewFeed(signedIn, permissions, localLiveFeedAccess) && canViewFeed(signedIn, permissions, remoteLiveFeedAccess)) {
+    title = messages.title;
+  } else if (canViewFeed(signedIn, permissions, localLiveFeedAccess)) {
+    title = messages.title_local;
+  } else {
+    title = messages.title_singular;
+  }
+
   return (
     <Column bindToDocument={!multiColumn} ref={columnRef} label={intl.formatMessage(messages.title)}>
       <ColumnHeader
         icon='globe'
         iconComponent={PublicIcon}
         active={hasUnread}
-        title={intl.formatMessage(messages.title)}
+        title={intl.formatMessage(title)}
         onPin={handlePin}
         onClick={handleHeaderClick}
         multiColumn={multiColumn}

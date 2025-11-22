@@ -796,6 +796,8 @@ is:
         view_dashboard_description: Leyfir notendum að skoða stjórnborðið og sjá ýmsar mælingar
         view_devops: DevOps
         view_devops_description: Leyfir notendum að skoða Sidekiq og pgHero stjórnborð
+        view_feeds: Skoða bein streymi og efnistengd
+        view_feeds_description: Gefur notendum aðgang að beinum streymum og efnistengdum, burtséð frá stillingum netþjóns
       title: Hlutverk
     rules:
       add_new: Skrá reglu
@@ -853,7 +855,13 @@ is:
       feed_access:
         modes:
           authenticated: Einungis auðkenndir notendur
+          disabled: Krefjast sérstaks hlutverks notanda
           public: Allir
+      landing_page:
+        values:
+          about: Um hugbúnaðinn
+          local_feed: Staðbundið streymi
+          trends: Vinsælt
       registrations:
         moderation_recommandation: Tryggðu að þú hafir hæft og aðgengilegt umsjónarteymi til taks áður en þú opnar á skráningar fyrir alla!
         preamble: Stýrðu því hverjir geta útbúið notandaaðgang á netþjóninum þínum.
@@ -1668,7 +1676,7 @@ is:
       disabled_account: Núverandi aðgangur þinn verður ekki nothæfur að fullu eftir þetta. Hinsvegar muntu geta flutt út gögn af honum og einnig endurvirkjað hann.
       followers: Þessi aðgerð mun flytja alla fylgjendur af núverandi aðgangi yfir á nýja aðganginn
       only_redirect_html: Einnig geturðu <a href="%{path}">einungis sett upp endurbeiningu á notandasniðið þitt</a>.
-      other_data: Engin önnur gögn munu flytjast sjálfvirkt
+      other_data: Engin önnur gögn verða flutt sjálfkrafa (m.a. færslurnar þínar og listar yfir þá sem þú fylgist með)
       redirect: Notandasnið aðgangsins verður uppfært með athugasemd um endurbeininguna og verður undanþegið frá leitum
   moderation:
     title: Umsjón
@@ -1925,6 +1933,7 @@ is:
     errors:
       in_reply_not_found: Færslan sem þú ert að reyna að svara að er líklega ekki til.
       quoted_status_not_found: Færslan sem þú ert að reyna að vitna í virðist ekki vera til.
+      quoted_user_not_mentioned: Ekki er hægt að vitna í aðila sem ekki er minnst á í einkaspjalli.
     over_character_limit: hámarksfjölda stafa (%{max}) náð
     pin_errors:
       direct: Ekki er hægt að festa færslur sem einungis eru sýnilegar þeim notendum sem minnst er á

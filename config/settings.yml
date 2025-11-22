@@ -24,7 +24,6 @@ defaults: &defaults
   flavour: 'glitch'
   skin: 'system'
   trends: true
-  trends_as_landing_page: true
   trendable_by_default: false
   trending_status_cw: true
   visible_reactions: 6
@@ -46,6 +45,7 @@ defaults: &defaults
   reject_pattern: ''
   reject_blurhash: ''
   allow_referrer_origin: false
+  landing_page: 'trends'
 
 development:
   <<: *defaults

@@ -79,7 +79,7 @@ es:
       featured_tag:
         name: 'Aquí están algunas de las etiquetas que más has utilizado recientemente:'
       filters:
-        action: Elegir qué acción realizar cuando una publicación coincide con el filtro
+        action: Elige qué acción realizar cuando una publicación coincide con el filtro
         actions:
           blur: Ocultar contenido multimedia detrás de una advertencia, sin ocultar el texto en sí
           hide: Ocultar completamente el contenido filtrado, comportándose como si no existiera
@@ -88,11 +88,12 @@ es:
         activity_api_enabled: Conteo de publicaciones publicadas localmente, usuarios activos y registros nuevos cada semana
         app_icon: WEBP, PNG, GIF o JPG. Reemplaza el icono de aplicación predeterminado en dispositivos móviles con un icono personalizado.
         backups_retention_period: Los usuarios tienen la capacidad de generar archivos de sus mensajes para descargar más adelante. Cuando se establece un valor positivo, estos archivos se eliminarán automáticamente del almacenamiento después del número de días especificado.
-        bootstrap_timeline_accounts: Estas cuentas aparecerán en la parte superior de las recomendaciones de los nuevos usuarios.
+        bootstrap_timeline_accounts: Estas cuentas se colocarán en la parte superior de las recomendaciones de cuentas a las que seguir para los nuevos usuarios. Proporciona una lista de cuentas separadas por comas.
         closed_registrations_message: Mostrado cuando los registros están cerrados
         content_cache_retention_period: Todas las publicaciones de otros servidores (incluso impulsos y respuestas) se eliminarán después del número de días especificado, sin tener en cuenta la interacción del usuario local con esos mensajes. Esto incluye mensajes donde un usuario local los ha marcado como marcadores o favoritos. Las menciones privadas entre usuarios de diferentes instancias también se perderán sin posibilidad de recuperación. El uso de esta configuración está destinado a instancias de propósito especial, y rompe muchas expectativas de los usuarios cuando se implementa para un uso de propósito general.
         custom_css: Puedes aplicar estilos personalizados a la versión web de Mastodon.
         favicon: WEBP, PNG, GIF o JPG. Reemplaza el favicon predeterminado de Mastodon con un icono personalizado.
+        landing_page: Selecciona qué página ven los nuevos visitantes cuando llegan por primera vez a tu servidor. Si seleccionas "Tendencias", entonces las tendencias deben estar habilitadas en la Configuración de Descubrimiento. Si selecciona "Cronología local", entonces "Acceso a las cronologías que destacan publicaciones locales" debe configurarse a "Todos" en la Configuración de Descubrimiento.
         mascot: Reemplaza la ilustración en la interfaz web avanzada.
         media_cache_retention_period: Los archivos multimedia de las publicaciones creadas por usuarios remotos se almacenan en caché en tu servidor. Cuando se establece un valor positivo, estos archivos se eliminarán después del número especificado de días. Si los datos multimedia se solicitan después de eliminarse, se volverán a descargar, si el contenido fuente todavía está disponible. Debido a restricciones en la frecuencia con la que las tarjetas de previsualización de enlaces realizan peticiones a sitios de terceros, se recomienda establecer este valor a al menos 14 días, o las tarjetas de previsualización de enlaces no se actualizarán bajo demanda antes de ese momento.
         min_age: Se pedirá a los usuarios que confirmen su fecha de nacimiento durante el registro
@@ -110,7 +111,6 @@ es:
         thumbnail: Una imagen de aproximadamente 2:1 se muestra junto a la información de tu servidor.
         trendable_by_default: Omitir la revisión manual del contenido en tendencia. Los elementos individuales aún podrán eliminarse de las tendencias.
         trends: Las tendencias muestran qué publicaciones, etiquetas y noticias están ganando tracción en tu servidor.
-        trends_as_landing_page: Mostrar contenido en tendencia para usuarios y visitantes en lugar de una descripción de este servidor. Requiere que las tendencias estén habilitadas.
       form_challenge:
         current_password: Estás entrando en un área segura
       imports:
@@ -287,6 +287,7 @@ es:
         content_cache_retention_period: Período de retención de contenido remoto
         custom_css: CSS personalizado
         favicon: Favicon
+        landing_page: Página de inicio para nuevos visitantes
         local_live_feed_access: Acceso a las cronologías que destacan publicaciones locales
         local_topic_feed_access: Acceso a las etiquetas y enlaces en tendencia que destacan publicaciones locales
         mascot: Mascota personalizada (legado)
@@ -311,7 +312,6 @@ es:
         thumbnail: Miniatura del servidor
         trendable_by_default: Permitir tendencias sin revisión previa
         trends: Habilitar tendencias
-        trends_as_landing_page: Usar tendencias como la página de inicio
       interactions:
         must_be_follower: Bloquear notificaciones de personas que no te siguen
         must_be_following: Bloquear notificaciones de personas que no sigues
@@ -372,9 +372,9 @@ es:
         jurisdiction: Jurisdicción legal
         min_age: Edad mínima
       user:
-        date_of_birth_1i: Día
+        date_of_birth_1i: Año
         date_of_birth_2i: Mes
-        date_of_birth_3i: Año
+        date_of_birth_3i: Día
         role: Rol
         time_zone: Zona horaria
       user_role:

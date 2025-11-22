@@ -47,7 +47,6 @@ import { IconButton } from 'flavours/glitch/components/icon_button';
 import { AccountNote } from 'flavours/glitch/features/account/components/account_note';
 import { DomainPill } from 'flavours/glitch/features/account/components/domain_pill';
 import FollowRequestNoteContainer from 'flavours/glitch/features/account/containers/follow_request_note_container';
-import { useLinks } from 'flavours/glitch/hooks/useLinks';
 import { useIdentity } from 'flavours/glitch/identity_context';
 import {
   autoPlayGif,
@@ -202,7 +201,6 @@ export const AccountHeader: React.FC<{
     state.relationships.get(accountId),
   );
   const hidden = useAppSelector((state) => getAccountHidden(state, accountId));
-  const handleLinkClick = useLinks();
 
   const handleBlock = useCallback(() => {
     if (!account) {
@@ -857,10 +855,7 @@ export const AccountHeader: React.FC<{
 
           {!(suspended || hidden) && (
             <div className='account__header__extra'>
-              <div
-                className='account__header__bio'
-                onClickCapture={handleLinkClick}
-              >
+              <div className='account__header__bio'>
                 {account.id !== me && signedIn && (
                   <AccountNote accountId={accountId} />
                 )}

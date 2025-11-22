@@ -63,10 +63,10 @@ const makeMapStateToProps = () => {
   const getStatusIds = makeGetStatusIds();
   const getPendingStatusIds = makeGetStatusIds(true);
 
-  const mapStateToProps = (state, { timelineId, regex }) => ({
+  const mapStateToProps = (state, { timelineId, regex, initialLoadingState = true }) => ({
     statusIds: getStatusIds(state, { type: timelineId, regex }),
     lastId:    state.getIn(['timelines', timelineId, 'items'])?.last(),
-    isLoading: state.getIn(['timelines', timelineId, 'isLoading'], true),
+    isLoading: state.getIn(['timelines', timelineId, 'isLoading'], initialLoadingState),
     isPartial: state.getIn(['timelines', timelineId, 'isPartial'], false),
     hasMore:   state.getIn(['timelines', timelineId, 'hasMore']),
     numPending: getPendingStatusIds(state, { type: timelineId }).size,

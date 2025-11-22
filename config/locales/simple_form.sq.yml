@@ -78,7 +78,7 @@ sq:
       featured_tag:
         name: 'Ja disa nga hashtag-ët që përdorët tani afër:'
       filters:
-        action: Zgjidhni cili veprim të kryhet, kur një postim ka përputhje me një filtër
+        action: Zgjidhni cili veprim të kryhet, kur një postim ka përkim me një filtër
         actions:
           blur: Fshihe median pas një sinjalizimi, pa fshehur vetë tekstin
           hide: Fshihe plotësisht lëndën e filtruar, duke u sjellë sikur të mos ekzistonte
@@ -87,11 +87,12 @@ sq:
         activity_api_enabled: Numër postimesh të botuar lokalisht, përdoruesish aktiv dhe regjistrimesh të reja sipas matjesh javore
         app_icon: WEBP, PNG, GIF, ose JPG. Anashkalon ikonë parazgjedhje aplikacioni në pajisje celulare me një ikonë vetjake.
         backups_retention_period: Përdorues kanë aftësinë të prodhojnë arkiva të postimeve të tyre për t’i shkarkuar më vonë. Kur i jepet një vlerë pozitive, këto arkiva do të fshihen automatikisht prej depozitës tuaj pas numrit të dhënë të ditëve.
-        bootstrap_timeline_accounts: Këto llogari do të fiksohen në krye të rekomandimeve për ndjekje nga përdorues të rinj.
+        bootstrap_timeline_accounts: Këto llogari do të fiksohen në krye të rekomandimeve për ndjekje për përdoruesin e ri. Jepni një listë llogarish ndarë me presje.
         closed_registrations_message: Shfaqur kur mbyllen dritare regjistrimesh
         content_cache_retention_period: Krejt postimet prej shërbyesve të tjerë (përfshi përforcime dhe përgjigje) do të fshihen pas numrit të caktuar të ditëve, pa marrë parasysh çfarëdo ndërveprimi përdoruesi me këto postime. Kjo përfshin postime kur një përdorues vendor u ka vënë shenjë si faqerojtës, ose të parapëlqyer. Do të humbin gjithashtu dhe përmendje private mes përdoruesish nga instanca të ndryshme dhe s’do të jetë e mundshme të rikthehen. Përdorimi i këtij rregullimi është menduar për instanca me qëllim të caktuar dhe ndërhyn në çka presin mjaft përdorues, kur sendërtohet për përdorim të përgjithshëm.
         custom_css: Stile vetjakë mund të aplikoni në versionin web të Mastodon-it.
         favicon: WEBP, PNG, GIF, ose JPG. Anashkalon favikonën parazgjedhje Mastodon me një ikonë vetjake.
+        landing_page: Përzgjedh cilën faqe shohin vizitorët e rinj, kur vijnë për herë të parë në shërbyesin tuaj. Nëse përzgjidhni “Në modë”, atëherë “në modë” duhet aktivizuar te Rregullime për Zbulime. Nëse përzgjidhni “Prurje vendore”, atëherë “Hyrje te prurje vendore që përmbajnë postime vendore” duhet vënë si “Gjithkush”, te Rregullime për Zbulime.
         mascot: Anashkalon ilustrimin te ndërfaqja web e thelluar.
         media_cache_retention_period: Kartela media nga postime të bëra nga përdorues të largët ruhen në një fshehtinë në shërbyesin tuaj. Kur i jepet një vlerë pozitive, media do të fshihet pas numrit të dhënë të ditëve. Nëse të dhënat e medias duhen pas fshirjes, do të rishkarkohen, nëse lënda burim mund të kihet ende. Për shkak kufizimesh mbi sa shpesh skeda paraparjesh lidhjesh ndërveprojnë me sajte palësh të treta, rekomandohet të vihet kjo vlerë të paktën 14 ditë, ose skedat e paraparjes së lidhje s’do të përditësohen duke e kërkuar para asaj kohe.
         min_age: Përdoruesve do t’ju kërkohet gjatë regjistrimit të ripohojnë datën e lindjes
@@ -109,7 +110,6 @@ sq:
         thumbnail: Një figurë afërsisht 2:1 e shfaqur tok me hollësi mbi shërbyesin tuaj.
         trendable_by_default: Anashkalo shqyrtim dorazi lënde në modë. Gjëra individuale prapë mund të hiqen nga lëndë në modë pas publikimi.
         trends: Gjërat në modë shfaqin cilat postime, hashtagë dhe histori të reja po tërheqin vëmendjen në shërbyesin tuaj.
-        trends_as_landing_page: Shfaq lëndë në modë për përdorues jo të futur në llogari dhe për vizitorë, në vend se të një përshkrimi të këtij shërbyesi. Lyp që të jenë të aktivizuara gjërat në modë.
       form_challenge:
         current_password: Po hyni në një zonë të sigurt
       imports:
@@ -286,6 +286,7 @@ sq:
         content_cache_retention_period: Periudhë mbajtjeje lënde të largët
         custom_css: CSS Vetjake
         favicon: Favikonë
+        landing_page: Faqe mbërritje për vizitorë të rinj
         local_live_feed_access: Hyrje te prurje të atypëratyshme që përmbajnë postime vendore
         local_topic_feed_access: Hyrje te prurje hashtag-ësh dhe lidhjesh që përmbajnë postime vendore
         mascot: Simbol vetjak (e dikurshme)
@@ -310,7 +311,6 @@ sq:
         thumbnail: Miniaturë shërbyesi
         trendable_by_default: Lejoni gjëra në modë pa shqyrtim paraprak
         trends: Aktivizo gjëra në modë
-        trends_as_landing_page: Përdor gjërat në modë si faqe hyrëse
       interactions:
         must_be_follower: Blloko njoftime nga jo-ndjekës
         must_be_following: Blloko njoftime nga persona që s’i ndiqni
@@ -371,9 +371,9 @@ sq:
         jurisdiction: Juridiksion ligjor
         min_age: Mosha minimale
       user:
-        date_of_birth_1i: Ditë
+        date_of_birth_1i: Vit
         date_of_birth_2i: Muaj
-        date_of_birth_3i: Vit
+        date_of_birth_3i: Ditë
         role: Rol
         time_zone: Zonë kohore
       user_role:

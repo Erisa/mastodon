@@ -7,8 +7,6 @@ import {
   useState,
 } from 'react';
 
-import classNames from 'classnames';
-
 import { cleanExtraEmojis } from '@/flavours/glitch/features/emoji/normalize';
 import { autoPlayGif } from '@/flavours/glitch/initial_state';
 import { polymorphicForwardRef } from '@/types/polymorphic';
@@ -65,11 +63,7 @@ export const AnimateEmojiProvider = polymorphicForwardRef<
     const parentContext = useContext(AnimateEmojiContext);
     if (parentContext !== null) {
       return (
-        <Wrapper
-          {...props}
-          className={classNames(className, 'animate-parent')}
-          ref={ref}
-        >
+        <Wrapper {...props} className={className} ref={ref}>
           {children}
         </Wrapper>
       );
@@ -78,7 +72,7 @@ export const AnimateEmojiProvider = polymorphicForwardRef<
     return (
       <Wrapper
         {...props}
-        className={classNames(className, 'animate-parent')}
+        className={className}
         onMouseEnter={handleEnter}
         onMouseLeave={handleLeave}
         ref={ref}

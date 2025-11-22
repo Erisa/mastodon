@@ -73,7 +73,6 @@ io:
       featured_tag:
         name: 'Yen kelka hashtagi quin vu uzis maxim recente:'
       filters:
-        action: Selektez ago kande posto parigas filtrilo
         actions:
           hide: Komplete celez filtrita kontenajo quale ol ne existas
           warn: Celez filtrita kontenajo dop avert quo montras titulo di filtrilo
@@ -81,7 +80,6 @@ io:
         activity_api_enabled: Quanto de lokale publikigita posti, aktiva uzanti e nova registri, donita semanope
         app_icon: WEBP, PNG, GIF o JPG. Ol remplas la originala imajeto di softwaro sur poshaparati kun personaligita imajeto.
         backups_retention_period: Uzanto povas igar arkivi di sua afishi por deskargar pose.
-        bootstrap_timeline_accounts: Ca konti adpinglesos ad super sequorekomendi di nova uzanti.
         closed_registrations_message: Montresas kande registradi klozesas
         content_cache_retention_period: Omna posti de altra servili efacesos (anke repeti e respondi) pos decidita quanto di dii, sen ye irga lokala uzantointerago kun ti posti. Privata mencioni inter uzanto de dessanta servili anke desganos e neposible riganesos.
         custom_css: Vu povas pozar kustumizita staili en retverso di Mastodon.
@@ -102,7 +100,6 @@ io:
         thumbnail: Cirkum 2:1 imajo montresar kun informo di ca servilo.
         trendable_by_default: Ignorez manuala kontrolar di populara enhavajo.
         trends: Populari montras quala afishi, gretvorti e novaji populareskas en vua servilo.
-        trends_as_landing_page: Montrez populara posti a uzanti neeniriti e vizitanti vice deskriptajo pri ca servilo. Bezonas ke populari es aktivita.
       form_challenge:
         current_password: Vu eniras sekura areo
       imports:
@@ -278,7 +275,6 @@ io:
         thumbnail: Servilimajeto
         trendable_by_default: Permisez populari sen kontrolo
         trends: Ebligar populari
-        trends_as_landing_page: Uzar populari quale la iniciala pagino
       interactions:
         must_be_follower: Celar la savigi da homi, qui ne sequas tu
         must_be_following: Celar la savigi da homi, quin tu ne sequas

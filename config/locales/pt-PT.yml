@@ -796,6 +796,8 @@ pt-PT:
         view_dashboard_description: Permite aos utilizadores acederem ao painel de controlo e a várias estatísticas
         view_devops: DevOps
         view_devops_description: Permite aos utilizadores aceder aos painéis de controlo do Sidekiq e pgHero
+        view_feeds: Ver cronologia em tempo real e de etiquetas
+        view_feeds_description: Permitir aos utilizadores aceder às cronologias em tempo real e de etiquetas independentemente das definições do servidor
       title: Funções
     rules:
       add_new: Adicionar regra
@@ -851,7 +853,13 @@ pt-PT:
       feed_access:
         modes:
           authenticated: Apesar utilizadores autenticados
+          disabled: Requerer função de utilizador especifica
           public: Todos
+      landing_page:
+        values:
+          about: Sobre
+          local_feed: Cronologia local
+          trends: Tendências
       registrations:
         moderation_recommandation: Certifique-se de que dispõe de uma equipa de moderação adequada e reativa antes de abrir as inscrições a todos!
         preamble: Controle quem pode criar uma conta no seu servidor.
@@ -1664,7 +1672,7 @@ pt-PT:
       disabled_account: Posteriormente, a tua conta atual não será totalmente utilizável. No entanto, continuarás a ter acesso à exportação de dados, bem como à reativação.
       followers: Esta ação irá migrar todos os seguidores da conta atual para a nova conta
       only_redirect_html: Em alternativa, podes <a href="%{path}">apenas colocar um redirecionamento no teu perfil</a>.
-      other_data: Nenhum outro dado será migrado automaticamente
+      other_data: Não serão movidos automaticamente mais nenhuns dados (incluindo as suas publicações e a lista de contas que segue)
       redirect: O perfil da tua conta atual será atualizado com um aviso de redirecionamento e será excluído das pesquisas
   moderation:
     title: Moderação
@@ -1921,6 +1929,7 @@ pt-PT:
     errors:
       in_reply_not_found: A publicação a que estás a tentar responder parece não existir.
       quoted_status_not_found: A publicação que está a tentar citar parece não existir.
+      quoted_user_not_mentioned: Um utilizador não mencionado não pode ser citado numa publicação privada.
     over_character_limit: limite de caracteres %{max} excedido
     pin_errors:
       direct: As publicações que só são visíveis para os utilizadores mencionados não podem ser fixadas

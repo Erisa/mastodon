@@ -796,6 +796,8 @@ it:
         view_dashboard_description: Consente agli utenti di accedere alla dashboard e alle varie metriche
         view_devops: DevOps
         view_devops_description: Consente agli utenti di accedere alle dashboard Sidekiq e pgHero
+        view_feeds: Visualizza feed in diretta e feed di argomenti
+        view_feeds_description: Consente agli utenti di accedere ai feed in diretta e ai feed di argomenti indipendentemente dalle impostazioni del server
       title: Ruoli
     rules:
       add_new: Aggiungi regola
@@ -837,6 +839,7 @@ it:
         title: Esclude gli utenti dall'indicizzazione dei motori di ricerca per impostazione predefinita
       discovery:
         follow_recommendations: Segui le raccomandazioni
+        preamble: La scoperta di contenuti interessanti è fondamentale per l'inserimento di nuovi utenti che potrebbero non conoscere nessuno su Mastodon. Controlla l'andamento delle varie funzionalità di scoperta sul tuo server.
         privacy: Privacy
         profile_directory: Directory del profilo
         public_timelines: Timeline pubbliche
@@ -850,7 +853,13 @@ it:
       feed_access:
         modes:
           authenticated: Solo utenti autenticati
+          disabled: Richiedi un ruolo utente specifico
           public: Tutti
+      landing_page:
+        values:
+          about: Info
+          local_feed: Feed locale
+          trends: Tendenze
       registrations:
         moderation_recommandation: Assicurati di avere un team di moderazione adeguato e reattivo prima di aprire le registrazioni a tutti!
         preamble: Controlla chi può creare un account sul tuo server.
@@ -1663,7 +1672,7 @@ it:
       disabled_account: Il tuo account attuale non sarà più pienamente utilizzabile. Tuttavia, avrai accesso all'esportazione dei dati e alla riattivazione.
       followers: Questa azione sposterà tutti i follower dall'account attuale al nuovo account
       only_redirect_html: In alternativa, puoi solo <a href="%{path}">impostare un reindirizzamento sul tuo profilo</a>.
-      other_data: Nessun altro dato verrà spostato automaticamente
+      other_data: Nessun altro dato verrà trasferito automaticamente (compresi i tuoi post e l'elenco degli account che segui)
       redirect: Il profilo del tuo account corrente sarà aggiornato con un avviso di ridirezione e sarà escluso dalle ricerche
   moderation:
     title: Moderazione
@@ -1920,6 +1929,7 @@ it:
     errors:
       in_reply_not_found: Il post a cui stai tentando di rispondere non sembra esistere.
       quoted_status_not_found: Il post che stai cercando di citare non sembra esistere.
+      quoted_user_not_mentioned: Non è possibile citare un utente non menzionato in un post di menzione privata.
     over_character_limit: Limite caratteri superato di %{max}
     pin_errors:
       direct: I messaggi visibili solo agli utenti citati non possono essere fissati in cima

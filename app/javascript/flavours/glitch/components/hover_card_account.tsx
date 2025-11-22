@@ -23,8 +23,6 @@ import { domain } from 'flavours/glitch/initial_state';
 import { getAccountHidden } from 'flavours/glitch/selectors/accounts';
 import { useAppSelector, useAppDispatch } from 'flavours/glitch/store';
 
-import { useLinks } from '../hooks/useLinks';
-
 export const HoverCardAccount = forwardRef<
   HTMLDivElement,
   { accountId?: string }
@@ -65,8 +63,6 @@ export const HoverCardAccount = forwardRef<
     hasRelationshipLoaded &&
     !isMutual &&
     !isFollower;
-
-  const handleClick = useLinks();
 
   return (
     <div
@@ -114,7 +110,7 @@ export const HoverCardAccount = forwardRef<
                   className='hover-card__bio'
                 />
 
-                <div className='account-fields' onClickCapture={handleClick}>
+                <div className='account-fields'>
                   <AccountFields
                     fields={account.fields.take(2)}
                     emojis={account.emojis}

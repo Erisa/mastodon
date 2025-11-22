@@ -21,16 +21,15 @@
                 selected: current_user.time_zone || Time.zone.tzinfo.name,
                 wrapper: :with_label
 
-  - if Mastodon::Feature.modern_emojis_enabled?
-    .fields-group
-      = f.simple_fields_for :settings, current_user.settings do |ff|
-        = ff.input :'web.emoji_style',
-                   collection: %w(auto twemoji native),
-                   include_blank: false,
-                   hint: I18n.t('simple_form.hints.defaults.setting_emoji_style'),
-                   label: I18n.t('simple_form.labels.defaults.setting_emoji_style'),
-                   label_method: ->(emoji_style) { I18n.t("emoji_styles.#{emoji_style}", default: emoji_style) },
-                   wrapper: :with_label
+  .fields-group
+    = f.simple_fields_for :settings, current_user.settings do |ff|
+      = ff.input :'web.emoji_style',
+                 collection: %w(auto twemoji native),
+                 include_blank: false,
+                 hint: I18n.t('simple_form.hints.defaults.setting_emoji_style'),
+                 label: I18n.t('simple_form.labels.defaults.setting_emoji_style'),
+                 label_method: ->(emoji_style) { I18n.t("emoji_styles.#{emoji_style}", default: emoji_style) },
+                 wrapper: :with_label
 
   - unless I18n.locale == :en
     .flash-message.translation-prompt
@@ -53,7 +52,6 @@
       = ff.input :'web.disable_swiping', wrapper: :with_label, label: I18n.t('simple_form.labels.defaults.setting_disable_swiping')
       = ff.input :'web.disable_hover_cards', wrapper: :with_label, label: I18n.t('simple_form.labels.defaults.setting_disable_hover_cards')
       = ff.input :'web.use_system_font', wrapper: :with_label, label: I18n.t('simple_form.labels.defaults.setting_system_font_ui')
-      = ff.input :'web.use_system_emoji_font', wrapper: :with_label, label: I18n.t('simple_form.labels.defaults.setting_system_emoji_font'), glitch_only: true
       = ff.input :'web.use_system_scrollbars', wrapper: :with_label, hint: I18n.t('simple_form.hints.defaults.setting_system_scrollbars_ui'), label: I18n.t('simple_form.labels.defaults.setting_system_scrollbars_ui')
 
     .fields-group.fields-row__column.fields-row__column-6

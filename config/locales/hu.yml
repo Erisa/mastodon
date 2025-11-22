@@ -796,6 +796,8 @@ hu:
         view_dashboard_description: Lehetővé teszi, hogy a felhasználó elérje az irányítópultot és vele számos metrikát
         view_devops: DevOps
         view_devops_description: Lehetővé teszi, hogy a felhasználó elérje a Sidekiq és pgHero irányítópultjait
+        view_feeds: Élő és témahírfolyamok megtekintése
+        view_feeds_description: A kiszolgálóbeállításoktól függetlenül engedélyezi az élő és témahírfolyamok elérését
       title: Szerepek
     rules:
       add_new: Szabály hozzáadása
@@ -837,6 +839,7 @@ hu:
         title: Alapértelmezetten ne indexeljék a keresők a felhasználókat
       discovery:
         follow_recommendations: Ajánlottak követése
+        preamble: Az érdekes tartalmak felszínre hozása fontos szerepet játszik az új felhasználók bevonásában, akik esetleg nem ismerik a Mastodont. Szabályozd, hogy a különböző felfedezési funkciók hogyan működjenek a kiszolgálón.
         privacy: Adatvédelem
         profile_directory: Profiladatbázis
         public_timelines: Nyilvános idővonalak
@@ -850,7 +853,13 @@ hu:
       feed_access:
         modes:
           authenticated: Csak hitelesített felhasználók
+          disabled: Konkrét felhasználói szerepkör megkövetelése
           public: Mindenki
+      landing_page:
+        values:
+          about: Névjegy
+          local_feed: Helyi idővonal
+          trends: Trendek
       registrations:
         moderation_recommandation: Győződj meg arról, hogy megfelelő és gyors reagálású moderátor csapatod van, mielőtt mindenki számára megnyitod a regisztrációt!
         preamble: Szabályozd, hogy ki hozhat létre fiókot a kiszolgálón.
@@ -1663,7 +1672,7 @@ hu:
       disabled_account: A jelenlegi fiókod nem lesz teljesen használható ezután. Viszont elérhető lesz majd az adatexport funkció, valamint a reaktiválás is.
       followers: Ez a művelet az összes követődet a jelenlegi fiókról az újra fogja költöztetni
       only_redirect_html: Az is lehetséges, hogy <a href="%{path}">csak átirányítást raksz a profilodra</a>.
-      other_data: Más adatot nem fogunk automatikusan mozgatni
+      other_data: Semmilyen más adat (beleértve a bejegyzéseket és a követett fiókokat) nem lesz automatikusan áthelyezve
       redirect: A jelenlegi fiókod profiljára átirányításról szóló figyelmeztetést rakunk, valamint már nem fogjuk mutatni a keresésekben
   moderation:
     title: Moderáció
@@ -1920,6 +1929,7 @@ hu:
     errors:
       in_reply_not_found: Már nem létezik az a bejegyzés, melyre válaszolni szeretnél.
       quoted_status_not_found: Már nem létezik az a bejegyzés, amelyből idézni szeretnél.
+      quoted_user_not_mentioned: Nem idézhet meg nem említett felhasználót egy privát említési bejegyzésben.
     over_character_limit: túllépted a maximális %{max} karakteres keretet
     pin_errors:
       direct: A csak a megemlített felhasználók számára látható bejegyzések nem tűzhetők ki

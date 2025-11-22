@@ -71,13 +71,11 @@ lad:
       featured_tag:
         name: 'Aki estan algunas de las etiketas ke mas tienes utilizado resientemente:'
       filters:
-        action: Eskoje kuala aksyon realizar kuando una publikasyon koensida kon el filtro
         actions:
           hide: Eskonde kompletamente el kontenido filtrado komo si no existiera
           warn: Eskonde el kontenido filtrado detras de una avertensya enmentando el titolo del filtro
       form_admin_settings:
         activity_api_enabled: Numero de publikasyones publikadas lokalmente, utilizadores activos i enrejistrasyones muevas kada semana
-        bootstrap_timeline_accounts: Estos kuentos apareseran en la parte superior de las rekomendasiones de los muevos utilizadores.
         closed_registrations_message: Amostrado kuando las enrejistrasyones estan serrados
         custom_css: Puedes aplikar estilos personalizados a la version web de Mastodon.
         mascot: Reemplaza la ilustrasyon en la enterfaz web avanzada.
@@ -95,7 +93,6 @@ lad:
         thumbnail: Una imaje de aproksimadamente 2:1 se amostra djunto a la enformasyon de tu sirvidor.
         trendable_by_default: Omite la revizyon manuala del kontenido en trend. Los elementos individuales ainda podran supremirse de los trendes.
         trends: Los trendes amostran ke mesajes, etiketas i haberes estan ganando traksyon en tu sirvidor.
-        trends_as_landing_page: Amostra kontenido en trend para utilizadores i vizitantes en lugar de una deskripsyon de este sirvidor. Rekiere ke los trendes esten kapasitados.
       form_challenge:
         current_password: Estas entrando en un area siguro
       imports:
@@ -245,6 +242,7 @@ lad:
         favicon: Ikona de favoritos
         mascot: Maskota personalizada (legado)
         media_cache_retention_period: Periodo de retensyon de kashe multimedia
+        min_age: Edad minima rekerida
         peers_api_enabled: Publika lista de sirvidores diskuviertos en la API
         profile_directory: Kapasita katalogo de profiles
         registrations_mode: Ken puede enrejistrarse
@@ -262,7 +260,6 @@ lad:
         thumbnail: Minyatura del sirvidor
         trendable_by_default: Permite trendes sin revizyon previa
         trends: Kapasita trendes
-        trends_as_landing_page: Kulanea trendes komo la pajina prinsipala
       interactions:
         must_be_follower: Bloka avizos de personas ke no te sigen
         must_be_following: Bloka avizos de personas a las kualas no siges
@@ -314,10 +311,9 @@ lad:
       terms_of_service_generator:
         choice_of_law: Legislasyon aplikavle
         domain: Domeno
+        min_age: Edad minima
       user:
-        date_of_birth_1i: Diya
         date_of_birth_2i: Mez
-        date_of_birth_3i: Anyo
         role: Rolo
         time_zone: Zona de tiempo
       user_role:
@@ -326,6 +322,8 @@ lad:
         name: Nombre
         permissions_as_keys: Permisos
         position: Priorita
+      username_block:
+        allow_with_approval: Permite enrejistrasyones kon aprovasyon
       webhook:
         events: Evenimientos kapasitados
         template: Modelo de kontenido

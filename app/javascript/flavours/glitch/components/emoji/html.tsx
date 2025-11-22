@@ -1,9 +1,6 @@
 import { useMemo } from 'react';
 
-import classNames from 'classnames';
-
 import type { CustomEmojiMapArg } from '@/flavours/glitch/features/emoji/types';
-import { isModernEmojiEnabled } from '@/flavours/glitch/utils/environment';
 import type {
   OnAttributeHandler,
   OnElementHandler,
@@ -22,7 +19,7 @@ export interface EmojiHTMLProps {
   onAttribute?: OnAttributeHandler;
 }
 
-export const ModernEmojiHTML = polymorphicForwardRef<'div', EmojiHTMLProps>(
+export const EmojiHTML = polymorphicForwardRef<'div', EmojiHTMLProps>(
   (
     {
       extraEmojis,
@@ -59,32 +56,4 @@ export const ModernEmojiHTML = polymorphicForwardRef<'div', EmojiHTMLProps>(
     );
   },
 );
-ModernEmojiHTML.displayName = 'ModernEmojiHTML';
-
-export const LegacyEmojiHTML = polymorphicForwardRef<'div', EmojiHTMLProps>(
-  (props, ref) => {
-    const {
-      as: asElement,
-      htmlString,
-      extraEmojis,
-      className,
-      onElement,
-      onAttribute,
-      ...rest
-    } = props;
-    const Wrapper = asElement ?? 'div';
-    return (
-      <Wrapper
-        {...rest}
-        ref={ref}
-        dangerouslySetInnerHTML={{ __html: htmlString }}
-        className={classNames(className, 'animate-parent')}
-      />
-    );
-  },
-);
-LegacyEmojiHTML.displayName = 'LegacyEmojiHTML';
-
-export const EmojiHTML = isModernEmojiEnabled()
-  ? ModernEmojiHTML
-  : LegacyEmojiHTML;
+EmojiHTML.displayName = 'EmojiHTML';

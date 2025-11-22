@@ -14,69 +14,11 @@ import { Icon } from 'flavours/glitch/components/icon';
 import { Poll } from 'flavours/glitch/components/poll';
 import { identityContextPropShape, withIdentity } from 'flavours/glitch/identity_context';
 import { languages as preloadedLanguages } from 'flavours/glitch/initial_state';
-import { decode as decodeIDNA } from 'flavours/glitch/utils/idna';
-
-import { isModernEmojiEnabled } from '../utils/environment';
 
 import { EmojiHTML } from './emoji/html';
 import { HandledLink } from './status/handled_link';
 
 const MAX_HEIGHT = 706; // 22px * 32 (+ 2px padding at the top)
-
-const textMatchesTarget = (text, origin, host) => {
-  return (text === origin || text === host
-          || text.startsWith(origin + '/') || text.startsWith(host + '/')
-          || 'www.' + text === host || ('www.' + text).startsWith(host + '/'));
-};
-
-const isLinkMisleading = (link) => {
-  let linkTextParts = [];
-
-  // Reconstruct visible text, as we do not have much control over how links
-  // from remote software look, and we can't rely on `innerText` because the
-  // `invisible` class does not set `display` to `none`.
-
-  const walk = (node) => {
-    switch (node.nodeType) {
-    case Node.TEXT_NODE:
-      linkTextParts.push(node.textContent);
-      break;
-    case Node.ELEMENT_NODE: {
-      if (node.classList.contains('invisible')) return;
-      const children = node.childNodes;
-      for (let i = 0; i < children.length; i++) {
-        walk(children[i]);
-      }
-      break;
-    }
-    }
-  };
-
-  walk(link);
-
-  const linkText = linkTextParts.join('');
-  const targetURL = new URL(link.href);
-
-  if (targetURL.protocol === 'magnet:') {
-    return !linkText.startsWith('magnet:');
-  }
-
-  if (targetURL.protocol === 'xmpp:') {
-    return !(linkText === targetURL.href || 'xmpp:' + linkText === targetURL.href);
-  }
-
-  // The following may not work with international domain names
-  if (textMatchesTarget(linkText, targetURL.origin, targetURL.host) || textMatchesTarget(linkText.toLowerCase(), targetURL.origin, targetURL.host)) {
-    return false;
-  }
-
-  // The link hasn't been recognized, maybe it features an international domain name
-  const hostname = decodeIDNA(targetURL.hostname).normalize('NFKC');
-  const host = targetURL.host.replace(targetURL.hostname, hostname);
-  const origin = targetURL.origin.replace(targetURL.host, host);
-  const text = linkText.normalize('NFKC');
-  return !(textMatchesTarget(text, origin, host) || textMatchesTarget(text.toLowerCase(), origin, host));
-};
 
 /**
  *
@@ -128,6 +70,17 @@ const mapStateToProps = state => ({
   languages: state.getIn(['server', 'translationLanguages', 'items']),
 });
 
+const compareUrls = (href1, href2) => {
+  try {
+    const url1 = new URL(href1);
+    const url2 = new URL(href2);
+
+    return url1.origin === url2.origin && url1.pathname === url2.pathname && url1.search === url2.search;
+  } catch {
+    return false;
+  }
+};
+
 class StatusContent extends PureComponent {
   static propTypes = {
     identity: identityContextPropShape,
@@ -137,8 +90,6 @@ class StatusContent extends PureComponent {
     onClick: PropTypes.func,
     collapsible: PropTypes.bool,
     onCollapsedToggle: PropTypes.func,
-    tagLinks: PropTypes.bool,
-    rewriteMentions: PropTypes.string,
     languages: ImmutablePropTypes.map,
     intl: PropTypes.object,
     // from react-router
@@ -147,14 +98,8 @@ class StatusContent extends PureComponent {
     history: PropTypes.object.isRequired
   };
 
-  static defaultProps = {
-    tagLinks: true,
-    rewriteMentions: 'no',
-  };
-
   _updateStatusLinks () {
     const node = this.node;
-    const { tagLinks, rewriteMentions } = this.props;
 
     if (!node) {
       return;
@@ -172,74 +117,6 @@ class StatusContent extends PureComponent {
 
       onCollapsedToggle(collapsed);
     }
-
-    // Exit if modern emoji is enabled, as it handles links using the HandledLink component.
-    if (isModernEmojiEnabled()) {
-      return;
-    }
-
-    const links = node.querySelectorAll('a');
-
-    let link, mention;
-
-    for (var i = 0; i < links.length; ++i) {
-      link = links[i];
-
-      if (link.classList.contains('status-link')) {
-        continue;
-      }
-
-      link.classList.add('status-link');
-
-      mention = this.props.status.get('mentions').find(item => link.href === item.get('url'));
-
-      if (mention) {
-        link.addEventListener('click', this.onMentionClick.bind(this, mention), false);
-        link.setAttribute('title', `@${mention.get('acct')}`);
-        link.setAttribute('data-hover-card-account', mention.get('id'));
-        if (rewriteMentions !== 'no') {
-          while (link.firstChild) link.removeChild(link.firstChild);
-          link.appendChild(document.createTextNode('@'));
-          const acctSpan = document.createElement('span');
-          acctSpan.textContent = rewriteMentions === 'acct' ? mention.get('acct') : mention.get('username');
-          link.appendChild(acctSpan);
-        }
-      } else if (link.textContent[0] === '#' || (link.previousSibling && link.previousSibling.textContent && link.previousSibling.textContent[link.previousSibling.textContent.length - 1] === '#')) {
-        link.addEventListener('click', this.onHashtagClick.bind(this, link.text), false);
-        link.setAttribute('data-menu-hashtag', this.props.status.getIn(['account', 'id']));
-      } else {
-        link.setAttribute('title', link.href);
-        link.classList.add('unhandled-link');
-
-        link.setAttribute('target', '_blank');
-        link.setAttribute('rel', 'noopener nofollow');
-
-        try {
-          if (tagLinks && isLinkMisleading(link)) {
-            // Add a tag besides the link to display its origin
-
-            const url = new URL(link.href);
-            const tag = document.createElement('span');
-            tag.classList.add('link-origin-tag');
-            switch (url.protocol) {
-            case 'xmpp:':
-              tag.textContent = `[${url.href}]`;
-              break;
-            case 'magnet:':
-              tag.textContent = '(magnet)';
-              break;
-            default:
-              tag.textContent = `[${url.host}]`;
-            }
-            link.insertAdjacentText('beforeend', ' ');
-            link.insertAdjacentElement('beforeend', tag);
-          }
-        } catch (e) {
-          // The URL is invalid, remove the href just to be safe
-          if (tagLinks && e instanceof TypeError) link.removeAttribute('href');
-        }
-      }
-    }
   }
 
   componentDidMount () {
@@ -249,22 +126,6 @@ class StatusContent extends PureComponent {
   componentDidUpdate () {
     this._updateStatusLinks();
   }
-
-  onMentionClick = (mention, e) => {
-    if (this.props.history && e.button === 0 && !(e.ctrlKey || e.metaKey)) {
-      e.preventDefault();
-      this.props.history.push(`/@${mention.get('acct')}`);
-    }
-  };
-
-  onHashtagClick = (hashtag, e) => {
-    hashtag = hashtag.replace(/^#/, '');
-
-    if (this.props.history && e.button === 0 && !(e.ctrlKey || e.metaKey)) {
-      e.preventDefault();
-      this.props.history.push(`/tags/${hashtag}`);
-    }
-  };
 
   handleMouseDown = (e) => {
     this.startXY = [e.clientX, e.clientY];
@@ -303,7 +164,7 @@ class StatusContent extends PureComponent {
 
   handleElement = (element, { key, ...props }, children) => {
     if (element instanceof HTMLAnchorElement) {
-      const mention = this.props.status.get('mentions').find(item => element.href === item.get('url'));
+      const mention = this.props.status.get('mentions').find(item => compareUrls(element.href, item.get('url')));
       return (
         <HandledLink
           {...props}

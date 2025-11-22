@@ -1,8 +1,7 @@
 import { connect } from 'react-redux';
 
-import { changeComposeVisibility } from '../../../actions/compose';
-import { openModal, closeModal } from '../../../actions/modal';
-import { isUserTouching } from '../../../is_mobile';
+import { changeComposeVisibility } from '@/flavours/glitch/actions/compose_typed';
+
 import PrivacyDropdown from '../components/privacy_dropdown';
 
 const mapStateToProps = state => ({

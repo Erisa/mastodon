@@ -782,6 +782,8 @@ nan:
         view_dashboard_description: 允准用者接近使用tsit ê la-jí-báng kap tsē-tsē指標
         view_devops: DevOps
         view_devops_description: 允准用者接近使用Sidekiq kap pgHero ê la-jí-báng
+        view_feeds: 看即時內容kap主題ê feed
+        view_feeds_description: 允准用者接近使用即時kap主題feed，無論服侍器ê設定。
       title: 角色
     rules:
       add_new: 加添規則
@@ -823,6 +825,7 @@ nan:
         title: 預設kā用者tuì tshiau-tshuē ia̋n-jín ê索引排除
       discovery:
         follow_recommendations: 跟tuè建議
+        preamble: Kā心適ê內容浮現出來，ē當幫tsān tī Mastodon頂siáng lóng可能m̄知ê新手。控制tsē-tsē發現lí ê服侍器ê特色作品ê功能án-nuá運作。
         privacy: 隱私權
         profile_directory: 個人資料ê目錄
         public_timelines: 公共ê時間線
@@ -836,7 +839,13 @@ nan:
       feed_access:
         modes:
           authenticated: Kan-ta hōo登入ê用者
+          disabled: 愛特別ê用者角色
           public: Ta̍k lâng
+      landing_page:
+        values:
+          about: 關係本站
+          local_feed: 本地ê動態
+          trends: 趨勢
       registrations:
         moderation_recommandation: 佇開放hōo ta̍k ê lâng註冊進前，請確認lí有夠額koh主動反應ê管理團隊！
         preamble: 控制ē當佇lí ê服侍器註冊ê人。
@@ -1153,10 +1162,156 @@ nan:
       subject: "%{instance} 有通the̍h ê Mastodon ê新版本！"
     new_trends:
       body: 下kha ê項目愛審查，tsiah ē當公開顯示：
+      new_trending_links:
+        title: 趨勢ê連結
+      new_trending_statuses:
+        title: 趨勢ê PO文
+      new_trending_tags:
+        title: 趨勢ê hashtag
+      subject: "%{instance} 頂有新ê趨勢愛審查"
+  aliases:
+    add_new: 加添別名
+    created_msg: 別名成功加添ah。Lí ē當開始tuì舊ê口座轉。
+    deleted_msg: Thâi掉捌名成功。Bē當tuì hit ê口座轉kàu tsit ê ah。
+    empty: Lí bô半个別名。
+    hint_html: Nā lí beh tuì別ê口座轉kah tsit ê，lí通佇tsia加別名，tse是必要ê，了後lí ē當kā跟tuè lí ê tuì舊口座suá到tsit ê。Tsit ê動作是<strong>無害koh通還原</strong>。<strong>著tī舊口座suá口座</strong>。
+    remove: 取消連結別名
+  appearance:
+    advanced_settings: 進一步ê設定
+    animations_and_accessibility: 動畫kap無障礙設定
+    boosting_preferences: 轉送ê偏好設定
+    boosting_preferences_info_html: "<strong>撇步：</strong>無論án-nuá設定，<kbd>Shift</kbd> + <kbd>Click</kbd> 佇%{icon} 轉送標á ē liâm-mī轉送。"
+    discovery: 發現
+    localization:
+      body: Mastodon是由志工翻譯。
+      guide_link: https://crowdin.com/project/mastodon
+      guide_link_text: Ta̍k家lóng ē當貢獻。
+    sensitive_content: 敏感ê內容
+  application_mailer:
+    notification_preferences: 改電子phue ê偏好
+    salutation: "%{name}、"
+    settings: 改電子phue ê偏好：%{link}
+    unsubscribe: 取消訂
+    view: 檢視：
+    view_profile: 看個人資料
+    view_status: 看PO文
+  applications:
+    created: 應用程式成功加添
+    destroyed: 應用程式成功thâi掉
+    logout: 登出
+    regenerate_token: 重頭產生接近使用ê token
+    token_regenerated: 接近使用ê token 成功重頭產生
+    warning: 注意！毋通kā分享hōo別lâng！
+    your_token: Lí ê接近使用token
+  auth:
+    apply_for_account: 申請口座
+    captcha_confirmation:
+      help_html: Nā lí完成CAPTCHA ê時陣有問題，lí通用 %{email} kap guán 聯絡，guán ē幫tsān lí。
+      hint_html: 上尾步ah！Guán愛確認lí是人類（以免pùn-sò訊息入侵！）解決下kha êCAPTCHA了後，ji̍h「繼續」。
+      title: 安全檢查
+    confirmations:
+      awaiting_review: Lí ê電子phue地址有確認ah！%{domain} ê人員leh審查lí ê註冊。Nā in允准lí ê口座，Lí ē收著電子phue！
+      awaiting_review_title: Lí ê註冊當leh審查
+      clicking_this_link: Ji̍h tsit ê連結
+      login_link: 登入
+      proceed_to_login_html: Lí tsit-má通繼續去 %{login_link}。
+      redirect_to_app_html: Lí應該受重轉kàu <strong>%{app_name}</strong>應用程式，若是iáu-buē，試 %{clicking_this_link} á是手動轉去tsit ê應用程式。
+      registration_complete: Lí佇 %{domain} ê註冊完成ah！
+      welcome_title: 歡迎 %{name}！
+      wrong_email_hint: Nā是電子phue ê地址無正確，lí ē當tī口座設定kā改。
+    delete_account: Thâi掉口座
+    delete_account_html: Nā lí behthâi掉lí ê口座，lí ē當<a href="%{path}">ji̍h tsia繼續</a>。Lí著確認動作。
+    description:
+      prefix_invited_by_user: "@%{name} 邀請lí加入tsit ê Mastodon 服侍器！"
+      prefix_sign_up: Tsit-má註冊Mastodon ê口座！
+      suffix: 有口座，lí當tuì ta̍k ê Mastodon 服侍器跟tuè lâng、PO更新kap交換訊息等等！
+    didnt_get_confirmation: Kám無收著確認ê連結？
+    dont_have_your_security_key: Lí iáu無安全鎖(security key)？
+    forgot_password: 密碼be記得？
+    invalid_reset_password_token: 重新設密碼ê token無效á是過期ah。請重頭the̍h新ê。
+    link_to_otp: 請tuì lí ê手機á輸入雙因素認證(2FA)ê碼，á是恢復碼。
+    link_to_webauth: 用lí ê安全鎖ê裝置
+    log_in_with: 登入用
+    login: 登入
+    logout: 登出
+    migrate_account: 轉kàu無kâng ê口座
+    migrate_account_html: Nā lí ǹg望引tshuā別人tuè無kâng ê口座，請 kàu<a href="%{path}">tsia設定</a>。
+    or_log_in_with: Á是登入用
+    progress:
+      confirm: 確認電子phue
+      details: Lí ê詳細
+      review: Lán ê審查
+      rules: 接受規則
+    providers:
+      cas: CAS
+      saml: SAML
+    register: 註冊
+    registration_closed: "%{instance} 無接受新ê成員"
+    resend_confirmation: 重送確認ê連結
+    reset_password: 重設密碼
+    rules:
+      accept: 接受
+      back: Tńg去
+      invited_by: Lí通用有tuì hia收著ê邀請加入 %{domain}：
+      preamble: Tsiah-ê hōo %{domain} ê管理員設定kap實施。
+      preamble_invited: 佇lí繼續進前，請思考 %{domain} ê管理員設立ê基本規則。
+      title: Tsi̍t-kuá基本規定。
+      title_invited: Lí受邀請ah。
+    security: 安全
+    set_new_password: 設新ê密碼
+    setup:
+      email_below_hint_html: 請檢查lí ê pùn-sò phue資料giap-á，á是請求koh送tsi̍t改。Lí通改電子phue地址，nā是有出入。
+      email_settings_hint_html: 請tshi̍h guán送kàu %{email} ê連結，來開始用 Mastodon。Guán ē佇tsia等。
+      link_not_received: Kám iáu bē收著連結？
+      new_confirmation_instructions_sent: Lí ē tī幾分鐘後收著新ê電子phue，有確認連結！
+      title: 請檢查lí ê收件giap-á
+    sign_in:
+      preamble_html: 請用lí佇 <strong>%{domain}</strong> ê口座kap密碼登入。若是lí ê口座tī別ê服侍器，lí bē當tī tsia登入。
+      title: 登入 %{domain}
+    status:
+      account_status: 口座ê狀態
+      confirming: Teh等電子phue確認完成。
+      functional: Lí ê口座完全ē當用。
+    use_security_key: 用安全鎖
+    user_agreement_html: 我有讀而且同意 <a href="%{terms_of_service_path}" target="_blank">服務規定</a> kap <a href="%{privacy_policy_path}" target="_blank">隱私權政策</a>
+    user_privacy_agreement_html: 我有讀而且同意 <a href="%{privacy_policy_path}" target="_blank">隱私權政策</a>
+  author_attribution:
+    example_title: 見本文字
+    hint_html: Lí kám佇Mastodon外口寫新聞á是blog文章？控制當in佇Mastodon分享ê時陣，án-tsuánn表示作者資訊。
+    instructions: 請確認lí ê文章HTML內底有tsit ê code：
+    more_from_html: 看 %{name} ê其他內容
+    s_blog: "%{name} ê Blog"
+    then_instructions: 了後，kā公開ê所在ê域名加kàu下kha ê格á：
+    title: 作者ê落名
+  challenge:
+    confirm: 繼續
+    hint_html: "<strong>提醒：</strong>Guán佇一點鐘內底，bē koh問密碼。"
+    invalid_password: 無效ê密碼
+    prompt: 確認密碼來繼續
+  crypto:
+    errors:
+      invalid_key: m̄是有效ê Ed25519 á是 Curve25519 鎖
+  date:
+    formats:
+      default: "%Y年%b月%d日"
+      with_month_name: "%Y年%B月%d日"
+  datetime:
+    distance_in_words:
+      about_x_hours: "%{count}點鐘前"
+      about_x_months: "%{count}kò月前"
+      about_x_years: "%{count}年前"
+      almost_x_years: 接近%{count}年前
+      half_a_minute: 頭tú-á
+      less_than_x_minutes: "%{count}分鐘前以內"
+      less_than_x_seconds: 頭tú-á
+      over_x_years: "%{count}年"
+      x_days: "%{count}kang"
   scheduled_statuses:
     too_soon: Tio̍h用未來ê日期。
   statuses:
     default_language: Kap界面ê語言sio kâng
+  terms_of_service:
+    title: 服務規定
   two_factor_authentication:
     disable: 停止用雙因素認證
   user_mailer:

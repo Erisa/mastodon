@@ -33,7 +33,7 @@ class ActivityPub::NoteSerializer < ActivityPub::Serializer
 
   attribute :voters_count, if: :poll_and_voters_count?
 
-  attribute :quote, if: :quote?
+  attribute :quote, if: :nonlegacy_quote?
   attribute :quote, key: :_misskey_quote, if: :serializable_quote?
   attribute :quote, key: :quote_uri, if: :serializable_quote?
   attribute :quote_authorization, if: :quote_authorization?
@@ -228,6 +228,10 @@ class ActivityPub::NoteSerializer < ActivityPub::Serializer
 
   def serializable_quote?
     object.quote&.quoted_status&.present?
+  end
+
+  def nonlegacy_quote?
+    object.quote.present? && !object.quote.legacy?
   end
 
   def quote_authorization?
