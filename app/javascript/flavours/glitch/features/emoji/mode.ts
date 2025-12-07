@@ -3,6 +3,7 @@
 
 import { createAppSelector, useAppSelector } from '@/flavours/glitch/store';
 import { isDevelopment } from '@/flavours/glitch/utils/environment';
+import { isDarkMode } from '@/flavours/glitch/utils/theme';
 
 import {
   EMOJI_MODE_NATIVE,
@@ -27,7 +28,7 @@ export function useEmojiAppState(): EmojiAppState {
     currentLocale: locale,
     locales: [locale],
     mode,
-    darkTheme: document.body.classList.contains('theme-default'),
+    darkTheme: isDarkMode(),
   };
 }
 

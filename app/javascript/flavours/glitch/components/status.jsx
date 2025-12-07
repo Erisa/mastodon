@@ -640,7 +640,7 @@ class Status extends ImmutablePureComponent {
     } else if (status.get('card') && settings.get('inline_preview_cards') && !this.props.muted && !status.get('quote')) {
       media.push(
         <Card
-          onOpenMedia={this.handleOpenMedia}
+          key={`${status.get('id')}-${status.get('edited_at')}`}
           card={status.get('card')}
           sensitive={status.get('sensitive')}
         />,

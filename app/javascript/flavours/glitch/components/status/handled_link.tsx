@@ -198,7 +198,7 @@ export const HandledLink: FC<HandledLinkProps & ComponentProps<'a'>> = ({
       title={href}
       className={classNames('unhandled-link', className)}
       target='_blank'
-      rel='noreferrer noopener'
+      rel='noopener'
       translate='no'
       ref={linkRef}
     >

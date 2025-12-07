@@ -68,7 +68,6 @@ docker-compose.override.yml
 
 # Ignore vendored CSS reset
 app/javascript/styles/mastodon/reset.scss
-app/javascript/styles_new/mastodon/reset.scss
 
 # Ignore Javascript pending https://github.com/mastodon/mastodon/pull/23631
 *.js
@@ -96,6 +95,7 @@ AUTHORS.md
 
 # Ignore glitch-soc vendored CSS reset
 app/javascript/flavours/glitch/styles/reset.scss
+app/javascript/flavours/glitch/styles_new/mastodon/reset.scss
 
 # Ignore win95 theme
 app/javascript/styles/win95.scss
