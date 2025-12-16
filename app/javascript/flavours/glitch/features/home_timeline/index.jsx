@@ -15,7 +15,6 @@ import { fetchAnnouncements, toggleShowAnnouncements } from 'flavours/glitch/act
 import { IconWithBadge } from 'flavours/glitch/components/icon_with_badge';
 import { NotSignedInIndicator } from 'flavours/glitch/components/not_signed_in_indicator';
 import { identityContextPropShape, withIdentity } from 'flavours/glitch/identity_context';
-import { criticalUpdatesPending } from 'flavours/glitch/initial_state';
 import { withBreakpoint } from 'flavours/glitch/features/ui/hooks/useBreakpoint';
 
 import { addColumn, removeColumn, moveColumn } from '../../actions/columns';
@@ -27,6 +26,7 @@ import StatusListContainer from '../ui/containers/status_list_container';
 import { ColumnSettings } from './components/column_settings';
 import { CriticalUpdateBanner } from './components/critical_update_banner';
 import { Announcements } from './components/announcements';
+import { AnnualReportTimeline } from '../annual_report/timeline';
 
 const messages = defineMessages({
   title: { id: 'column.home', defaultMessage: 'Home' },
@@ -129,7 +129,10 @@ class HomeTimeline extends PureComponent {
     const { intl, hasUnread, columnId, multiColumn, hasAnnouncements, unreadAnnouncements, showAnnouncements, matchesBreakpoint } = this.props;
     const pinned = !!columnId;
     const { signedIn } = this.props.identity;
-    const banners = [];
+    const banners = [
+      <CriticalUpdateBanner key='critical-update-banner' />,
+      <AnnualReportTimeline key='annual-report' />
+    ];
 
     let announcementsButton;
 
@@ -145,10 +148,6 @@ class HomeTimeline extends PureComponent {
           <IconWithBadge id='bullhorn' icon={CampaignIcon} count={unreadAnnouncements} />
         </button>
       );
-    }
-
-    if (criticalUpdatesPending) {
-      banners.push(<CriticalUpdateBanner key='critical-update-banner' />);
     }
 
     return (

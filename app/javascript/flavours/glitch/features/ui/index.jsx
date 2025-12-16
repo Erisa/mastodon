@@ -24,6 +24,7 @@ import { identityContextPropShape, withIdentity } from 'flavours/glitch/identity
 import { layoutFromWindow } from 'flavours/glitch/is_mobile';
 import { selectUnreadNotificationGroupsCount } from 'flavours/glitch/selectors/notifications';
 import { WithRouterPropTypes } from 'flavours/glitch/utils/react_router';
+import { checkAnnualReport } from '@/flavours/glitch/reducers/slices/annual_report';
 
 import { uploadCompose, resetCompose, changeComposeSpoilerness } from '../../actions/compose';
 import { clearHeight } from '../../actions/height_cache';
@@ -414,6 +415,7 @@ class UI extends PureComponent {
       this.props.dispatch(expandHomeTimeline());
       this.props.dispatch(fetchNotifications());
       this.props.dispatch(fetchServerTranslationLanguages());
+      this.props.dispatch(checkAnnualReport());
 
       setTimeout(() => this.props.dispatch(fetchServer()), 3000);
     }

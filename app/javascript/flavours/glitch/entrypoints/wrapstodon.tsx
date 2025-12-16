@@ -2,13 +2,11 @@ import { createRoot } from 'react-dom/client';
 
 import { Provider as ReduxProvider } from 'react-redux';
 
-import {
-  importFetchedAccounts,
-  importFetchedStatuses,
-} from '@/flavours/glitch/actions/importer';
+import { importFetchedStatuses } from '@/flavours/glitch/actions/importer';
+import { hydrateStore } from '@/flavours/glitch/actions/store';
 import type { ApiAnnualReportResponse } from '@/flavours/glitch/api/annual_report';
 import { Router } from '@/flavours/glitch/components/router';
-import { WrapstodonShare } from '@/flavours/glitch/features/annual_report/share';
+import { WrapstodonSharedPage } from '@/flavours/glitch/features/annual_report/shared_page';
 import { IntlProvider, loadLocale } from '@/flavours/glitch/locales';
 import { loadPolyfills } from '@/flavours/glitch/polyfills';
 import ready from '@/flavours/glitch/ready';
@@ -27,13 +25,24 @@ function loaded() {
 
   const initialState = JSON.parse(
     propsNode.textContent,
-  ) as ApiAnnualReportResponse;
+  ) as ApiAnnualReportResponse & { me?: string; domain: string };
 
   const report = initialState.annual_reports[0];
   if (!report) {
     throw new Error('Initial state report not found');
   }
-  store.dispatch(importFetchedAccounts(initialState.accounts));
+
+  // Set up store
+  store.dispatch(
+    hydrateStore({
+      meta: {
+        locale: document.documentElement.lang,
+        me: initialState.me,
+        domain: initialState.domain,
+      },
+      accounts: initialState.accounts,
+    }),
+  );
   store.dispatch(importFetchedStatuses(initialState.statuses));
 
   store.dispatch(setReport(report));
@@ -43,7 +52,7 @@ function loaded() {
     <IntlProvider>
       <ReduxProvider store={store}>
         <Router>
-          <WrapstodonShare />
+          <WrapstodonSharedPage />
         </Router>
       </ReduxProvider>
     </IntlProvider>,

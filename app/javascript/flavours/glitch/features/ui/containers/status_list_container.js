@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 
 import { debounce } from 'lodash';
 
-import { scrollTopTimeline, loadPending, TIMELINE_SUGGESTIONS } from '@/flavours/glitch/actions/timelines';
+import { scrollTopTimeline, loadPending } from '@/flavours/glitch/actions/timelines';
+import { isNonStatusId } from '@/flavours/glitch/actions/timelines_typed';
 import StatusList from '@/flavours/glitch/components/status_list';
 import { me } from '@/flavours/glitch/initial_state';
-import { TIMELINE_WRAPSTODON } from '@/flavours/glitch/reducers/slices/annual_report';
 
 const getRegex = createSelector([
   (state, { regex }) => regex,
@@ -29,7 +29,7 @@ const makeGetStatusIds = (pending = false) => createSelector([
   getRegex,
 ], (columnSettings, statusIds, statuses, regex) => {
   return statusIds.filter(id => {
-    if (id === null || id === TIMELINE_SUGGESTIONS || id === TIMELINE_WRAPSTODON) return true;
+    if (isNonStatusId(id)) return true;
 
     const statusForId = statuses.get(id);
 

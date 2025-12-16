@@ -4,6 +4,7 @@ import type { List } from 'immutable';
 
 import { EmojiHTML } from '@/flavours/glitch/components/emoji/html';
 import { useElementHandledLink } from '@/flavours/glitch/components/status/handled_link';
+import type { CustomEmoji } from '@/flavours/glitch/models/custom_emoji';
 import type { Status } from '@/flavours/glitch/models/status';
 
 import type { Mention } from './embedded_status';
@@ -33,6 +34,7 @@ export const EmbeddedStatusContent: React.FC<{
       className={className}
       lang={status.get('language') as string}
       htmlString={status.get('contentHtml') as string}
+      extraEmojis={status.get('emoji') as List<CustomEmoji>}
     />
   );
 };

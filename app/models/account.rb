@@ -469,6 +469,10 @@ class Account < ApplicationRecord
     save!
   end
 
+  def featureable?
+    local? && discoverable?
+  end
+
   private
 
   def prepare_contents

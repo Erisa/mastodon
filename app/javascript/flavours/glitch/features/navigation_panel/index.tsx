@@ -52,6 +52,8 @@ import { canViewFeed } from 'flavours/glitch/permissions';
 import { selectUnreadNotificationGroupsCount } from 'flavours/glitch/selectors/notifications';
 import { useAppSelector, useAppDispatch } from 'flavours/glitch/store';
 
+import { AnnualReportNavItem } from '../annual_report/nav_item';
+
 import { DisabledAccountBanner } from './components/disabled_account_banner';
 import { FollowedTagsPanel } from './components/followed_tags_panel';
 import { ListPanel } from './components/list_panel';
@@ -321,6 +323,8 @@ export const NavigationPanel: React.FC<{ multiColumn?: boolean }> = ({
             <NotificationsLink />
 
             <FollowRequestsLink />
+
+            <AnnualReportNavItem />
 
             <hr />
 

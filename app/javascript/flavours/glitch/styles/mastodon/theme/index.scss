@@ -6,8 +6,7 @@
 html {
   @include base.palette;
 
-  &[data-user-theme='system'],
-  &[data-user-theme='system-modern'] {
+  &:is([data-user-theme='system-modern'], [data-user-theme='system']) {
     color-scheme: dark light;
 
     @media (prefers-color-scheme: dark) {

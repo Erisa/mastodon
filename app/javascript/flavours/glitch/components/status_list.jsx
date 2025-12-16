@@ -8,8 +8,6 @@ import { debounce } from 'lodash';
 import { TIMELINE_GAP, TIMELINE_SUGGESTIONS } from 'flavours/glitch/actions/timelines';
 import { RegenerationIndicator } from 'flavours/glitch/components/regeneration_indicator';
 import { InlineFollowSuggestions } from 'flavours/glitch/features/home_timeline/components/inline_follow_suggestions';
-import { AnnualReportTimeline } from 'flavours/glitch/features/annual_report/timeline';
-import { TIMELINE_WRAPSTODON } from '@/flavours/glitch/reducers/slices/annual_report';
 
 import { StatusQuoteManager } from '../components/status_quoted';
 
@@ -68,10 +66,6 @@ export default class StatusList extends ImmutablePureComponent {
           return (
             <InlineFollowSuggestions key={TIMELINE_SUGGESTIONS} />
           );
-        case TIMELINE_WRAPSTODON:
-          return (
-            <AnnualReportTimeline key={TIMELINE_WRAPSTODON} />
-          )
         case TIMELINE_GAP:
           return (
             <LoadGap
