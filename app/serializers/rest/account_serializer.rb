@@ -21,6 +21,8 @@ class REST::AccountSerializer < ActiveModel::Serializer
 
   attribute :memorial, if: :memorial?
 
+  attribute :feature_approval, if: -> { Mastodon::Feature.collections_enabled? }
+
   class AccountDecorator < SimpleDelegator
     def self.model_name
       Account.model_name
@@ -189,5 +191,13 @@ class REST::AccountSerializer < ActiveModel::Serializer
 
   def show_rationale_for_user?
     Setting.show_domain_blocks_rationale == 'users' && current_user? && current_user.functional_or_moved?
+  end
+
+  def feature_approval
+    {
+      automatic: object.feature_policy_as_keys(:automatic),
+      manual: object.feature_policy_as_keys(:manual),
+      current_user: object.feature_policy_for_account(current_user&.account),
+    }
   end
 end

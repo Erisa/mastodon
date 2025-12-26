@@ -90,8 +90,7 @@ export interface NotificationGroupAdminReport extends BaseNotification<'admin.re
 
 type StatusReaction = Omit<Omit<ApiStatusReactionJSON, 'account'>, 'count'>;
 
-export interface NotificationGroupReaction
-  extends BaseNotification<'reaction'> {
+export interface NotificationGroupReaction extends BaseNotification<'reaction'> {
   statusId: string | undefined;
   reaction: StatusReaction | undefined;
 }

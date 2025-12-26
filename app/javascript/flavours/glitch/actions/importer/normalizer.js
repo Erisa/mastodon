@@ -2,6 +2,8 @@ import escapeTextContentForBrowser from 'escape-html';
 
 import { autoHideCW } from '../../utils/content_warning';
 
+import { importCustomEmoji } from './emoji';
+
 const domParser = new DOMParser();
 
 export function searchTextFromRawStatus (status) {
@@ -142,6 +144,10 @@ export function normalizeAnnouncement(announcement) {
   const normalAnnouncement = { ...announcement };
 
   normalAnnouncement.contentHtml = normalAnnouncement.content;
+
+  if (normalAnnouncement.emojis) {
+    importCustomEmoji(normalAnnouncement.emojis);
+  }
 
   return normalAnnouncement;
 }

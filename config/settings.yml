@@ -46,6 +46,7 @@ defaults: &defaults
   reject_blurhash: ''
   allow_referrer_origin: false
   landing_page: 'trends'
+  wrapstodon: true
 
 development:
   <<: *defaults
