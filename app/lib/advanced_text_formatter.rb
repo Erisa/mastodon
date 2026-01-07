@@ -38,8 +38,6 @@ class AdvancedTextFormatter < TextFormatter
 
   # Differs from TextFormatter by not messing with newline after parsing
   def to_s
-    return ''.html_safe if text.blank?
-
     html = rewrite do |entity|
       if entity[:url]
         link_to_url(entity)

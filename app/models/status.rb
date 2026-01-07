@@ -141,6 +141,7 @@ class Status < ApplicationRecord
   scope :tagged_with_none, lambda { |tag_ids|
     where('NOT EXISTS (SELECT * FROM statuses_tags forbidden WHERE forbidden.status_id = statuses.id AND forbidden.tag_id IN (?))', tag_ids)
   }
+  scope :without_empty_attachments, -> { where(ordered_media_attachment_ids: nil).or(where.not(ordered_media_attachment_ids: [])) }
 
   scope :not_local_only, -> { where(local_only: [false, nil]) }
 
