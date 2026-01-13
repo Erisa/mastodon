@@ -2,6 +2,7 @@
 // See: https://github.com/nolanlawson/emoji-picker-element/blob/master/src/picker/utils/testColorEmojiSupported.js
 
 import { createAppSelector, useAppSelector } from '@/flavours/glitch/store';
+import { assetHost } from '@/flavours/glitch/utils/config';
 import { isDevelopment } from '@/flavours/glitch/utils/environment';
 import { isDarkMode } from '@/flavours/glitch/utils/theme';
 
@@ -29,6 +30,7 @@ export function useEmojiAppState(): EmojiAppState {
     locales: [locale],
     mode,
     darkTheme: isDarkMode(),
+    assetHost,
   };
 }
 

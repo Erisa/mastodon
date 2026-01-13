@@ -38,6 +38,8 @@ class AdvancedTextFormatter < TextFormatter
 
   # Differs from TextFormatter by not messing with newline after parsing
   def to_s
+    return add_quote_fallback('').html_safe if text.blank? # rubocop:disable Rails/OutputSafety
+
     html = rewrite do |entity|
       if entity[:url]
         link_to_url(entity)
