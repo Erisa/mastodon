@@ -5,9 +5,7 @@ export function getUserTheme() {
 
 export function isDarkMode() {
   const { userTheme } = document.documentElement.dataset;
-  return (
-    ((userTheme === 'system' || userTheme === 'system-modern') &&
-      window.matchMedia('(prefers-color-scheme: dark)').matches) ||
-    (userTheme !== 'mastodon-light' && userTheme !== 'modern-light')
-  );
+  return userTheme === 'system' || userTheme === 'system-modern'
+    ? window.matchMedia('(prefers-color-scheme: dark)').matches
+    : userTheme !== 'mastodon-light' && userTheme !== 'modern-light';
 }
