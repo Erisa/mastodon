@@ -1,17 +1,6 @@
 // Mastodon Modern theme by Freeplay! Check the original repo for more info: https://git.gay/freeplay/Mastodon-Modern
 // Everything in the "modern" directory is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License: http://creativecommons.org/licenses/by-sa/4.0/
 
-@use 'mastodon/theme/light';
-@use 'mastodon/theme/utils';
-
-@use 'mastodon-light';
+@use 'common';
 @use 'modern/style';
 @use 'modern/glitch-fixes';
-
-.theme-modern-light,
-html:where([data-user-theme='modern-light']) {
-  color-scheme: light;
-
-  @include light.tokens;
-  @include utils.invert-on-light;
-}

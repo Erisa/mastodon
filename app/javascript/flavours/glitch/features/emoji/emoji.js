@@ -1,6 +1,6 @@
 import Trie from 'substring-trie';
 
-import { getUserTheme, isDarkMode } from '@/flavours/glitch/utils/theme';
+import { getIsSystemTheme, isDarkMode } from '@/flavours/glitch/utils/theme';
 import { assetHost } from 'flavours/glitch/utils/config';
 
 import { autoPlayGif } from '../../initial_state';
@@ -98,8 +98,7 @@ const emojifyTextNode = (node, customEmojis) => {
       const { filename, shortCode } = unicodeMapping[unicode_emoji];
       const title = shortCode ? `:${shortCode}:` : '';
 
-      const userTheme = getUserTheme();
-      const isSystemTheme = userTheme === 'system' || userTheme === 'system-modern';
+      const isSystemTheme = getIsSystemTheme();
 
       const theme = (isSystemTheme || !isDarkMode()) ? 'light' : 'dark';
 
