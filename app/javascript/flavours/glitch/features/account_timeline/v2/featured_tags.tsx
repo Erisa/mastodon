@@ -9,7 +9,7 @@ import { useParams } from 'react-router';
 import { fetchFeaturedTags } from '@/flavours/glitch/actions/featured_tags';
 import { useAppHistory } from '@/flavours/glitch/components/router';
 import { Tag } from '@/flavours/glitch/components/tags/tag';
-import { useOverflow } from '@/flavours/glitch/hooks/useOverflow';
+import { useOverflowButton } from '@/flavours/glitch/hooks/useOverflow';
 import { selectAccountFeaturedTags } from '@/flavours/glitch/selectors/accounts';
 import { useAppDispatch, useAppSelector } from '@/flavours/glitch/store';
 
@@ -30,7 +30,7 @@ export const FeaturedTags: FC<{ accountId: string }> = ({ accountId }) => {
   // Get list of tags with overflow handling.
   const [showOverflow, setShowOverflow] = useState(false);
   const { hiddenCount, wrapperRef, listRef, hiddenIndex, maxWidth } =
-    useOverflow();
+    useOverflowButton();
 
   // Handle whether to show all tags.
   const handleOverflowClick: MouseEventHandler = useCallback(() => {
