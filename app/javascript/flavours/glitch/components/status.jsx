@@ -165,6 +165,7 @@ class Status extends ImmutablePureComponent {
     'expanded',
     'unread',
     'pictureInPicture',
+    'onQuoteCancel',
     'previousId',
     'nextInReplyToId',
     'rootId',

@@ -5,10 +5,12 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { DisplayName } from '@/flavours/glitch/components/display_name';
 import { AnimateEmojiProvider } from '@/flavours/glitch/components/emoji/context';
 import { EmojiHTML } from '@/flavours/glitch/components/emoji/html';
+import { Icon } from '@/flavours/glitch/components/icon';
 import { IconButton } from '@/flavours/glitch/components/icon_button';
 import { LoadingIndicator } from '@/flavours/glitch/components/loading_indicator';
 import { useElementHandledLink } from '@/flavours/glitch/components/status/handled_link';
 import { useAccount } from '@/flavours/glitch/hooks/useAccount';
+import IconVerified from '@/images/icons/icon_verified.svg?react';
 import CloseIcon from '@/material-icons/400-24px/close.svg?react';
 
 import classes from './redesign.module.scss';
@@ -56,7 +58,10 @@ export const AccountFieldsModal: FC<{
         <AnimateEmojiProvider>
           <dl className={classes.modalFieldsList}>
             {account.fields.map((field, index) => (
-              <div key={index} className={classes.modalFieldItem}>
+              <div
+                key={index}
+                className={`${classes.modalFieldItem} ${classes.fieldCard}`}
+              >
                 <EmojiHTML
                   as='dt'
                   htmlString={field.name_emojified}
@@ -64,12 +69,22 @@ export const AccountFieldsModal: FC<{
                   className='translate'
                   {...htmlHandlers}
                 />
-                <EmojiHTML
-                  as='dd'
-                  htmlString={field.value_emojified}
-                  extraEmojis={account.emojis}
-                  {...htmlHandlers}
-                />
+                <dd>
+                  <EmojiHTML
+                    as='span'
+                    htmlString={field.value_emojified}
+                    extraEmojis={account.emojis}
+                    {...htmlHandlers}
+                  />
+                  {!!field.verified_at && (
+                    <Icon
+                      id='verified'
+                      icon={IconVerified}
+                      className={classes.fieldIconVerified}
+                      noFill
+                    />
+                  )}
+                </dd>
               </div>
             ))}
           </dl>

@@ -29,6 +29,7 @@ import { AccountHeaderFields } from './fields';
 import { AccountInfo } from './info';
 import { MemorialNote } from './memorial_note';
 import { MovedNote } from './moved_note';
+import { AccountNote as AccountNoteRedesign } from './note';
 import redesignClasses from './redesign.module.scss';
 import { AccountTabs } from './tabs';
 
@@ -147,12 +148,7 @@ export const AccountHeader: React.FC<{
               isRedesignEnabled() && redesignClasses.nameWrapper,
             )}
           >
-            <AccountName
-              accountId={accountId}
-              className={classNames(
-                isRedesignEnabled() && redesignClasses.name,
-              )}
-            />
+            <AccountName accountId={accountId} />
             {isRedesignEnabled() && <AccountButtons accountId={accountId} />}
           </div>
 
@@ -171,9 +167,13 @@ export const AccountHeader: React.FC<{
           {!suspendedOrHidden && (
             <div className='account__header__extra'>
               <div className='account__header__bio'>
-                {me && account.id !== me && (
-                  <AccountNote accountId={accountId} />
-                )}
+                {me &&
+                  account.id !== me &&
+                  (isRedesignEnabled() ? (
+                    <AccountNoteRedesign accountId={accountId} />
+                  ) : (
+                    <AccountNote accountId={accountId} />
+                  ))}
 
                 <AccountBio
                   accountId={accountId}

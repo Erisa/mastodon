@@ -94,6 +94,7 @@ class Status < ApplicationRecord
   has_many :local_favorited, -> { merge(Account.local) }, through: :favourites, source: :account
   has_many :local_reblogged, -> { merge(Account.local) }, through: :reblogs, source: :account
   has_many :local_bookmarked, -> { merge(Account.local) }, through: :bookmarks, source: :account
+  has_many :local_replied, -> { merge(Account.local) }, through: :replies, source: :account
 
   has_and_belongs_to_many :tags # rubocop:disable Rails/HasAndBelongsToMany
 
@@ -530,7 +531,13 @@ class Status < ApplicationRecord
   def set_local_only
     return unless account.domain.nil? && !attribute_changed?(:local_only)
 
-    self.local_only = marked_local_only?
+    self.local_only = true if thread&.local_only? && local_only.nil?
+
+    if reblog?
+      self.local_only = reblog.local_only
+    elsif local_only.nil?
+      self.local_only = marked_local_only?
+    end
   end
 
   def set_conversation
@@ -573,7 +580,7 @@ class Status < ApplicationRecord
   def increment_counter_caches
     return if direct_visibility?
 
-    account&.increment_count!(:statuses_count)
+    account&.increment_count!(:statuses_count, status_created_at: created_at)
     reblog&.increment_count!(:reblogs_count) if reblog?
     thread&.increment_count!(:replies_count) if in_reply_to_id.present? && distributable?
   end

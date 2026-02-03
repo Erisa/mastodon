@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_01_19_153538) do
+ActiveRecord::Schema[8.0].define(version: 2026_01_27_141820) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -198,8 +198,8 @@ ActiveRecord::Schema[8.0].define(version: 2026_01_19_153538) do
     t.datetime "requested_review_at", precision: nil
     t.boolean "indexable", default: false, null: false
     t.string "attribution_domains", default: [], array: true
-    t.text "avatar_description", default: "", null: false
-    t.text "header_description", default: "", null: false
+    t.string "avatar_description", default: "", null: false
+    t.string "header_description", default: "", null: false
     t.string "following_url", default: "", null: false
     t.integer "id_scheme", default: 1
     t.integer "feature_approval_policy", default: 0, null: false

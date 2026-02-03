@@ -233,10 +233,6 @@ export function submitCompose(overridePrivacy = null, successCallback = undefine
       return;
     }
 
-    if (getState().getIn(['compose', 'advanced_options', 'do_not_federate'])) {
-      status = status + ' 👁️';
-    }
-
     dispatch(submitComposeRequest());
 
     // If we're editing a post with media attachments, those have not
@@ -267,6 +263,7 @@ export function submitCompose(overridePrivacy = null, successCallback = undefine
         status,
         spoiler_text,
         content_type: getState().getIn(['compose', 'content_type']),
+        local_only: getState().getIn(['compose', 'advanced_options', 'do_not_federate']),
         in_reply_to_id: getState().getIn(['compose', 'in_reply_to'], null),
         media_ids: media.map(item => item.get('id')),
         media_attributes,

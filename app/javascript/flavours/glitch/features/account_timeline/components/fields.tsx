@@ -3,15 +3,19 @@ import type { FC } from 'react';
 
 import { FormattedMessage } from 'react-intl';
 
+import classNames from 'classnames';
+
 import { openModal } from '@/flavours/glitch/actions/modal';
 import { AccountFields } from '@/flavours/glitch/components/account_fields';
 import { EmojiHTML } from '@/flavours/glitch/components/emoji/html';
 import { FormattedDateWrapper } from '@/flavours/glitch/components/formatted_date';
+import { Icon } from '@/flavours/glitch/components/icon';
 import { MiniCardList } from '@/flavours/glitch/components/mini_card/list';
 import { useElementHandledLink } from '@/flavours/glitch/components/status/handled_link';
 import { useAccount } from '@/flavours/glitch/hooks/useAccount';
 import type { Account } from '@/flavours/glitch/models/account';
 import { useAppDispatch } from '@/flavours/glitch/store';
+import IconVerified from '@/images/icons/icon_verified.svg?react';
 
 import { isRedesignEnabled } from '../common';
 
@@ -55,25 +59,41 @@ const RedesignAccountHeaderFields: FC<{ account: Account }> = ({ account }) => {
   const htmlHandlers = useElementHandledLink();
   const cards = useMemo(
     () =>
-      account.fields.toArray().map(({ value_emojified, name_emojified }) => ({
-        label: (
-          <EmojiHTML
-            htmlString={name_emojified}
-            extraEmojis={account.emojis}
-            className='translate'
-            as='span'
-            {...htmlHandlers}
-          />
-        ),
-        value: (
-          <EmojiHTML
-            as='span'
-            htmlString={value_emojified}
-            extraEmojis={account.emojis}
-            {...htmlHandlers}
-          />
-        ),
-      })),
+      account.fields
+        .toArray()
+        .map(({ value_emojified, name_emojified, verified_at }) => ({
+          label: (
+            <>
+              <EmojiHTML
+                htmlString={name_emojified}
+                extraEmojis={account.emojis}
+                className='translate'
+                as='span'
+                {...htmlHandlers}
+              />
+              {!!verified_at && (
+                <Icon
+                  id='verified'
+                  icon={IconVerified}
+                  className={classes.fieldIconVerified}
+                  noFill
+                />
+              )}
+            </>
+          ),
+          value: (
+            <EmojiHTML
+              as='span'
+              htmlString={value_emojified}
+              extraEmojis={account.emojis}
+              {...htmlHandlers}
+            />
+          ),
+          className: classNames(
+            classes.fieldCard,
+            !!verified_at && classes.fieldCardVerified,
+          ),
+        })),
     [account.emojis, account.fields, htmlHandlers],
   );
 
