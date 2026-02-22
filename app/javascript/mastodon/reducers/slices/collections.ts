@@ -7,12 +7,15 @@ import {
   apiUpdateCollection,
   apiGetCollection,
   apiDeleteCollection,
+  apiAddCollectionItem,
+  apiRemoveCollectionItem,
 } from '@/mastodon/api/collections';
 import type {
   ApiCollectionJSON,
   ApiCreateCollectionPayload,
   ApiUpdateCollectionPayload,
 } from '@/mastodon/api_types/collections';
+import { me } from '@/mastodon/initial_state';
 import {
   createAppSelector,
   createDataLoadingThunk,
@@ -109,6 +112,14 @@ const collectionSlice = createSlice({
       const { collectionId } = action.meta.arg;
       // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
       delete state.collections[collectionId];
+      if (me) {
+        let accountCollectionIds = state.accountCollections[me]?.collectionIds;
+        if (accountCollectionIds) {
+          accountCollectionIds = accountCollectionIds.filter(
+            (id) => id !== collectionId,
+          );
+        }
+      }
     });
 
     /**
@@ -129,6 +140,32 @@ const collectionSlice = createSlice({
           collectionIds: [collection.id],
           status: 'idle',
         };
+      }
+    });
+
+    /**
+     * Adding an account to a collection
+     */
+
+    builder.addCase(addCollectionItem.fulfilled, (state, action) => {
+      const { collection_item } = action.payload;
+      const { collectionId } = action.meta.arg;
+
+      state.collections[collectionId]?.items.push(collection_item);
+    });
+
+    /**
+     * Removing an account from a collection
+     */
+
+    builder.addCase(removeCollectionItem.fulfilled, (state, action) => {
+      const { itemId, collectionId } = action.meta.arg;
+
+      const collection = state.collections[collectionId];
+      if (collection) {
+        collection.items = collection.items.filter(
+          (item) => item.id !== itemId,
+        );
       }
     });
   },
@@ -167,6 +204,18 @@ export const deleteCollection = createDataLoadingThunk(
   `${collectionSlice.name}/deleteCollection`,
   ({ collectionId }: { collectionId: string }) =>
     apiDeleteCollection(collectionId),
+);
+
+export const addCollectionItem = createDataLoadingThunk(
+  `${collectionSlice.name}/addCollectionItem`,
+  ({ collectionId, accountId }: { collectionId: string; accountId: string }) =>
+    apiAddCollectionItem(collectionId, accountId),
+);
+
+export const removeCollectionItem = createDataLoadingThunk(
+  `${collectionSlice.name}/removeCollectionItem`,
+  ({ collectionId, itemId }: { collectionId: string; itemId: string }) =>
+    apiRemoveCollectionItem(collectionId, itemId),
 );
 
 export const collections = collectionSlice.reducer;

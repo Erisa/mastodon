@@ -701,7 +701,6 @@ lv:
       resolved_msg: Ziņojums sekmīgi atrisināts.
       skip_to_actions: Pāriet uz darbībām
       status: Statuss
-      statuses: Ziņotais saturs
       statuses_description_html: Pārkāpuma saturs tiks minēts saziņā ar paziņoto kontu
       summary:
         action_preambles:
@@ -1960,11 +1959,6 @@ lv:
     past_preamble_html: Kopš jūsu pēdējā apmeklējuma esam veikuši dažas izmaiņas pakalpojumu izmantošanas noteikumus. Iesakām pārskatīt atjauninātos noteikumus.
     review_link: Pārskatīt pakalpojumu izmantošanas noteikumus
     title: Mainās %{domain} pakalpojuma izmantošanas noteikumi
-  themes:
-    contrast: Mastodon (Augsts kontrasts)
-    default: Mastodon (Tumšs)
-    mastodon-light: Mastodon (Gaišs)
-    system: Automātisks (ievēro sistēmas izskatu)
   time:
     formats:
       default: "%b %d, %Y, %H:%M"

@@ -660,7 +660,6 @@ io:
       resolved_msg: Raporto sucesoze rezolvesis!
       skip_to_actions: Saltez a agi
       status: Stando
-      statuses: Raportizita kontenajo
       statuses_description_html: Ofensanta kontenajo citesos en komuniko kun raportizita konto
       summary:
         action_preambles:
@@ -1778,10 +1777,6 @@ io:
       too_late: Ol esas tro tarda ye apelar ca strekizo
   tags:
     does_not_match_previous_name: ne parigesas a antea nomo
-  themes:
-    contrast: Mastodon (Alta kontrasteso)
-    default: Mastodon (Obskura)
-    mastodon-light: Mastodon (Brila)
   time:
     formats:
       default: "%d %b, %Y, %H:%M"

@@ -734,7 +734,6 @@ gd:
       resolved_msg: Chaidh an gearan fhuasgladh!
       skip_to_actions: Geàrr leum dha na gnìomhan
       status: Staid
-      statuses: Susbaint le gearan
       statuses_description_html: Thèid iomradh a thoirt air an t-susbaint oilbheumach sa chonaltradh leis a’ chunntas mun a chaidh an gearan a thogail
       summary:
         action_preambles:
@@ -2044,7 +2043,7 @@ gd:
     quote_policies:
       followers: Luchd-leantainn a-mhàin
       nobody: Mi fhìn a-mhàin
-      public: Neach sam bith
+      public: A h-uile duine
     quote_post_author: Luaidh air post le %{acct}
     title: "%{name}: “%{quote}”"
     visibilities:
@@ -2103,11 +2102,6 @@ gd:
     past_preamble_html: Dh’atharraich sinn teirmichean na seirbheise againn on turas mu dheireadh a thadhail thu oirnn. Mholamaid gun dèan thu lèirmheas air na teirmichean ùra.
     review_link: Dèan lèirmheas air teirmichean na seirbheise
     title: Tha teirmichean na seirbheise aig %{domain} gu bhith atharrachadh
-  themes:
-    contrast: Mastodon (iomsgaradh àrd)
-    default: Mastodon (dorcha)
-    mastodon-light: Mastodon (soilleir)
-    system: Fèin-obrachail (cleachd ùrlar an t-siostaim)
   time:
     formats:
       default: "%d %b %Y, %H:%M"

@@ -53,6 +53,7 @@ zh-CN:
         label: 更改角色
         no_role: 没有角色
         title: 更改 %{username} 的角色
+      collections: 收藏列表
       confirm: 确认
       confirmed: 已确认
       confirming: 等待确认
@@ -346,6 +347,14 @@ zh-CN:
         save: 保存
         title: 新增气泡服务器
       title: 气泡服务器
+    collections:
+      accounts: 账号
+      collection_title: "%{name} 的收藏列表"
+      contents: 内容
+      number_of_accounts:
+        other: "%{count} 个账号"
+      open: 打开
+      view_publicly: 以公开身份查看
     critical_update_pending: 紧急更新待处理
     custom_emojis:
       assign_category: 指定类别
@@ -676,6 +685,7 @@ zh-CN:
       cancel: 取消
       category: 类别
       category_description_html: 在与被举报账号的通信时，将引用该账号和/或内容被举报的原因
+      collections: 收藏列表
       comment:
         none: 没有
       comment_description_html: "%{name} 补充道："
@@ -705,12 +715,13 @@ zh-CN:
       report: '举报 #%{id}'
       reported_account: 举报用户
       reported_by: 举报人
+      reported_content: 被举报内容
       reported_with_application: 举报人使用的应用
       resolved: 已处理
       resolved_msg: 举报处理成功！
       skip_to_actions: 跳转到操作
       status: 状态
-      statuses: 被举报内容
+      statuses: 嘟文
       statuses_description_html: 在与该账号的通信中将引用违规内容
       summary:
         action_preambles:
@@ -797,6 +808,7 @@ zh-CN:
         view_devops_description: 允许用户访问 Sidekiq 和 pgHero 控制面板
         view_feeds: 查看实时动态和话题
         view_feeds_description: 允许用户无视服务器设置访问实时动态和话题
+      requires_2fa: 需要双因素认证
       title: 角色
     rules:
       add_new: 添加规则
@@ -1998,10 +2010,7 @@ zh-CN:
     review_link: 查看服务条款
     title: "%{domain} 更新了服务条款"
   themes:
-    contrast: Mastodon（高对比度）
-    default: Mastodon（暗色主题）
-    mastodon-light: Mastodon（亮色主题）
-    system: 自动切换（使用系统主题）
+    default: Mastodon
   time:
     formats:
       default: "%Y年%m月%d日 %H:%M"
@@ -2026,6 +2035,8 @@ zh-CN:
     recovery_codes: 备份恢复代码
     recovery_codes_regenerated: 恢复代码重新生成成功
     recovery_instructions_html: 如果你的手机无法使用，你可以使用下列任意一个恢复代码来重新获得对账号的访问权。<strong>请妥善保管好你的恢复代码</strong>（例如，你可以将它们打印出来，然后和其他重要的文件放在一起）。
+    resume_app_authorization: 恢复应用程序授权
+    role_requirement: "%{domain} 要求你设置双因素认证以使用 Mastodon。"
     webauthn: 安全密钥
   user_mailer:
     announcement_published:

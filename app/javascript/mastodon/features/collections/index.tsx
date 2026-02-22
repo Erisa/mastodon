@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useCallback } from 'react';
+import { useEffect } from 'react';
 
 import { defineMessages, useIntl, FormattedMessage } from 'react-intl';
 
@@ -7,12 +7,9 @@ import { Link } from 'react-router-dom';
 
 import AddIcon from '@/material-icons/400-24px/add.svg?react';
 import ListAltIcon from '@/material-icons/400-24px/list_alt.svg?react';
-import MoreHorizIcon from '@/material-icons/400-24px/more_horiz.svg?react';
 import SquigglyArrow from '@/svg-icons/squiggly_arrow.svg?react';
-import { openModal } from 'mastodon/actions/modal';
 import { Column } from 'mastodon/components/column';
 import { ColumnHeader } from 'mastodon/components/column_header';
-import { Dropdown } from 'mastodon/components/dropdown_menu';
 import { Icon } from 'mastodon/components/icon';
 import ScrollableList from 'mastodon/components/scrollable_list';
 import {
@@ -21,85 +18,12 @@ import {
 } from 'mastodon/reducers/slices/collections';
 import { useAppSelector, useAppDispatch } from 'mastodon/store';
 
+import { CollectionListItem } from './detail/collection_list_item';
 import { messages as editorMessages } from './editor';
 
 const messages = defineMessages({
   heading: { id: 'column.collections', defaultMessage: 'My collections' },
-  view: {
-    id: 'collections.view_collection',
-    defaultMessage: 'View collection',
-  },
-  delete: {
-    id: 'collections.delete_collection',
-    defaultMessage: 'Delete collection',
-  },
-  more: { id: 'status.more', defaultMessage: 'More' },
 });
-
-const ListItem: React.FC<{
-  id: string;
-  name: string;
-}> = ({ id, name }) => {
-  const dispatch = useAppDispatch();
-  const intl = useIntl();
-
-  const handleDeleteClick = useCallback(() => {
-    dispatch(
-      openModal({
-        modalType: 'CONFIRM_DELETE_COLLECTION',
-        modalProps: {
-          name,
-          id,
-        },
-      }),
-    );
-  }, [dispatch, id, name]);
-
-  const menu = useMemo(
-    () => [
-      { text: intl.formatMessage(messages.view), to: `/collections/${id}` },
-      null,
-      {
-        text: intl.formatMessage(editorMessages.manageAccounts),
-        to: `/collections/${id}/edit`,
-      },
-      {
-        text: intl.formatMessage(editorMessages.editDetails),
-        to: `/collections/${id}/edit/details`,
-      },
-      {
-        text: intl.formatMessage(editorMessages.editSettings),
-        to: `/collections/${id}/edit/settings`,
-      },
-      null,
-      {
-        text: intl.formatMessage(messages.delete),
-        action: handleDeleteClick,
-        dangerous: true,
-      },
-    ],
-    [intl, id, handleDeleteClick],
-  );
-
-  return (
-    <div className='lists__item'>
-      <Link
-        to={`/collections/${id}/edit/details`}
-        className='lists__item__title'
-      >
-        <span>{name}</span>
-      </Link>
-
-      <Dropdown
-        scrollKey='collections'
-        items={menu}
-        icon='ellipsis-h'
-        iconComponent={MoreHorizIcon}
-        title={intl.formatMessage(messages.more)}
-      />
-    </div>
-  );
-};
 
 export const Collections: React.FC<{
   multiColumn?: boolean;
@@ -166,7 +90,7 @@ export const Collections: React.FC<{
         bindToDocument={!multiColumn}
       >
         {collections.map((item) => (
-          <ListItem key={item.id} id={item.id} name={item.name} />
+          <CollectionListItem key={item.id} collection={item} />
         ))}
       </ScrollableList>
 

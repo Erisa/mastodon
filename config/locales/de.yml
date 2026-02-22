@@ -56,6 +56,7 @@ de:
         label: Rolle ändern
         no_role: Keine Rolle
         title: Rolle für %{username} ändern
+      collections: Sammlungen
       confirm: Bestätigen
       confirmed: Bestätigt
       confirming: Bestätigung ausstehend
@@ -340,6 +341,15 @@ de:
       unpublish: Ankündigung zurücknehmen
       unpublished_msg: Ankündigung erfolgreich zurückgenommen!
       updated_msg: Ankündigung erfolgreich aktualisiert!
+    collections:
+      accounts: Konten
+      collection_title: Sammlung von %{name}
+      contents: Inhalte
+      number_of_accounts:
+        one: 1 Konto
+        other: "%{count} Konten"
+      open: Öffnen
+      view_publicly: Sammlung öffnen
     critical_update_pending: Kritisches Update ausstehend
     custom_emojis:
       assign_category: Kategorie zuweisen
@@ -679,6 +689,7 @@ de:
       cancel: Abbrechen
       category: Kategorie
       category_description_html: Der Grund, weshalb dieses Konto und/oder der Inhalt gemeldet worden ist, wird in der Kommunikation mit dem gemeldeten Konto erwähnt
+      collections: Sammlungen
       comment:
         none: Ohne ergänzenden Kommentar
       comment_description_html: "%{name} ergänzte die Meldung um folgende Hinweis:"
@@ -708,12 +719,13 @@ de:
       report: "%{id}. Meldung"
       reported_account: Gemeldetes Konto
       reported_by: Gemeldet von
+      reported_content: Gemeldeter Inhalt
       reported_with_application: Gemeldet via
       resolved: Geklärt
       resolved_msg: Meldung erfolgreich geklärt!
       skip_to_actions: Zur Maßnahme springen
       status: Status
-      statuses: Gemeldeter Inhalt
+      statuses: Beiträge
       statuses_description_html: Beanstandete Inhalte werden in der Kommunikation mit dem gemeldeten Konto erwähnt
       summary:
         action_preambles:
@@ -802,6 +814,7 @@ de:
         view_devops_description: Erlaubt es Benutzer*innen, auf die Sidekiq- und pgHero-Dashboards zuzugreifen
         view_feeds: Live-Feeds und Hashtags anzeigen
         view_feeds_description: Ermöglicht Nutzer*innen unabhängig von den Servereinstellungen den Zugriff auf die Live-Feeds und Hashtags
+      requires_2fa: Zwei-Faktor-Authentisierung erforderlich
       title: Rollen
     rules:
       add_new: Regel hinzufügen
@@ -2021,10 +2034,7 @@ de:
     review_link: Nutzungsbedingungen lesen
     title: Die Nutzungsbedingungen von %{domain} ändern sich
   themes:
-    contrast: Mastodon (Hoher Kontrast)
-    default: Mastodon (Dunkel)
-    mastodon-light: Mastodon (Hell)
-    system: Automatisch (wie Betriebssystem)
+    default: Mastodon
   time:
     formats:
       default: "%d. %b %Y, %H:%M Uhr"
@@ -2049,6 +2059,8 @@ de:
     recovery_codes: Wiederherstellungscodes sichern
     recovery_codes_regenerated: Wiederherstellungscodes erfolgreich neu erstellt
     recovery_instructions_html: Falls du jemals den Zugang zu deinem Smartphone verlierst, kannst du einen der unten aufgeführten Wiederherstellungscodes verwenden, um wieder Zugang zu deinem Konto zu erhalten. <strong>Bewahre die Wiederherstellungscodes sicher auf</strong>. Du kannst sie zum Beispiel ausdrucken und zusammen mit anderen wichtigen Dokumenten aufbewahren.
+    resume_app_authorization: Autorisierung der App fortsetzen
+    role_requirement: "%{domain} verlangt das Einrichten einer Zwei-Faktor-Authentisierung, bevor du Mastodon verwenden kannst."
     webauthn: Sicherheitsschlüssel
   user_mailer:
     announcement_published:

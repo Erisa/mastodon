@@ -56,6 +56,7 @@ el:
         label: Αλλαγή ρόλου
         no_role: Κανένας ρόλος
         title: Αλλαγή ρόλου για %{username}
+      collections: Συλλογές
       confirm: Επιβεβαίωση
       confirmed: Επιβεβαιώθηκε
       confirming: Προς επιβεβαίωση
@@ -245,7 +246,7 @@ el:
         update_user_role: Ενημέρωση ρόλου
         update_username_block: Ενημέρωση Κανόνα Ονόματος Χρήστη
       actions:
-        approve_appeal_html: Ο/Η %{name} ενέκρινε την ένσταση της απόφασης των συντονιστών από %{target}
+        approve_appeal_html: Ο/Η %{name} ενέκρινε την έφεση της απόφασης των συντονιστών από %{target}
         approve_user_html: Ο/Η %{name} ενέκρινε την εγγραφή του χρήστη %{target}
         assigned_to_self_report_html: Ο/Η %{name} ανάθεσε την αναφορά %{target} στον εαυτό του/της
         change_email_user_html: Ο χρήστης %{name} άλλαξε τη διεύθυνση email του χρήστη %{target}
@@ -289,7 +290,7 @@ el:
         memorialize_account_html: O/H %{name} μετέτρεψε τον λογαριασμό του %{target} σε σελίδα εις μνήμην
         promote_user_html: Ο/Η %{name} προβίβασε το χρήστη %{target}
         publish_terms_of_service_html: Ο χρήστης %{name} δημοσίευσε ενημερώσεις για τους όρους της υπηρεσίας
-        reject_appeal_html: Ο/Η %{name} απέρριψε την ένσταση της απόφασης των συντονιστών από %{target}
+        reject_appeal_html: Ο/Η %{name} απέρριψε την έφεση της απόφασης των συντονιστών από %{target}
         reject_user_html: Ο/Η %{name} απέρριψε την εγγραφή του χρήστη %{target}
         remove_avatar_user_html: Ο/Η %{name} αφαίρεσε το άβαταρ του/της %{target}
         reopen_report_html: Ο/Η %{name} ξανάνοιξε την αναφορά %{target}
@@ -340,6 +341,15 @@ el:
       unpublish: Αναίρεση δημοσίευσης
       unpublished_msg: Επιτυχής ακύρωση δημοσίευσης ανακοίνωσης!
       updated_msg: Επιτυχής ενημέρωση ανακοίνωσης!
+    collections:
+      accounts: Λογαριασμοί
+      collection_title: Συλλογή από %{name}
+      contents: Περιεχόμενα
+      number_of_accounts:
+        one: 1 λογαριασμός
+        other: "%{count} λογαριασμοί"
+      open: Άνοιγμα
+      view_publicly: Προβολή δημόσια
     critical_update_pending: Κρίσιμη ενημέρωση σε αναμονή
     custom_emojis:
       assign_category: Ανάθεση κατηγορίας
@@ -403,7 +413,7 @@ el:
       website: Ιστοσελίδα
     disputes:
       appeals:
-        empty: Καμία ένσταση.
+        empty: Δε βρέθηκαν εφέσεις.
         title: Εφέσεις
     domain_allows:
       add_new: Έγκριση τομέα
@@ -679,6 +689,7 @@ el:
       cancel: Άκυρο
       category: Κατηγορία
       category_description_html: Ο λόγος για τον οποίο αναφέρθηκε αυτός ο λογαριασμός και/ή το περιεχόμενο θα εσωκλείεται σε επικοινωνία με τον αναφερόμενο λογαριασμό
+      collections: Συλλογές
       comment:
         none: Κανένα
       comment_description_html: 'Για να δώσει περισσότερες πληροφορίες, ο/η %{name} έγραψε:'
@@ -708,12 +719,13 @@ el:
       report: 'Αναφορά #%{id}'
       reported_account: Αναφερόμενος λογαριασμός
       reported_by: Αναφέρθηκε από
+      reported_content: Αναφερόμενο περιεχόμενο
       reported_with_application: Αναφέρθηκε με την εφαρμογή
       resolved: Επιλύθηκε
       resolved_msg: Η αναφορά επιλύθηκε επιτυχώς!
       skip_to_actions: Μετάβαση στις ενέργειες
       status: Κατάσταση
-      statuses: Αναφερόμενο περιεχόμενο
+      statuses: Αναρτήσεις
       statuses_description_html: Το προσβλητικό περιεχόμενο θα εσωκλείεται στην επικοινωνία με τον αναφερόμενο λογαριασμό
       summary:
         action_preambles:
@@ -802,6 +814,7 @@ el:
         view_devops_description: Επιτρέπει στους χρήστες να έχουν πρόσβαση στα ταμπλό πληροφοριών Sidekiq και pgHero
         view_feeds: Προβολή ζωντανών και θεματικών ροών
         view_feeds_description: Επιτρέπει στους χρήστες να έχουν πρόσβαση στις ζωντανές και θεματικές ροές ανεξάρτητα από τις ρυθμίσεις του διακομιστή
+      requires_2fa: Απαιτεί έλεγχο ταυτότητας δύο παραγόντων
       title: Ρόλοι
     rules:
       add_new: Προσθήκη κανόνα
@@ -1166,7 +1179,7 @@ el:
         mark_statuses_as_sensitive: να επισημάνουν τις αναρτήσεις τους ως ευαίσθητες
         none: μια προειδοποίηση
         sensitive: να επισημάνουν τον λογαριασμό του ως ευαίσθητο
-        silence: να περιορίσουν το λογαριασμό του
+        silence: να περιορίσουν τον λογαριασμό του
         suspend: να αναστείλουν τον λογαριασμό του
       body: 'Ο/Η %{target} κάνει έφεση στην απόφαση συντονισμού που έγινε από τον/την %{action_taken_by} στις %{date}, η οποία ήταν %{type}. Έγραψαν:'
       next_steps: Μπορείς να εγκρίνεις την έφεση για να αναιρέσεις την απόφαση της ομάδας συντονισμού ή να την αγνοήσεις.
@@ -1761,10 +1774,10 @@ el:
     setup: Ρύθμιση
     wrong_code: Ο κωδικός που έβαλες ήταν άκυρος! Είναι σωστή ώρα στον διακομιστή και τη συσκευή;
   pagination:
-    newer: Νεότερο
-    next: Επόμενο
-    older: Παλιότερο
-    prev: Προηγούμενο
+    newer: Νεότερες
+    next: Επόμενη
+    older: Παλαιότερες
+    prev: Προηγούμενη
     truncate: "&hellip;"
   polls:
     errors:
@@ -2021,10 +2034,7 @@ el:
     review_link: Επισκόπηση όρων υπηρεσίας
     title: Οι όροι παροχής υπηρεσιών του %{domain} αλλάζουν
   themes:
-    contrast: Mastodon (Υψηλή αντίθεση)
-    default: Mastodon (Σκοτεινό)
-    mastodon-light: Mastodon (Ανοιχτόχρωμο)
-    system: Αυτόματο (θέμα συστήματος)
+    default: Mastodon
   time:
     formats:
       default: "%b %d, %Y, %H:%M"
@@ -2049,6 +2059,8 @@ el:
     recovery_codes: Εφεδρικοί κωδικοί ανάκτησης
     recovery_codes_regenerated: Οι εφεδρικοί κωδικοί ανάκτησης δημιουργήθηκαν επιτυχώς
     recovery_instructions_html: Αν ποτέ δεν έχεις πρόσβαση στο κινητό σου, μπορείς να χρησιμοποιήσεις έναν από τους παρακάτω κωδικούς ανάκτησης για να αποκτήσεις πρόσβαση στο λογαριασμό σου. <strong>Διαφύλαξε τους κωδικούς ανάκτησης</strong>. Για παράδειγμα, μπορείς να τους εκτυπώσεις και να τους φυλάξεις μαζί με άλλα σημαντικά σου έγγραφα.
+    resume_app_authorization: Συνέχιση εξουσιοδότησης εφαρμογής
+    role_requirement: Το %{domain} απαιτεί να ρυθμίσετε τον έλεγχο ταυτότητας δύο παραγόντων πριν χρησιμοποιήσετε το Mastodon.
     webauthn: Κλειδιά ασφαλείας
   user_mailer:
     announcement_published:
@@ -2095,7 +2107,7 @@ el:
       title: Σημαντική ενημέρωση
     warning:
       appeal: Υποβολή έφεσης
-      appeal_description: Αν πιστεύεις ότι έγινε λάθος, μπορείς να υποβάλεις μια αίτηση στο προσωπικό του %{instance}.
+      appeal_description: Αν πιστεύεις ότι έγινε λάθος, μπορείς να υποβάλεις μια έφεση στο προσωπικό του %{instance}.
       categories:
         spam: Ανεπιθύμητο
         violation: Το περιεχόμενο παραβιάζει τις ακόλουθες οδηγίες κοινότητας

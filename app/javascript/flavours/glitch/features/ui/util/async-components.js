@@ -1,4 +1,4 @@
-import { isClientFeatureEnabled } from '@/flavours/glitch/utils/environment';
+import { isServerFeatureEnabled } from '@/flavours/glitch/utils/environment';
 
 export function EmojiPicker () {
   return import('../../emoji/emoji_picker');
@@ -48,13 +48,19 @@ export function DirectTimeline() {
   return import('../../direct_timeline');
 }
 
-export function Collections () {
+export function Collections() {
   return import('../../collections').then(
     module => ({default: module.Collections})
   );
 }
 
-export function CollectionsEditor () {
+export function CollectionDetail() {
+  return import('../../collections/detail/index').then(
+    module => ({default: module.CollectionDetailPage})
+  );
+}
+
+export function CollectionsEditor() {
   return import('../../collections/editor').then(
     module => ({default: module.CollectionEditorPage})
   );
@@ -77,7 +83,7 @@ export function PinnedStatuses () {
 }
 
 export function AccountTimeline () {
-  if (isClientFeatureEnabled('profile_redesign')) {
+  if (isServerFeatureEnabled('profile_redesign')) {
     return import('../../account_timeline/v2');
   }
   return import('../../account_timeline');
@@ -89,6 +95,16 @@ export function AccountGallery () {
 
 export function AccountFeatured() {
   return import('../../account_featured');
+}
+
+export function AccountAbout() {
+  return import('../../account_about')
+    .then((module) => ({ default: module.AccountAbout }));
+}
+
+export function AccountEdit() {
+  return import('../../account_edit')
+  .then((module) => ({ default: module.AccountEdit }));
 }
 
 export function Followers () {

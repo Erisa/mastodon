@@ -726,7 +726,6 @@ sl:
       resolved_msg: Prijava je uspešno razrešena!
       skip_to_actions: Preskoči na dejanja
       status: Stanje
-      statuses: Prijavljena vsebina
       statuses_description_html: Žaljiva vsebina bo citirana v komunikaciji z računom iz prijave
       summary:
         action_preambles:
@@ -2063,11 +2062,6 @@ sl:
     title: Pogoji uporabe
   terms_of_service_interstitial:
     title: Spreminjajo se pogoji uporabe domene %{domain}
-  themes:
-    contrast: Mastodon (Visok kontrast)
-    default: Mastodon (Temna)
-    mastodon-light: Mastodon (Svetla)
-    system: Samodejno (uporabi sistemsko temo)
   time:
     formats:
       default: "%b %d %Y, %H:%M"

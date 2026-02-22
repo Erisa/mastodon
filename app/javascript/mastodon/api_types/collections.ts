@@ -11,14 +11,14 @@ export interface ApiCollectionJSON {
   account_id: string;
 
   id: string;
-  uri: string;
+  uri: string | null;
   local: boolean;
   item_count: number;
 
   name: string;
   description: string;
-  tag?: ApiTagJSON;
-  language: string;
+  tag: ApiTagJSON | null;
+  language: string | null;
   sensitive: boolean;
   discoverable: boolean;
 
@@ -53,6 +53,7 @@ export interface ApiCollectionWithAccountsJSON extends ApiWrappedCollectionJSON 
  * Nested account item
  */
 interface CollectionAccountItem {
+  id: string;
   account_id?: string; // Only present when state is 'accepted' (or the collection is your own)
   state: 'pending' | 'accepted' | 'rejected' | 'revoked';
   position: number;

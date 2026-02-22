@@ -56,6 +56,7 @@ fr-CA:
         label: Modifier le rôle
         no_role: Aucun rôle
         title: Modifier le rôle de %{username}
+      collections: Collections
       confirm: Confirmer
       confirmed: Confirmé
       confirming: Confirmation
@@ -340,6 +341,15 @@ fr-CA:
       unpublish: Retirer l'annonce
       unpublished_msg: L’annonce a été dépubliée avec succès !
       updated_msg: L’annonce a été mise à jour avec succès !
+    collections:
+      accounts: Comptes
+      collection_title: Collection par %{name}
+      contents: Contenu
+      number_of_accounts:
+        one: 1 compte
+        other: "%{count} comptes"
+      open: Ouvrir
+      view_publicly: Afficher publiquement
     critical_update_pending: Mise à jour critique en attente
     custom_emojis:
       assign_category: Attribuer une catégorie
@@ -682,6 +692,7 @@ fr-CA:
       cancel: Annuler
       category: Catégorie
       category_description_html: La raison pour laquelle ce compte et/ou ce contenu a été signalé sera citée dans la communication avec le compte signalé
+      collections: Collections
       comment:
         none: Aucun
       comment_description_html: 'Pour fournir plus d''informations, %{name} a écrit :'
@@ -711,12 +722,13 @@ fr-CA:
       report: 'Signalement #%{id}'
       reported_account: Compte signalé
       reported_by: Signalé par
+      reported_content: Contenu signalé
       reported_with_application: Signalé avec l'application
       resolved: Résolus
       resolved_msg: Signalement résolu avec succès !
       skip_to_actions: Passer aux actions
       status: Statut
-      statuses: Contenu signalé
+      statuses: Messages
       statuses_description_html: Le contenu offensant sera cité dans la communication avec le compte signalé
       summary:
         action_preambles:
@@ -805,6 +817,7 @@ fr-CA:
         view_devops_description: Permet aux utilisateur⋅rice⋅s d'accéder aux tableaux de bord Sidekiq et pgHero
         view_feeds: Voir les flux en direct et les fils de discussion
         view_feeds_description: Permet aux utilisateur·rice·s d'accéder aux flux en direct et de discussion indépendamment des paramètres du serveur
+      requires_2fa: Nécessite une authentification à deux facteurs
       title: Rôles
     rules:
       add_new: Ajouter une règle
@@ -1791,9 +1804,9 @@ fr-CA:
   privacy:
     hint_html: "<strong>Personnalisez la façon dont votre profil et vos messages peuvent être découverts.</strong> Mastodon peut vous aider à atteindre un public plus large lorsque certains paramètres sont activés. Prenez le temps de les examiner pour vous assurer qu’ils sont configurés comme vous le souhaitez."
     privacy: Confidentialité
-    privacy_hint_html: Contrôlez ce que vous souhaitez divulguer. Les gens découvrent des profils intéressants en parcourant ceux suivis par d’autres personnes et des applications sympas en voyant lesquelles sont utilisées par d’autres pour publier des messages, mais vous préférez peut-être ne pas dévoiler ces informations.
+    privacy_hint_html: Contrôler ce que vous souhaitez divulguer. Les utilisateur·rice·s découvrent des profils intéressants en parcourant ceux suivis par d’autres personnes et des applications sympas en voyant celles utilisées pour publier des messages, mais vous préférez peut-être ne pas dévoiler ces informations.
     reach: Portée
-    reach_hint_html: Contrôlez si vous souhaitez être découvert et suivi par de nouvelles personnes. Voulez-vous que vos publications apparaissent sur l’écran Explorer ? Voulez-vous que d’autres personnes vous voient dans leurs recommandations de suivi ? Souhaitez-vous approuver automatiquement tous les nouveaux abonnés ou avoir un contrôle granulaire sur chacun d’entre eux ?
+    reach_hint_html: Contrôler si vous souhaitez être découvert et suivi par de nouvelles personnes. Voulez-vous que vos messages puissent apparaître dans les tendances ? Voulez-vous que d’autres personnes vous voient dans leurs recommandations de suivi ? Souhaitez-vous approuver automatiquement tous les nouveaux abonnés ou avoir un contrôle granulaire sur chacun d’entre eux ?
     search: Recherche
     search_hint_html: Contrôlez la façon dont vous voulez être retrouvé. Voulez-vous que les gens vous trouvent selon ce que vous avez publié publiquement ? Voulez-vous que des personnes extérieures à Mastodon trouvent votre profil en faisant des recherches sur le web ? N’oubliez pas que l’exclusion totale de tous les moteurs de recherche ne peut être garantie pour les informations publiques.
     title: Vie privée et visibilité
@@ -2024,10 +2037,7 @@ fr-CA:
     review_link: Vérifier les conditions d'utilisation
     title: Les conditions d'utilisation de %{domain} ont changées
   themes:
-    contrast: Mastodon (Contraste élevé)
-    default: Mastodon (Sombre)
-    mastodon-light: Mastodon (Clair)
-    system: Automatique (utiliser le thème système)
+    default: Mastodon
   time:
     formats:
       default: "%d %b %Y, %H:%M"
@@ -2052,6 +2062,8 @@ fr-CA:
     recovery_codes: Codes de récupération
     recovery_codes_regenerated: Codes de récupération régénérés avec succès
     recovery_instructions_html: Si vous perdez l’accès à votre téléphone, vous pouvez utiliser un des codes de récupération ci-dessous pour retrouver l’accès à votre compte. <strong>Conservez les codes de récupération en sécurité</strong>. Par exemple, en les imprimant et en les stockant avec vos autres documents importants.
+    resume_app_authorization: Reprendre l'autorisation de l'application
+    role_requirement: "%{domain} nécessite de configurer une authentification à deux facteurs avant de pouvoir utiliser Mastodon."
     webauthn: Clés de sécurité
   user_mailer:
     announcement_published:

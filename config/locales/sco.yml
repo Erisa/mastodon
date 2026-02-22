@@ -580,7 +580,6 @@ sco:
       resolved_msg: Clype successfully resolvt!
       skip_to_actions: Jouk tae actions
       status: Status
-      statuses: Clyped on content
       statuses_description_html: Offendin content wull be citit in communication wi the clyped on accoont
       target_origin: Origin o clyped on accoont
       title: Clypes
@@ -1429,10 +1428,6 @@ sco:
       too_late: It is ower late fir tae appeal this strike
   tags:
     does_not_match_previous_name: disnae match the previous nemm
-  themes:
-    contrast: Mastodon (Heich contrast)
-    default: Mastodon (Daurk)
-    mastodon-light: Mastodon (Licht)
   time:
     formats:
       default: "%b %d, %Y, %H:%M"
