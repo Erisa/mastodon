@@ -105,6 +105,8 @@ class Form::AdminSettings
     authorized_fetch: :authorized_fetch_mode?,
   }.freeze
 
+  UPLOAD_MIME_TYPES = %w(image/jpeg image/png image/gif image/webp).freeze
+
   DESCRIPTION_LIMIT = 200
   DOMAIN_BLOCK_AUDIENCES = %w(disabled users all).freeze
   BUBBLE_DOMAIN_AUDIENCES = %w(disabled users all).freeze

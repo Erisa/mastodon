@@ -5,12 +5,12 @@
 # Table name: status_reactions
 #
 #  id              :bigint(8)        not null, primary key
-#  account_id      :bigint(8)        not null
-#  status_id       :bigint(8)        not null
 #  name            :string           default(""), not null
-#  custom_emoji_id :bigint(8)
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  account_id      :bigint(8)        not null
+#  custom_emoji_id :bigint(8)
+#  status_id       :bigint(8)        not null
 #
 class StatusReaction < ApplicationRecord
   include Paginable

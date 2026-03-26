@@ -107,7 +107,7 @@
 }
 
 $button-breakpoint: 420px;
-$button-fallback-breakpoint: #{$button-breakpoint} + 55px;
+$button-fallback-breakpoint: $button-breakpoint + 55px;
 
 .buttonsDesktop {
   @container (width < #{$button-breakpoint}) {
@@ -132,7 +132,7 @@ $button-fallback-breakpoint: #{$button-breakpoint} + 55px;
   }
 
   @supports (not (container-type: inline-size)) {
-    @media (min-width: (#{$button-fallback-breakpoint} + 1px)) {
+    @media (min-width: ($button-fallback-breakpoint + 1px)) {
       display: none;
     }
   }
@@ -214,77 +214,128 @@ svg.badgeIcon {
 }
 
 .fieldList {
+  --cols: 4;
+
+  position: relative;
   display: grid;
-  grid-template-columns: 160px 1fr;
-  column-gap: 12px;
+  grid-template-columns: repeat(var(--cols), 1fr);
+  gap: 4px;
   margin: 16px 0;
-  border-top: 0.5px solid var(--color-border-primary);
 
   @container (width < 420px) {
-    grid-template-columns: 100px 1fr;
+    --cols: 2;
   }
 }
 
-.fieldRow {
-  display: grid;
-  grid-column: 1 / -1;
-  align-items: start;
-  grid-template-columns: subgrid;
-  padding: 8px;
-  border-bottom: 0.5px solid var(--color-border-primary);
+.fieldItem {
+  --col-span: 1;
 
-  > :is(dt, dd) {
-    &:not(.fieldShowAll) {
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 2;
-      line-clamp: 2;
-      overflow: hidden;
-      text-overflow: ellipsis;
+  grid-column: span var(--col-span);
+  position: relative;
+
+  @for $col from 2 through 4 {
+    &[data-cols='#{$col}'] {
+      --col-span: #{$col};
     }
   }
 
-  > dt {
-    color: var(--color-text-secondary);
+  dt {
+    font-weight: normal;
   }
 
-  > dd {
-    display: flex;
-    align-items: center;
-    gap: 4px;
+  dd {
+    font-weight: 500;
   }
 
-  a {
-    color: inherit;
-    text-decoration: none;
+  :is(dt, dd) {
+    text-overflow: initial;
 
-    &:hover,
-    &:focus {
-      text-decoration: underline;
+    // Override the MiniCard link styles
+    a {
+      color: inherit;
+      font-weight: inherit;
+
+      &:hover,
+      &:focus {
+        color: inherit;
+        text-decoration: underline;
+      }
     }
+  }
+
+  // See: https://stackoverflow.com/questions/13226296/is-scrollwidth-property-of-a-span-not-working-on-chrome
+  [data-contents] {
+    display: inline-block;
   }
 }
 
 .fieldVerified {
   background-color: var(--color-bg-success-softer);
+
+  dt {
+    padding-right: 24px;
+  }
 }
 
 .fieldVerifiedIcon {
+  display: block;
+  position: absolute;
   width: 16px;
   height: 16px;
+  top: 8px;
+  right: 8px;
+
+  > svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.fieldOverflowButton {
+  --default-bg-color: var(--color-bg-secondary-solid);
+  --hover-bg-color: var(--color-bg-brand-softer-solid);
+
+  position: absolute;
+  right: 8px;
+  padding: 0 2px;
+  transition: background-color 0.2s ease-in-out;
+  border: 2px solid var(--color-bg-primary);
+
+  > svg {
+    width: 16px;
+    height: 12px;
+  }
 }
 
 .fieldNumbersWrapper {
+  display: flex;
   font-size: 13px;
   padding: 0;
+  margin: 8px 0;
+  gap: 20px;
+
+  li {
+    @container (width < 420px) {
+      flex: 1 1 0px;
+    }
+  }
 
   a {
+    color: inherit;
     font-weight: unset;
+    padding: 0;
+
+    &:hover,
+    &:focus {
+      color: var(--color-text-brand-soft);
+    }
   }
 
   strong {
+    display: block;
     font-weight: 600;
     color: var(--color-text-primary);
+    font-size: 15px;
   }
 }
 

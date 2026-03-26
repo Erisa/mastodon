@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
+import SearchIcon from '@/material-icons/400-24px/search.svg?react';
+
 import { TextInputField, TextInput } from './text_input_field';
 
 const meta = {
@@ -38,7 +40,25 @@ export const Optional: Story = {
 export const WithError: Story = {
   args: {
     required: false,
-    hasError: true,
+    status: 'error',
+  },
+};
+
+export const WithWarning: Story = {
+  args: {
+    required: false,
+    status: {
+      variant: 'warning',
+      message: 'Special characters are not allowed',
+    },
+  },
+};
+
+export const WithIcon: Story = {
+  args: {
+    label: 'Search',
+    hint: undefined,
+    icon: SearchIcon,
   },
 };
 

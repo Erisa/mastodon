@@ -13,7 +13,11 @@ namespace :api, format: false do
     resources :async_refreshes, only: :show
 
     resources :collections, only: [:show, :create, :update, :destroy] do
-      resources :items, only: [:create, :destroy], controller: 'collection_items'
+      resources :items, only: [:create, :destroy], controller: 'collection_items' do
+        member do
+          post :revoke
+        end
+      end
     end
   end
 
@@ -120,7 +124,7 @@ namespace :api, format: false do
     resources :markers, only: [:index, :create]
     resources :gifs, only: [:index]
 
-    resource :profile, only: [:show] do
+    resource :profile, only: [:show, :update] do
       scope module: :profile do
         resource :avatar, only: :destroy
         resource :header, only: :destroy

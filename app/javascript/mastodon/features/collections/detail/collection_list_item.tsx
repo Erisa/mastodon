@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 
 import type { ApiCollectionJSON } from 'mastodon/api_types/collections';
 import { RelativeTimestamp } from 'mastodon/components/relative_timestamp';
+import { Article } from 'mastodon/components/scrollable_list/components';
 
 import classes from './collection_list_item.module.scss';
 import { CollectionMenu } from './collection_menu';
@@ -52,12 +53,7 @@ export const CollectionMetaData: React.FC<{
         id='collections.last_updated_at'
         defaultMessage='Last updated: {date}'
         values={{
-          date: (
-            <RelativeTimestamp
-              timestamp={collection.updated_at}
-              short={false}
-            />
-          ),
+          date: <RelativeTimestamp timestamp={collection.updated_at} long />,
         }}
         tagName='li'
       />
@@ -67,15 +63,23 @@ export const CollectionMetaData: React.FC<{
 
 export const CollectionListItem: React.FC<{
   collection: ApiCollectionJSON;
-}> = ({ collection }) => {
+  withoutBorder?: boolean;
+  positionInList: number;
+  listSize: number;
+}> = ({ collection, withoutBorder, positionInList, listSize }) => {
   const { id, name } = collection;
   const linkId = useId();
 
   return (
-    <article
-      className={classNames(classes.wrapper, 'focusable')}
-      tabIndex={-1}
+    <Article
+      focusable
+      className={classNames(
+        classes.wrapper,
+        withoutBorder && classes.wrapperWithoutBorder,
+      )}
       aria-labelledby={linkId}
+      aria-posinset={positionInList}
+      aria-setsize={listSize}
     >
       <div className={classes.content}>
         <h2 id={linkId}>
@@ -87,6 +91,6 @@ export const CollectionListItem: React.FC<{
       </div>
 
       <CollectionMenu context='list' collection={collection} />
-    </article>
+    </Article>
   );
 };

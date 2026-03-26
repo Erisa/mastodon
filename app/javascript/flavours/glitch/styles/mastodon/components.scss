@@ -1430,6 +1430,9 @@ body > [data-popper-placement] {
   .autosuggest-textarea > .autosuggest-textarea__textarea:lang(#{$lang}) {
     writing-mode: vertical-lr;
     min-height: 209px; // writable
+    max-height: 209px; // suppress autosizing by react-textarea-autosize
+    overflow-x: auto;
+    scrollbar-color: unset;
   }
 
   .detailed-status > .status__content > .status__content__text:lang(#{$lang}) {
@@ -1740,7 +1743,7 @@ body > [data-popper-placement] {
   .detailed-status__display-name {
     color: var(--color-text-tertiary);
 
-    span {
+    span:not(.account__avatar) {
       display: inline;
     }
 
@@ -2089,7 +2092,12 @@ body > [data-popper-placement] {
 
 .account {
   padding: 10px; // glitch: reduced padding
-  border-bottom: 1px solid var(--color-border-primary);
+
+  // Using :where keeps specificity low, allowing for existing
+  // .account overrides to still apply
+  &:where(:not(&--without-border)) {
+    border-bottom: 1px solid var(--color-border-primary);
+  }
 
   .account__display-name {
     flex: 1 1 auto;
@@ -3063,8 +3071,6 @@ a.account__display-name {
     }
 
     &__main {
-      --column-header-height: 62px;
-
       box-sizing: border-box;
       width: 100%;
       flex: 0 1 auto;
@@ -3983,6 +3989,11 @@ a.account__display-name {
   &:hover {
     text-decoration: underline;
   }
+
+  &:focus-visible {
+    outline: var(--outline-focus-default);
+    outline-offset: -2px;
+  }
 }
 
 .column-header__back-button {
@@ -4116,15 +4127,17 @@ a.account__display-name {
 }
 
 .column-link {
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   gap: 8px;
   width: 100%;
-  padding: 12px;
+  padding: 10px;
+  padding-inline-start: 14px;
+  overflow: hidden;
   font-size: 16px;
   font-weight: 400;
   text-decoration: none;
-  overflow: hidden;
   white-space: nowrap;
   color: color-mix(
     in oklab,
@@ -4132,9 +4145,8 @@ a.account__display-name {
     var(--color-text-secondary)
   );
   background: transparent;
-  border: 0;
-  border-left: 4px solid transparent;
-  box-sizing: border-box;
+  border: 2px solid transparent;
+  border-radius: 4px;
 
   &:hover,
   &:active,
@@ -4146,17 +4158,15 @@ a.account__display-name {
     color: var(--color-text-brand);
   }
 
-  &:focus {
-    outline: 0;
-  }
-
   &:focus-visible {
+    outline: none;
     border-color: var(--color-text-brand);
-    border-radius: 0;
+    background: var(--color-bg-brand-softer);
   }
 
   &--logo {
-    padding: 10px;
+    padding: 8px;
+    padding-inline-start: 12px;
   }
 }
 
@@ -6671,15 +6681,19 @@ a.status-card {
     line-height: 20px;
     color: var(--color-text-secondary);
 
-    h1 {
+    /*
+     * Using the :where selector to lower specificity and allow for
+     * easy customisation of modal heading styles
+     */
+    :where(h1) {
       font-size: 16px;
       line-height: 24px;
       color: var(--color-text-primary);
       font-weight: 500;
+    }
 
-      &:not(:only-child) {
-        margin-bottom: 8px;
-      }
+    :where(h1:not(:only-child)) {
+      margin-bottom: 8px;
     }
 
     strong {
@@ -8772,7 +8786,7 @@ noscript {
     gap: 8px;
 
     $button-breakpoint: 420px;
-    $button-fallback-breakpoint: #{$button-breakpoint} + 55px;
+    $button-fallback-breakpoint: $button-breakpoint + 55px;
 
     &--desktop {
       margin-top: 55px;
@@ -8796,7 +8810,7 @@ noscript {
       }
 
       @supports (not (container-type: inline-size)) {
-        @media (min-width: (#{$button-fallback-breakpoint} + 1px)) {
+        @media (min-width: ($button-fallback-breakpoint + 1px)) {
           display: none;
         }
       }
@@ -9441,10 +9455,6 @@ noscript {
 .status__wrapper,
 .conversation {
   position: relative;
-
-  // When scrolling these elements into view, take into account
-  // the column header height
-  scroll-margin-top: var(--column-header-height, 0);
 
   &.unread {
     &::before {
@@ -11889,6 +11899,9 @@ noscript {
 
 .column-footer {
   padding: 16px;
+  position: sticky;
+  bottom: 0;
+  background: var(--color-bg-primary);
 }
 
 .lists-scrollable {

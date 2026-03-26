@@ -136,7 +136,7 @@ export const Profile: React.FC<{
       }),
     )
       .then(() => {
-        history.push('/start/follows');
+        history.push('/home');
         dispatch(closeOnboarding());
         return '';
       })
@@ -163,6 +163,7 @@ export const Profile: React.FC<{
         icon='person'
         iconComponent={PersonIcon}
         multiColumn={multiColumn}
+        showBackButton
       />
 
       <div className='scrollable scrollable--flex'>
@@ -232,7 +233,7 @@ export const Profile: React.FC<{
               }
               value={displayName}
               onChange={handleDisplayNameChange}
-              hasError={!!errors?.display_name}
+              status={errors?.display_name ? 'error' : undefined}
               id='display_name'
             />
           </div>
@@ -254,7 +255,7 @@ export const Profile: React.FC<{
               }
               value={note}
               onChange={handleNoteChange}
-              hasError={!!errors?.note}
+              status={errors?.note ? 'error' : undefined}
               id='note'
             />
           </div>
@@ -300,8 +301,8 @@ export const Profile: React.FC<{
               <LoadingIndicator />
             ) : (
               <FormattedMessage
-                id='onboarding.profile.save_and_continue'
-                defaultMessage='Save and continue'
+                id='onboarding.profile.finish'
+                defaultMessage='Finish'
               />
             )}
           </Button>

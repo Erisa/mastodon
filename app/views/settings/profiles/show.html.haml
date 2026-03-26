@@ -2,7 +2,7 @@
   = t('settings.edit_profile')
 
 - content_for :heading do
-  %h2= t('settings.profile')
+  %h1= t('settings.profile')
   = render partial: 'settings/shared/profile_navigation'
 
 = simple_form_for @account, url: settings_profile_path, html: { id: :edit_profile } do |f|
@@ -10,7 +10,7 @@
 
   %p.lead= t('edit_profile.hint_html')
 
-  %h4= t('edit_profile.basic_information')
+  %h2= t('edit_profile.basic_information')
 
   .fields-row
     .fields-row__column.fields-row__column-6
@@ -35,7 +35,7 @@
       .fields-group
         = f.input :avatar,
                   hint: t('simple_form.hints.defaults.avatar', dimensions: Account::Avatar::AVATAR_GEOMETRY, size: number_to_human_size(Account::Avatar::AVATAR_LIMIT)),
-                  input_html: { accept: Account::Avatar::AVATAR_IMAGE_MIME_TYPES.join(',') },
+                  input_html: { accept: Account::Avatar::AVATAR_IMAGE_MIME_TYPES },
                   wrapper: :with_label
         - if @account.avatar.present?
           = f.input :avatar_description, wrapper: :with_label, input_html: { maxlength: Account::DESCRIPTION_LENGTH_LIMIT }, chuckya_only: true
@@ -53,7 +53,7 @@
       .fields-group
         = f.input :header,
                   hint: t('simple_form.hints.defaults.header', dimensions: Account::Header::HEADER_GEOMETRY, size: number_to_human_size(Account::Header::HEADER_LIMIT)),
-                  input_html: { accept: Account::Header::HEADER_IMAGE_MIME_TYPES.join(',') },
+                  input_html: { accept: Account::Header::HEADER_IMAGE_MIME_TYPES },
                   wrapper: :with_label
         - if @account.header.present?
           = f.input :header_description, wrapper: :with_label, input_html: { maxlength: Account::DESCRIPTION_LENGTH_LIMIT }, chuckya_only: true
@@ -66,7 +66,7 @@
             = material_symbol 'delete'
             = t('generic.delete')
 
-  %h4= t('edit_profile.other')
+  %h2= t('edit_profile.other')
 
   .fields-group
     = f.input :bot, as: :boolean, wrapper: :with_label, hint: t('simple_form.hints.defaults.bot')

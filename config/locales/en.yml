@@ -267,6 +267,7 @@ en:
         demote_user_html: "%{name} demoted user %{target}"
         destroy_announcement_html: "%{name} deleted announcement %{target}"
         destroy_canonical_email_block_html: "%{name} unblocked email with the hash %{target}"
+        destroy_collection_html: "%{name} removed collection by %{target}"
         destroy_custom_emoji_html: "%{name} deleted emoji %{target}"
         destroy_domain_allow_html: "%{name} disallowed federation with domain %{target}"
         destroy_domain_block_html: "%{name} unblocked domain %{target}"
@@ -306,6 +307,7 @@ en:
         unsilence_account_html: "%{name} undid limit of %{target}'s account"
         unsuspend_account_html: "%{name} unsuspended %{target}'s account"
         update_announcement_html: "%{name} updated announcement %{target}"
+        update_collection_html: "%{name} updated collection by %{target}"
         update_custom_emoji_html: "%{name} updated emoji %{target}"
         update_domain_block_html: "%{name} updated domain block for %{target}"
         update_ip_block_html: "%{name} changed rule for IP %{target}"
@@ -699,7 +701,7 @@ en:
       cancel: Cancel
       category: Category
       category_description_html: The reason this account and/or content was reported will be cited in communication with the reported account
-      collections: Collections
+      collections: Collections (%{count})
       comment:
         none: None
       comment_description_html: 'To provide more information, %{name} wrote:'
@@ -735,7 +737,7 @@ en:
       resolved_msg: Report successfully resolved!
       skip_to_actions: Skip to actions
       status: Status
-      statuses: Posts
+      statuses: Posts (%{count})
       statuses_description_html: Offending content will be cited in communication with the reported account
       summary:
         action_preambles:
@@ -786,6 +788,8 @@ en:
         administrator_description: Users with this permission will bypass every permission
         delete_user_data: Delete User Data
         delete_user_data_description: Allows users to delete other users' data without delay
+        invite_bypass_approval: Invite Users without review
+        invite_bypass_approval_description: Allows people invited to the server by these users to bypass moderation approval
         invite_users: Invite Users
         invite_users_description: Allows users to invite new people to the server
         manage_announcements: Manage Announcements
@@ -998,6 +1002,8 @@ en:
       elasticsearch_version_check:
         message_html: 'Incompatible Elasticsearch version: %{value}'
         version_comparison: Elasticsearch %{running_version} is running while %{required_version} is required
+      missing_indexes_check:
+        message_html: 'The following indexes are missing from the database and should be recreated: <code>%{value}</code>.<br> Missing indexes may lead to severely reduced performance and data inconsistencies.'
       rules_check:
         action: Manage server rules
         message_html: You haven't defined any server rules.
@@ -1298,6 +1304,7 @@ en:
     progress:
       confirm: Confirm email
       details: Your details
+      list: Sign up progress
       review: Our review
       rules: Accept rules
     providers:
@@ -1313,6 +1320,7 @@ en:
       invited_by: 'You can join %{domain} thanks to the invitation you have received from:'
       preamble: These are set and enforced by the %{domain} moderators.
       preamble_invited: Before you proceed, please consider the ground rules set by the moderators of %{domain}.
+      read_more: Read more
       title: Some ground rules.
       title_invited: You've been invited.
     security: Security

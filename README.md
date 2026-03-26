@@ -9,6 +9,8 @@ Here are some of the changes compared to glitch-soc:
 - GIF picker (originally from [koyu.space](https://github.com/koyuspace/mastodon), rewritten for Chuckya)
 - Mastodon Modern theme (licensed under CC-BY-SA 4.0, [original repo](https://git.gay/freeplay/Mastodon-Modern))
 - Configurable media attachment limits
+- Additional moderation tools for admins
+- Command-line interface for managing username blocks
 - Polls can be posted alongside media (glitch-soc/mastodon#2524)
 - Polls can have only one option
 - Restores status trend half-life to 2 hours
@@ -102,6 +104,7 @@ Mastodon is a **free, open-source social network server** based on [ActivityPub]
 - **PostgreSQL** 14+
 - **Redis** 7.0+
 - **Node.js** 20+
+- **FFmpeg** 5.1+
 
 This repository includes deployment configurations for **Docker and docker-compose**, as well as for other environments like Heroku and Scalingo. For Helm charts, reference the [mastodon/chart repository](https://github.com/mastodon/chart). A [**standalone** installation guide](https://docs.joinmastodon.org/admin/install/) is available in the main documentation.
 

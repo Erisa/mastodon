@@ -23,7 +23,7 @@ RSpec.describe ActivityPub::ProcessStatusUpdateService do
       ],
     }
   end
-  let(:json) { Oj.load(Oj.dump(payload)) }
+  let(:json) { JSON.parse(payload.to_json) }
 
   let(:alice) { Fabricate(:account) }
   let(:bob) { Fabricate(:account) }
@@ -133,6 +133,48 @@ RSpec.describe ActivityPub::ProcessStatusUpdateService do
         expect(status.reload).to_not be_edited
         expect(status.reload.text).to eq 'Hello world'
         expect(status.poll.reload.cached_tallies).to eq [4, 3]
+      end
+    end
+
+    context 'with an implicit update of a poll that has already expired' do
+      let(:account) { Fabricate(:account, domain: 'example.com') }
+      let!(:expiration) { 10.days.ago.utc }
+      let!(:status) do
+        Fabricate(:status,
+                  text: 'Hello world',
+                  account: account,
+                  poll_attributes: {
+                    options: %w(Foo Bar),
+                    account: account,
+                    multiple: false,
+                    hide_totals: false,
+                    expires_at: expiration,
+                  })
+      end
+
+      let(:payload) do
+        {
+          '@context': 'https://www.w3.org/ns/activitystreams',
+          id: 'https://example.com/foo',
+          type: 'Question',
+          content: 'Hello world',
+          endTime: expiration.iso8601,
+          oneOf: [
+            poll_option_json('Foo', 4),
+            poll_option_json('Bar', 3),
+          ],
+        }
+      end
+
+      before do
+        travel_to(expiration - 1.day) do
+          Fabricate(:poll_vote, poll: status.poll)
+        end
+      end
+
+      it 'does not re-trigger notifications' do
+        expect { subject.call(status, json, json) }
+          .to_not enqueue_sidekiq_job(PollExpirationNotifyWorker)
       end
     end
 
@@ -502,8 +544,8 @@ RSpec.describe ActivityPub::ProcessStatusUpdateService do
       }
     end
 
-    before do
-      stub_request(:get, approval_uri).to_return(headers: { 'Content-Type': 'application/activity+json' }, body: Oj.dump({
+    let(:quote_authorization_json) do
+      {
         '@context': [
           'https://www.w3.org/ns/activitystreams',
           {
@@ -528,7 +570,11 @@ RSpec.describe ActivityPub::ProcessStatusUpdateService do
         attributedTo: ActivityPub::TagManager.instance.uri_for(quoted_status.account),
         interactingObject: ActivityPub::TagManager.instance.uri_for(status),
         interactionTarget: ActivityPub::TagManager.instance.uri_for(quoted_status),
-      }))
+      }
+    end
+
+    before do
+      stub_request(:get, approval_uri).to_return(headers: { 'Content-Type': 'application/activity+json' }, body: quote_authorization_json.to_json)
     end
 
     it 'updates the approval URI and verifies the quote' do
@@ -567,8 +613,8 @@ RSpec.describe ActivityPub::ProcessStatusUpdateService do
       }
     end
 
-    before do
-      stub_request(:get, approval_uri).to_return(headers: { 'Content-Type': 'application/activity+json' }, body: Oj.dump({
+    let(:quote_authorization_json) do
+      {
         '@context': [
           'https://www.w3.org/ns/activitystreams',
           {
@@ -593,7 +639,11 @@ RSpec.describe ActivityPub::ProcessStatusUpdateService do
         attributedTo: ActivityPub::TagManager.instance.uri_for(quoted_status.account),
         interactingObject: ActivityPub::TagManager.instance.uri_for(status),
         interactionTarget: ActivityPub::TagManager.instance.uri_for(quoted_status),
-      }))
+      }
+    end
+
+    before do
+      stub_request(:get, approval_uri).to_return(headers: { 'Content-Type': 'application/activity+json' }, body: quote_authorization_json.to_json)
     end
 
     it 'updates the approval URI and verifies the quote' do
@@ -776,8 +826,8 @@ RSpec.describe ActivityPub::ProcessStatusUpdateService do
       }
     end
 
-    before do
-      stub_request(:get, approval_uri).to_return(headers: { 'Content-Type': 'application/activity+json' }, body: Oj.dump({
+    let(:quote_authorization_json) do
+      {
         '@context': [
           'https://www.w3.org/ns/activitystreams',
           {
@@ -802,7 +852,11 @@ RSpec.describe ActivityPub::ProcessStatusUpdateService do
         attributedTo: ActivityPub::TagManager.instance.uri_for(quoted_status.account),
         interactingObject: ActivityPub::TagManager.instance.uri_for(status),
         interactionTarget: ActivityPub::TagManager.instance.uri_for(quoted_status),
-      }))
+      }
+    end
+
+    before do
+      stub_request(:get, approval_uri).to_return(headers: { 'Content-Type': 'application/activity+json' }, body: quote_authorization_json.to_json)
     end
 
     it 'updates the approval URI and verifies the quote' do
@@ -841,8 +895,8 @@ RSpec.describe ActivityPub::ProcessStatusUpdateService do
       }
     end
 
-    before do
-      stub_request(:get, approval_uri).to_return(headers: { 'Content-Type': 'application/activity+json' }, body: Oj.dump({
+    let(:quote_authorization_json) do
+      {
         '@context': [
           'https://www.w3.org/ns/activitystreams',
           {
@@ -867,7 +921,11 @@ RSpec.describe ActivityPub::ProcessStatusUpdateService do
         attributedTo: ActivityPub::TagManager.instance.uri_for(quoted_status.account),
         interactingObject: ActivityPub::TagManager.instance.uri_for(status),
         interactionTarget: ActivityPub::TagManager.instance.uri_for(quoted_status),
-      }))
+      }
+    end
+
+    before do
+      stub_request(:get, approval_uri).to_return(headers: { 'Content-Type': 'application/activity+json' }, body: quote_authorization_json.to_json)
     end
 
     it 'updates the approval URI but does not verify the quote' do
@@ -1084,8 +1142,8 @@ RSpec.describe ActivityPub::ProcessStatusUpdateService do
       }
     end
 
-    before do
-      stub_request(:get, approval_uri).to_return(headers: { 'Content-Type': 'application/activity+json' }, body: Oj.dump({
+    let(:quote_authorization_json) do
+      {
         '@context': [
           'https://www.w3.org/ns/activitystreams',
           {
@@ -1110,7 +1168,11 @@ RSpec.describe ActivityPub::ProcessStatusUpdateService do
         attributedTo: ActivityPub::TagManager.instance.uri_for(quoted_status.account),
         interactingObject: ActivityPub::TagManager.instance.uri_for(status),
         interactionTarget: ActivityPub::TagManager.instance.uri_for(quoted_status),
-      }))
+      }
+    end
+
+    before do
+      stub_request(:get, approval_uri).to_return(headers: { 'Content-Type': 'application/activity+json' }, body: quote_authorization_json.to_json)
     end
 
     it 'updates the URI and unverifies the quote' do
@@ -1192,8 +1254,8 @@ RSpec.describe ActivityPub::ProcessStatusUpdateService do
       }
     end
 
-    before do
-      stub_request(:get, second_approval_uri).to_return(headers: { 'Content-Type': 'application/activity+json' }, body: Oj.dump({
+    let(:quote_authorization_json) do
+      {
         '@context': [
           'https://www.w3.org/ns/activitystreams',
           {
@@ -1218,7 +1280,11 @@ RSpec.describe ActivityPub::ProcessStatusUpdateService do
         attributedTo: ActivityPub::TagManager.instance.uri_for(second_quoted_status.account),
         interactingObject: ActivityPub::TagManager.instance.uri_for(status),
         interactionTarget: ActivityPub::TagManager.instance.uri_for(second_quoted_status),
-      }))
+      }
+    end
+
+    before do
+      stub_request(:get, second_approval_uri).to_return(headers: { 'Content-Type': 'application/activity+json' }, body: quote_authorization_json.to_json)
     end
 
     it 'updates the URI and unverifies the quote' do

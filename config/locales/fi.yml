@@ -267,6 +267,7 @@ fi:
         demote_user_html: "%{name} alensi käyttäjän %{target}"
         destroy_announcement_html: "%{name} poisti tiedotteen %{target}"
         destroy_canonical_email_block_html: "%{name} kumosi eston tiivistettä %{target} vastaavalta sähköpostiosoitteelta"
+        destroy_collection_html: "%{name} poisti käyttäjän %{target} kokoelman"
         destroy_custom_emoji_html: "%{name} poisti emojin %{target}"
         destroy_domain_allow_html: "%{name} kielsi federoinnin verkkotunnuksen %{target} kanssa"
         destroy_domain_block_html: "%{name} kumosi verkkotunnuksen %{target} eston"
@@ -306,6 +307,7 @@ fi:
         unsilence_account_html: "%{name} kumosi käyttäjän %{target} tilin rajoituksen"
         unsuspend_account_html: "%{name} kumosi käyttäjän %{target} tilin jäädytyksen"
         update_announcement_html: "%{name} päivitti tiedotteen %{target}"
+        update_collection_html: "%{name} päivitti käyttäjän %{target} kokoelman"
         update_custom_emoji_html: "%{name} päivitti emojin %{target}"
         update_domain_block_html: "%{name} päivitti verkkotunnuksen %{target} eston"
         update_ip_block_html: "%{name} muutti IP-⁠osoitteen %{target} sääntöä"
@@ -689,7 +691,7 @@ fi:
       cancel: Peruuta
       category: Luokka
       category_description_html: Syy siihen, miksi tämä tili ja/tai sisältö raportoitiin, mainitaan ilmoitetun tilin kanssa viestiessä
-      collections: Kokoelmat
+      collections: Kokoelmat (%{count})
       comment:
         none: Ei mitään
       comment_description_html: 'Antaakseen lisätietoja %{name} kirjoitti:'
@@ -725,7 +727,7 @@ fi:
       resolved_msg: Raportin ratkaisu onnistui!
       skip_to_actions: Siirry toimiin
       status: Tila
-      statuses: Julkaisut
+      statuses: Julkaisut (%{count})
       statuses_description_html: Loukkaava sisältö mainitaan raportoidun tilin yhteydessä
       summary:
         action_preambles:
@@ -1217,7 +1219,7 @@ fi:
     advanced_settings: Edistyneet asetukset
     animations_and_accessibility: Animaatiot ja saavutettavuus
     boosting_preferences: Tehostusasetukset
-    boosting_preferences_info_html: "<strong>Vihje:</strong> Asetuksista riippumatta <kbd>Vaihto</kbd> + <kbd>napsautus</kbd> %{icon} Tehosta-kuvakkeeseen tehostaa välittömästi."
+    boosting_preferences_info_html: "<strong>Vinkki:</strong> Asetuksista riippumatta <kbd>Vaihto</kbd> + <kbd>napsautus</kbd> %{icon} Tehosta-kuvakkeeseen tehostaa välittömästi."
     discovery: Löydettävyys
     localization:
       body: Mastodonin ovat kääntäneet vapaaehtoiset.
@@ -1277,6 +1279,7 @@ fi:
     progress:
       confirm: Vahvista sähköpostiosoite
       details: Omat tietosi
+      list: Rekisteröitymisprosessi
       review: Arviomme
       rules: Hyväksy säännöt
     providers:
@@ -1331,7 +1334,7 @@ fi:
     title: Tekijän nimeäminen
   challenge:
     confirm: Jatka
-    hint_html: "<strong>Vihje:</strong> Emme pyydä sinulta salasanaa uudelleen seuraavan tunnin aikana."
+    hint_html: "<strong>Vinkki:</strong> Emme pyydä sinulta salasanaa uudelleen seuraavan tunnin aikana."
     invalid_password: Väärä salasana
     prompt: Jatka vahvistalla salasanasi
   color_scheme:
@@ -2090,7 +2093,7 @@ fi:
       subject: Kaksivaiheisen todennuksen virhe
       title: Kaksivaiheisen todennuksen toinen vaihe epäonnistui
     suspicious_sign_in:
-      change_password: vaihda salasanasi
+      change_password: vaihdat salasanasi
       details: 'Tässä on tiedot kirjautumisesta:'
       explanation: Olemme havainneet kirjautumisen tilillesi uudesta IP-osoitteesta.
       further_actions_html: Jos tämä et ollut sinä, suosittelemme, että %{action} heti ja otat käyttöön kaksivaiheisen todennuksen pitääksesi tilisi turvassa.

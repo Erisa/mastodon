@@ -1,3 +1,121 @@
+// Profile Edit Page
+
+.profileImage {
+  height: 120px;
+  background: var(--color-bg-secondary);
+  border-bottom: 1px solid var(--color-border-primary);
+  overflow: hidden;
+  position: relative;
+
+  @container (width >= 500px) {
+    height: 160px;
+  }
+
+  > img {
+    object-fit: cover;
+    object-position: top center;
+    width: 100%;
+    height: 100%;
+  }
+
+  .imageButton {
+    top: 16px;
+    right: 24px;
+  }
+}
+
+.avatar {
+  margin-top: -64px;
+  margin-left: 18px;
+  position: relative;
+  width: 82px;
+
+  > :global(.account__avatar) {
+    border: 1px solid var(--color-border-primary);
+  }
+
+  .imageButton {
+    bottom: -8px;
+    right: -8px;
+  }
+}
+
+.bio {
+  unicode-bidi: plaintext;
+
+  p:not(:last-child) {
+    margin-bottom: 20px;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: underline;
+  }
+}
+
+.field {
+  padding: 12px 0;
+  display: flex;
+  gap: 4px;
+  align-items: start;
+
+  > div {
+    flex-grow: 1;
+  }
+}
+
+.verifiedLinkHelpButton {
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: underline;
+
+  &:global(.button) {
+    color: var(--color-text-primary);
+
+    &:active,
+    &:hover,
+    &:focus {
+      text-decoration: underline;
+    }
+  }
+}
+
+// Featured Tags Page
+
+.wrapper {
+  padding: 24px;
+}
+
+.autoComplete,
+.tagSuggestions {
+  margin: 12px 0;
+}
+
+.tagSuggestions {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  align-items: center;
+
+  // Add more padding to the suggestions label
+  > span {
+    margin-right: 4px;
+  }
+}
+
+.tagItem {
+  > h4 {
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  > p {
+    color: var(--color-text-secondary);
+  }
+}
+
+// Column component
+
 .column {
   border: 1px solid var(--color-border-primary);
   border-top-width: 0;
@@ -11,29 +129,115 @@
   }
 }
 
-.profileImage {
-  height: 120px;
-  background: var(--color-bg-secondary);
-  border-bottom: 1px solid var(--color-border-primary);
-  overflow: hidden;
+// Edit button component
 
-  @container (width >= 500px) {
-    height: 160px;
-  }
-
-  > img {
-    object-fit: cover;
-    object-position: top center;
-    width: 100%;
-    height: 100%;
-  }
-}
-
-.avatar {
-  margin-top: -64px;
-  margin-left: 18px;
+.editButton {
   border: 1px solid var(--color-border-primary);
+  border-radius: 8px;
+  box-sizing: border-box;
+  padding: 4px;
+  transition:
+    color 0.2s ease-in-out,
+    background-color 0.2s ease-in-out;
+
+  &:global(.button) {
+    background-color: var(--color-bg-primary);
+    color: var(--color-text-primary);
+    font-size: 13px;
+    padding: 4px 8px;
+
+    &:active,
+    &:focus,
+    &:hover {
+      background-color: var(--color-bg-brand-softer);
+    }
+
+    &:disabled {
+      background-color: var(--color-bg-primary);
+      opacity: 0.5;
+    }
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
 }
+
+.deleteButton {
+  --default-icon-color: var(--color-text-error);
+  --hover-bg-color: var(--color-bg-error-base-hover);
+  --hover-icon-color: var(--color-text-on-error-base);
+}
+
+// Field component
+
+.fieldName {
+  color: var(--color-text-secondary);
+  font-size: 13px;
+}
+
+.fieldValue {
+  color: var(--color-text-primary);
+  font-size: 15px;
+}
+
+// Image edit component
+
+.imageButton {
+  --default-bg-color: var(--color-bg-primary);
+
+  &,
+  &:global(.active) {
+    // Overrides the transparent background added by default with .active
+    --hover-bg-color: var(--color-bg-brand-softer-solid);
+  }
+
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--color-border-primary);
+  border-radius: 9999px;
+  box-sizing: border-box;
+  padding: 4px;
+  transition:
+    color 0.2s ease-in-out,
+    background-color 0.2s ease-in-out;
+
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.imageMenu {
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+// Item list component
+
+.itemList {
+  > li {
+    display: flex;
+    align-items: center;
+    padding: 12px 0;
+
+    > :first-child {
+      flex-grow: 1;
+    }
+  }
+}
+
+.itemListButtons {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+// Section component
 
 .section {
   padding: 20px;
@@ -45,19 +249,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 8px;
-
-  > button {
-    border: 1px solid var(--color-border-primary);
-    border-radius: 8px;
-    box-sizing: border-box;
-    padding: 4px;
-
-    svg {
-      width: 20px;
-      height: 20px;
-    }
-  }
+  margin-bottom: 16px;
 }
 
 .sectionTitle {
@@ -68,43 +260,4 @@
 
 .sectionSubtitle {
   color: var(--color-text-secondary);
-}
-
-.inputWrapper {
-  position: relative;
-}
-
-// Override input styles
-.inputWrapper .inputText {
-  font-size: 15px;
-  padding-right: 32px;
-}
-
-textarea.inputText {
-  min-height: 82px;
-  height: 100%;
-
-  // 160px is approx the height of the modal header and footer
-  max-height: calc(80vh - 160px);
-}
-
-.inputWrapper :global(.emoji-picker-dropdown) {
-  position: absolute;
-  bottom: 10px;
-  right: 8px;
-  height: 24px;
-  z-index: 1;
-
-  :global(.icon-button) {
-    color: var(--color-text-secondary);
-  }
-}
-
-.counter {
-  margin-top: 4px;
-  font-size: 13px;
-}
-
-.counterError {
-  color: var(--color-text-error);
 }

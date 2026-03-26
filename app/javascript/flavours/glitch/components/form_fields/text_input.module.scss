@@ -20,14 +20,23 @@
     font-size: 16px;
   }
 
-  &:focus {
-    outline-color: var(--color-text-brand);
+  .iconWrapper & {
+    // Make space for icon displayed at start of input
+    padding-inline-start: 36px;
+  }
+
+  &::placeholder {
+    color: var(--color-text-secondary);
   }
 
   &:focus:user-invalid,
   &:required:user-invalid,
   [data-has-error='true'] & {
     outline-color: var(--color-text-error);
+  }
+
+  &:focus {
+    outline-color: var(--color-text-brand);
   }
 
   &:required:user-valid {
@@ -39,4 +48,18 @@
     border-color: transparent;
     cursor: not-allowed;
   }
+}
+
+.iconWrapper {
+  position: relative;
+}
+
+.icon {
+  pointer-events: none;
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  inset-inline-start: 10px;
+  inset-block-start: 10px;
+  color: var(--color-text-secondary);
 }

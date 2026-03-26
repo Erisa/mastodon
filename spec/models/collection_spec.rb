@@ -8,7 +8,11 @@ RSpec.describe Collection do
 
     it { is_expected.to validate_presence_of(:name) }
 
+    it { is_expected.to validate_length_of(:name).is_at_most(40) }
+
     it { is_expected.to validate_presence_of(:description) }
+
+    it { is_expected.to validate_length_of(:description).is_at_most(100) }
 
     it { is_expected.to_not allow_value(nil).for(:local) }
 
@@ -22,6 +26,14 @@ RSpec.describe Collection do
 
     context 'when collection is remote' do
       subject { Fabricate.build :collection, local: false }
+
+      it { is_expected.to validate_length_of(:name).is_at_most(Collection::NAME_LENGTH_HARD_LIMIT) }
+
+      it { is_expected.to_not validate_presence_of(:description) }
+
+      it { is_expected.to validate_presence_of(:description_html) }
+
+      it { is_expected.to validate_length_of(:description_html).is_at_most(Collection::DESCRIPTION_LENGTH_HARD_LIMIT) }
 
       it { is_expected.to validate_presence_of(:uri) }
 
@@ -136,6 +148,20 @@ RSpec.describe Collection do
   describe '#object_type' do
     it 'returns `:featured_collection`' do
       expect(subject.object_type).to eq :featured_collection
+    end
+  end
+
+  describe '#to_log_human_identifier' do
+    subject { Fabricate(:collection) }
+
+    it 'returns the account name' do
+      expect(subject.to_log_human_identifier).to eq subject.account.acct
+    end
+  end
+
+  describe '#to_log_permalink' do
+    it 'includes the URI of the collection' do
+      expect(subject.to_log_permalink).to eq ActivityPub::TagManager.instance.uri_for(subject)
     end
   end
 end

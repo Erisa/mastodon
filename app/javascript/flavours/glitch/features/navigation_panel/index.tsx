@@ -15,6 +15,8 @@ import AddIcon from '@/material-icons/400-24px/add.svg?react';
 import AlternateEmailIcon from '@/material-icons/400-24px/alternate_email.svg?react';
 import BookmarksActiveIcon from '@/material-icons/400-24px/bookmarks-fill.svg?react';
 import BookmarksIcon from '@/material-icons/400-24px/bookmarks.svg?react';
+import CollectionsActiveIcon from '@/material-icons/400-24px/category-fill.svg?react';
+import CollectionsIcon from '@/material-icons/400-24px/category.svg?react';
 import HomeActiveIcon from '@/material-icons/400-24px/home-fill.svg?react';
 import HomeIcon from '@/material-icons/400-24px/home.svg?react';
 import InfoIcon from '@/material-icons/400-24px/info.svg?react';
@@ -38,6 +40,7 @@ import { Account } from 'flavours/glitch/components/account';
 import { IconWithBadge } from 'flavours/glitch/components/icon_with_badge';
 import { Search } from 'flavours/glitch/features/compose/components/search';
 import { ColumnLink } from 'flavours/glitch/features/ui/components/column_link';
+import { getNavigationSkipLinkId } from 'flavours/glitch/features/ui/components/skip_links';
 import { useBreakpoint } from 'flavours/glitch/features/ui/hooks/useBreakpoint';
 import { useIdentity } from 'flavours/glitch/identity_context';
 import {
@@ -53,6 +56,7 @@ import { selectUnreadNotificationGroupsCount } from 'flavours/glitch/selectors/n
 import { useAppSelector, useAppDispatch } from 'flavours/glitch/store';
 
 import { AnnualReportNavItem } from '../annual_report/nav_item';
+import { areCollectionsEnabled } from '../collections/utils';
 
 import { DisabledAccountBanner } from './components/disabled_account_banner';
 import { FollowedTagsPanel } from './components/followed_tags_panel';
@@ -76,6 +80,10 @@ const messages = defineMessages({
   direct: { id: 'navigation_bar.direct', defaultMessage: 'Private mentions' },
   favourites: { id: 'navigation_bar.favourites', defaultMessage: 'Favorites' },
   bookmarks: { id: 'navigation_bar.bookmarks', defaultMessage: 'Bookmarks' },
+  collections: {
+    id: 'navigation_bar.collections',
+    defaultMessage: 'Collections',
+  },
   preferences: {
     id: 'navigation_bar.preferences',
     defaultMessage: 'Preferences',
@@ -223,6 +231,8 @@ export const NavigationPanel: React.FC<{ multiColumn?: boolean }> = ({
 
   let banner: React.ReactNode;
 
+  let linknum = 0;
+
   if (transientSingleColumn) {
     banner = (
       <div className='switch-to-advanced'>
@@ -271,6 +281,7 @@ export const NavigationPanel: React.FC<{ multiColumn?: boolean }> = ({
                 activeIconComponent={AddIcon}
                 text={intl.formatMessage(messages.compose)}
                 className='button navigation-panel__compose-button'
+                id={linknum++ === 0 ? getNavigationSkipLinkId() : undefined}
               />
             )}
             <ColumnLink
@@ -280,6 +291,7 @@ export const NavigationPanel: React.FC<{ multiColumn?: boolean }> = ({
               iconComponent={HomeIcon}
               activeIconComponent={HomeActiveIcon}
               text={intl.formatMessage(messages.home)}
+              id={linknum++ === 0 ? getNavigationSkipLinkId() : undefined}
             />
           </>
         )}
@@ -291,6 +303,7 @@ export const NavigationPanel: React.FC<{ multiColumn?: boolean }> = ({
             icon='explore'
             iconComponent={TrendingUpIcon}
             text={intl.formatMessage(messages.explore)}
+            id={linknum++ === 0 ? getNavigationSkipLinkId() : undefined}
           />
         )}
 
@@ -315,6 +328,7 @@ export const NavigationPanel: React.FC<{ multiColumn?: boolean }> = ({
                 ? messages.firehose
                 : messages.firehose_singular,
             )}
+            id={linknum++ === 0 ? getNavigationSkipLinkId() : undefined}
           />
         )}
 
@@ -348,6 +362,16 @@ export const NavigationPanel: React.FC<{ multiColumn?: boolean }> = ({
               activeIconComponent={BookmarksActiveIcon}
               text={intl.formatMessage(messages.bookmarks)}
             />
+            {areCollectionsEnabled() && (
+              <ColumnLink
+                transparent
+                to='/collections'
+                icon='collections'
+                iconComponent={CollectionsIcon}
+                activeIconComponent={CollectionsActiveIcon}
+                text={intl.formatMessage(messages.collections)}
+              />
+            )}
             <ColumnLink
               transparent
               to='/conversations'
@@ -384,6 +408,7 @@ export const NavigationPanel: React.FC<{ multiColumn?: boolean }> = ({
             icon='ellipsis-h'
             iconComponent={InfoIcon}
             text={intl.formatMessage(messages.about)}
+            id={linknum++ === 0 ? getNavigationSkipLinkId() : undefined}
           />
         </div>
 

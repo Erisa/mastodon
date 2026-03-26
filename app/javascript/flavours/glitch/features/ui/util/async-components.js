@@ -97,14 +97,14 @@ export function AccountFeatured() {
   return import('../../account_featured');
 }
 
-export function AccountAbout() {
-  return import('../../account_about')
-    .then((module) => ({ default: module.AccountAbout }));
-}
-
 export function AccountEdit() {
   return import('../../account_edit')
   .then((module) => ({ default: module.AccountEdit }));
+}
+
+export function AccountEditFeaturedTags() {
+  return import('../../account_edit/featured_tags')
+  .then((module) => ({ default: module.AccountEditFeaturedTags }));
 }
 
 export function Followers () {
@@ -177,6 +177,11 @@ export function ReportModal () {
 
 export function SettingsModal () {
   return import('../../local_settings');
+}
+
+export function ReportCollectionModal () {
+  return import('../components/report_collection_modal')
+    .then((module) => ({ default: module.ReportCollectionModal }));;
 }
 
 export function IgnoreNotificationsModal () {

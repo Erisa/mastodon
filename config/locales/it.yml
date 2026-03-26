@@ -267,6 +267,7 @@ it:
         demote_user_html: "%{name} ha retrocesso l'utente %{target}"
         destroy_announcement_html: "%{name} ha eliminato l'annuncio %{target}"
         destroy_canonical_email_block_html: "%{name} ha sbloccato l'e-mail con l'hash %{target}"
+        destroy_collection_html: "%{name} ha rimosso la collezione di %{target}"
         destroy_custom_emoji_html: "%{name} ha eliminato l'emoji %{target}"
         destroy_domain_allow_html: "%{name} non ha consentito la federazione con il dominio %{target}"
         destroy_domain_block_html: "%{name} ha sbloccato il dominio %{target}"
@@ -306,6 +307,7 @@ it:
         unsilence_account_html: "%{name} ha riattivato l'account di %{target}"
         unsuspend_account_html: "%{name} ha annullato la sospensione dell'account di %{target}"
         update_announcement_html: "%{name} ha aggiornato l'annuncio %{target}"
+        update_collection_html: "%{name} ha aggiornato la collezione di %{target}"
         update_custom_emoji_html: "%{name} ha aggiornato emoji %{target}"
         update_domain_block_html: "%{name} ha aggiornato il blocco dominio per %{target}"
         update_ip_block_html: "%{name} ha cambiato la regola per l'IP %{target}"
@@ -689,7 +691,7 @@ it:
       cancel: Annulla
       category: Categoria
       category_description_html: Il motivo per cui questo account e/o contenuto è stato segnalato sarà citato nella comunicazione con l'account segnalato
-      collections: Collezioni
+      collections: Collezioni (%{count})
       comment:
         none: Nessuno
       comment_description_html: 'Per fornire ulteriori informazioni, %{name} ha scritto:'
@@ -725,7 +727,7 @@ it:
       resolved_msg: Rapporto risolto!
       skip_to_actions: Passa alle azioni
       status: Stato
-      statuses: Post
+      statuses: Post (%{count})
       statuses_description_html: Il contenuto offensivo sarà citato nella comunicazione con l'account segnalato
       summary:
         action_preambles:
@@ -836,7 +838,7 @@ it:
         rules_hint: C'è un'area dedicata per le regole che i tuoi utenti dovrebbero rispettare.
         title: Info
       allow_referrer_origin:
-        desc: Quando i tuoi utenti cliccano su link a siti esterni, il loro browser potrebbe inviare l'indirizzo del tuo server Mastodon come referente. Disattiva questa opzione se ciò identificherebbe in modo univoco i tuoi utenti, ad esempio se si tratta di un server Mastodon personale.
+        desc: Quando i tuoi utenti cliccano su link a siti esterni, il loro browser potrebbe inviare l'indirizzo del tuo server Mastodon come referente. Disattiva questa opzione se ciò identificherebbe in modo univoco i tuoi utenti, per esempio, se si tratta di un server Mastodon personale.
         title: Consenti ai siti esterni di vedere il tuo server Mastodon come fonte di traffico
       appearance:
         preamble: Personalizza l'interfaccia web di Mastodon.
@@ -1277,6 +1279,7 @@ it:
     progress:
       confirm: Conferma l'e-mail
       details: I tuoi dettagli
+      list: Stato della registrazione
       review: La nostra revisione
       rules: Accetta le regole
     providers:
@@ -1292,6 +1295,7 @@ it:
       invited_by: 'Puoi unirti a %{domain} grazie all''invito che hai ricevuto da:'
       preamble: Questi sono impostati e applicati dai moderatori di %{domain}.
       preamble_invited: Prima di procedere, si prega di considerare le regole di base stabilite dai moderatori di %{domain}.
+      read_more: Scopri di più
       title: Alcune regole di base.
       title_invited: Sei stato/a invitato/a.
     security: Credenziali
