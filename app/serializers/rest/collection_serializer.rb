@@ -5,7 +5,7 @@ class REST::CollectionSerializer < ActiveModel::Serializer
              :local, :sensitive, :discoverable, :item_count,
              :created_at, :updated_at
 
-  belongs_to :tag, serializer: REST::StatusSerializer::TagSerializer
+  belongs_to :tag, serializer: REST::ShallowTagSerializer
 
   has_many :items, serializer: REST::CollectionItemSerializer
 
@@ -15,6 +15,7 @@ class REST::CollectionSerializer < ActiveModel::Serializer
 
   def description
     return object.description if object.local?
+    return if object.description_html.nil?
 
     Sanitize.fragment(object.description_html, Sanitize::Config::MASTODON_STRICT)
   end

@@ -1713,7 +1713,7 @@ button.icon-button {
   padding-bottom: 120px;
 }
 .account__header__image {
-  height: 0;
+  height: 0 !important;
   padding-bottom: 35%;
   border-radius: var(--panel-radius) var(--panel-radius) 0 0;
   position: sticky;
@@ -2638,6 +2638,7 @@ button.icon-button {
     height: max-content;
     border-radius: 24px;
     margin-top: auto;
+    inset-inline-end: 0px !important;
     transform: translateY(100vh) !important;
     transition: transform 0.2s cubic-bezier(0, 0, 1, 0), opacity 1s;
   }
@@ -2818,4 +2819,10 @@ button.icon-button {
 }
 .emoji-picker-dropdown__modifiers {
   top: 16px;
+}
+._feat_account_edit__section {
+  z-index: 1;
+}
+._comp_number_fields__list {
+  z-index: 0;
 }

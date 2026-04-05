@@ -28,10 +28,9 @@ import { DisplayName } from 'mastodon/components/display_name';
 import ScrollableList from 'mastodon/components/scrollable_list';
 import { ShortNumber } from 'mastodon/components/short_number';
 import { VerifiedBadge } from 'mastodon/components/verified_badge';
+import { useSearchAccounts } from 'mastodon/hooks/useSearchAccounts';
 import { me } from 'mastodon/initial_state';
 import { useAppDispatch, useAppSelector } from 'mastodon/store';
-
-import { useSearchAccounts } from './use_search_accounts';
 
 export const messages = defineMessages({
   manageMembers: {
@@ -286,6 +285,7 @@ const ListMembers: React.FC<{
             <FormattedMessage
               id='lists.no_results_found'
               defaultMessage='No results found.'
+              tagName='span'
             />
           )
         }

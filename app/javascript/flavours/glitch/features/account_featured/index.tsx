@@ -2,12 +2,12 @@ import { useEffect } from 'react';
 
 import { FormattedMessage } from 'react-intl';
 
-import { useParams } from 'react-router';
+import { useHistory } from 'react-router';
 
 import { List as ImmutableList } from 'immutable';
 
+import { useAccount } from '@/flavours/glitch/hooks/useAccount';
 import { fetchEndorsedAccounts } from 'flavours/glitch/actions/accounts';
-import { fetchFeaturedTags } from 'flavours/glitch/actions/featured_tags';
 import { Account } from 'flavours/glitch/components/account';
 import { ColumnBackButton } from 'flavours/glitch/components/column_back_button';
 import { LoadingIndicator } from 'flavours/glitch/components/loading_indicator';
@@ -32,46 +32,35 @@ import { CollectionListItem } from '../collections/detail/collection_list_item';
 import { areCollectionsEnabled } from '../collections/utils';
 
 import { EmptyMessage } from './components/empty_message';
-import { FeaturedTag } from './components/featured_tag';
-import type { TagMap } from './components/featured_tag';
-
-interface Params {
-  acct?: string;
-  id?: string;
-}
 
 const AccountFeatured: React.FC<{ multiColumn: boolean }> = ({
   multiColumn,
 }) => {
   const accountId = useAccountId();
+  const account = useAccount(accountId);
   const { suspended, blockedBy, hidden } = useAccountVisibility(accountId);
   const forceEmptyState = suspended || blockedBy || hidden;
-  const { acct = '' } = useParams<Params>();
 
   const dispatch = useAppDispatch();
 
+  const history = useHistory();
+  useEffect(() => {
+    if (account && !account.show_featured) {
+      history.push(`/@${account.acct}`);
+    }
+  }, [account, history]);
+
   useEffect(() => {
     if (accountId) {
-      void dispatch(fetchFeaturedTags({ accountId }));
       void dispatch(fetchEndorsedAccounts({ accountId }));
+
       if (areCollectionsEnabled()) {
         void dispatch(fetchAccountCollections({ accountId }));
       }
     }
   }, [accountId, dispatch]);
 
-  const isLoading = useAppSelector(
-    (state) =>
-      !accountId ||
-      !!state.user_lists.getIn(['featured_tags', accountId, 'isLoading']),
-  );
-  const featuredTags = useAppSelector(
-    (state) =>
-      state.user_lists.getIn(
-        ['featured_tags', accountId, 'items'],
-        ImmutableList(),
-      ) as ImmutableList<TagMap>,
-  );
+  const isLoading = !accountId;
   const featuredAccountIds = useAppSelector(
     (state) =>
       state.user_lists.getIn(
@@ -103,11 +92,7 @@ const AccountFeatured: React.FC<{ multiColumn: boolean }> = ({
     );
   }
 
-  if (
-    featuredTags.isEmpty() &&
-    featuredAccountIds.isEmpty() &&
-    listedCollections.length === 0
-  ) {
+  if (featuredAccountIds.isEmpty() && listedCollections.length === 0) {
     return (
       <AccountFeaturedWrapper accountId={accountId}>
         <EmptyMessage
@@ -143,31 +128,10 @@ const AccountFeatured: React.FC<{ multiColumn: boolean }> = ({
                   key={item.id}
                   collection={item}
                   withoutBorder={index === listedCollections.length - 1}
+                  withAuthorHandle={false}
                   positionInList={index + 1}
                   listSize={listedCollections.length}
                 />
-              ))}
-            </ItemList>
-          </>
-        )}
-        {!featuredTags.isEmpty() && (
-          <>
-            <h4 className='column-subheading'>
-              <FormattedMessage
-                id='account.featured.hashtags'
-                defaultMessage='Hashtags'
-              />
-            </h4>
-            <ItemList>
-              {featuredTags.map((tag, index) => (
-                <Article
-                  focusable
-                  key={tag.get('id')}
-                  aria-posinset={index + 1}
-                  aria-setsize={featuredTags.size}
-                >
-                  <FeaturedTag tag={tag} account={acct} />
-                </Article>
               ))}
             </ItemList>
           </>

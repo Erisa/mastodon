@@ -1,6 +1,8 @@
 .header {
-  padding: 16px;
-  border-bottom: 1px solid var(--color-border-primary);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px;
 }
 
 .titleWithMenu {
@@ -11,23 +13,45 @@
 
 .titleWrapper {
   flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 4px;
   min-width: 0;
 }
 
 .tag {
-  margin-bottom: 4px;
-  margin-inline-start: -8px;
+  display: inline-block;
+  padding: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  background: var(--color-bg-secondary);
 }
 
 .name {
-  font-size: 28px;
+  font-size: 22px;
+  font-weight: 500;
   line-height: 1.2;
   overflow-wrap: anywhere;
 }
 
+.authorNote {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+
+  a {
+    color: inherit;
+    text-decoration-color: rgb(from var(--color-text-secondary) r g b / 50%);
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
 .description {
   font-size: 15px;
-  margin-top: 8px;
 }
 
 .headerButtonWrapper {
@@ -37,90 +61,55 @@
 
 .iconButton {
   box-sizing: content-box;
-  padding: 5px;
+  padding: 7px;
   border-radius: 4px;
   border: 1px solid var(--color-border-primary);
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
 }
 
-.authorNote {
-  margin-top: 8px;
-  font-size: 13px;
-  color: var(--color-text-secondary);
-}
-
-.previewAuthorNote {
-  font-size: 13px;
-}
-
-.metaData {
-  margin-top: 16px;
-  font-size: 15px;
+.itemList {
+  padding-inline: 24px;
 }
 
 .columnSubheading {
-  background: var(--color-bg-secondary);
-  padding: 15px 20px;
+  padding-bottom: 12px;
   font-size: 15px;
   font-weight: 500;
-
-  &:focus-visible {
-    outline: var(--outline-focus-default);
-    outline-offset: -2px;
-  }
 }
 
-.displayNameWithAvatar {
-  display: inline-flex;
-  gap: 4px;
-  align-items: baseline;
-
-  a {
-    color: inherit;
-    text-decoration: underline;
-
-    &:hover,
-    &:focus {
-      text-decoration: none;
-    }
-  }
-
-  > :global(.account__avatar) {
-    align-self: center;
-  }
-}
-
-.sensitiveWarning {
+.accountItemWrapper {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  max-width: 460px;
-  margin: auto;
-  padding: 60px 30px;
-  gap: 20px;
-  text-align: center;
-  text-wrap: balance;
-  font-size: 15px;
-  line-height: 1.5;
-  cursor: default;
+  align-items: start;
+  padding-block: 16px;
+
+  &[data-with-border='true'] {
+    border-bottom: 1px solid var(--color-border-primary);
+  }
+
+  :global(.account__note) {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+  }
+
+  // Hide 'No description provided' message added by `Account` component
+  :global(.account__note--missing) {
+    display: none;
+  }
 }
 
-.revokeControlWrapper {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 10px;
-  margin-top: -10px;
-  padding-bottom: 16px;
-  padding-inline: calc(26px + var(--avatar-width)) 16px;
+.accountItem {
+  --account-name-size: 15px;
+  --account-handle-color: var(--color-text-secondary);
+  --account-handle-size: 13px;
+  --account-bio-color: var(--color-text-primary);
+  --account-bio-size: 13px;
+  --account-outer-spacing: 0;
 
-  :global(.button) {
-    min-width: 30%;
-    white-space: normal;
-  }
-
-  --avatar-width: 46px;
-
-  @container (width < 360px) {
-    --avatar-width: 35px;
-  }
+  flex-grow: 1;
 }

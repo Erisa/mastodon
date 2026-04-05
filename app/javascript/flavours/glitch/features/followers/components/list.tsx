@@ -12,7 +12,6 @@ import { useAccountVisibility } from '@/flavours/glitch/hooks/useAccountVisibili
 import { useLayout } from '@/flavours/glitch/hooks/useLayout';
 
 import { ProfileColumnHeader } from '../../account/components/profile_column_header';
-import { AccountHeader } from '../../account_timeline/components/account_header';
 
 import { RemoteHint } from './remote';
 
@@ -26,6 +25,7 @@ interface AccountListProps {
   accountId?: string | null;
   append?: ReactNode;
   emptyMessage: ReactNode;
+  header?: ReactNode;
   footer?: ReactNode;
   list?: AccountList | null;
   loadMore: () => void;
@@ -37,6 +37,7 @@ export const AccountList: FC<AccountListProps> = ({
   accountId,
   append,
   emptyMessage,
+  header,
   footer,
   list,
   loadMore,
@@ -99,7 +100,7 @@ export const AccountList: FC<AccountListProps> = ({
         hasMore={!forceEmptyState && list?.hasMore}
         isLoading={list?.isLoading ?? true}
         onLoadMore={loadMore}
-        prepend={<AccountHeader accountId={accountId} hideTabs />}
+        prepend={header}
         alwaysPrepend
         append={append ?? <RemoteHint domain={domain} url={account.url} />}
         emptyMessage={emptyMessage}

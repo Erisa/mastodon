@@ -1,13 +1,14 @@
 import PropTypes from 'prop-types';
 import { PureComponent } from 'react';
 
-import { defineMessages, injectIntl, FormattedMessage } from 'react-intl';
+import { defineMessages, FormattedMessage } from 'react-intl';
 
 import { Helmet } from 'react-helmet';
 
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { connect } from 'react-redux';
 
+import { injectIntl } from '@/flavours/glitch/components/intl';
 import { fetchServer, fetchExtendedDescription, fetchDomainBlocks, fetchBubbleDomains  } from 'flavours/glitch/actions/server';
 import { Account } from 'flavours/glitch/components/account';
 import Column from 'flavours/glitch/components/column';

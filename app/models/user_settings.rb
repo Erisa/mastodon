@@ -20,6 +20,7 @@ class UserSettings
   setting :hide_followers_count, default: false
   setting :visible_reactions, default: 6
   setting :default_quote_policy, default: 'public', in: %w(public followers nobody)
+  setting :email_subscriptions, default: false
 
   setting_inverse_alias :indexable, :noindex
   setting_inverse_alias :show_followers_count, :hide_followers_count

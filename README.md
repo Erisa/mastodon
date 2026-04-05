@@ -13,7 +13,7 @@ Here are some of the changes compared to glitch-soc:
 - Command-line interface for managing username blocks
 - Polls can be posted alongside media (glitch-soc/mastodon#2524)
 - Polls can have only one option
-- Restores status trend half-life to 2 hours
+- Allows configuring status trend half-life time
 - Allows dashes in custom emote names
 - Emojis can be put side-by-side
 - Minor media attachment tweaks
@@ -100,7 +100,7 @@ Mastodon is a **free, open-source social network server** based on [ActivityPub]
 
 ### Requirements
 
-- **Ruby** 3.2+
+- **Ruby** 3.3+
 - **PostgreSQL** 14+
 - **Redis** 7.0+
 - **Node.js** 20+

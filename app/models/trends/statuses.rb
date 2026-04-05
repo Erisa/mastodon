@@ -5,10 +5,12 @@ class Trends::Statuses < Trends::Base
 
   BATCH_SIZE = 100
 
+  SCORE_HALFLIFE = (ENV['TREND_STATUS_HALFLIFE_HOURS'] || 1).to_i
+
   self.default_options = {
     threshold: 5,
     review_threshold: 3,
-    score_halflife: 2.hours.freeze,
+    score_halflife: SCORE_HALFLIFE.hours.freeze,
     decay_threshold: 0.3,
   }
 

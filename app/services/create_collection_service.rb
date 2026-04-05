@@ -9,10 +9,8 @@ class CreateCollectionService
 
     @collection.save!
 
-    if Mastodon::Feature.collections_federation_enabled?
-      distribute_add_activity
-      distribute_feature_request_activities
-    end
+    distribute_add_activity
+    distribute_feature_request_activities
 
     @collection
   end
@@ -36,7 +34,8 @@ class CreateCollectionService
     @accounts_to_add.each do |account_to_add|
       raise Mastodon::NotPermittedError, I18n.t('accounts.errors.cannot_be_added_to_collections') unless AccountPolicy.new(@account, account_to_add).feature?
 
-      @collection.collection_items.build(account: account_to_add, state: :accepted)
+      state = account_to_add.local? ? :accepted : :pending
+      @collection.collection_items.build(account: account_to_add, state:)
     end
   end
 

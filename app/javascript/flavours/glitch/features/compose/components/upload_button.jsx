@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import { defineMessages, injectIntl } from 'react-intl';
+import { defineMessages } from 'react-intl';
 
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import ImmutablePureComponent from 'react-immutable-pure-component';
@@ -10,6 +10,8 @@ import PhotoLibraryIcon from '@/material-icons/400-20px/photo_library.svg?react'
 import BrushIcon from '@/material-icons/400-24px/brush.svg?react';
 import GifBoxIcon from '@/material-icons/400-24px/gif_box.svg?react';
 import UploadFileIcon from '@/material-icons/400-24px/upload_file.svg?react';
+
+import { injectIntl } from '@/flavours/glitch/components/intl';
 
 import { DropdownIconButton } from './dropdown_icon_button';
 

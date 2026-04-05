@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import { defineMessages, injectIntl, FormattedMessage } from 'react-intl';
+import { defineMessages, FormattedMessage } from 'react-intl';
 
 import { Helmet } from 'react-helmet';
 
@@ -14,6 +14,7 @@ import RefreshIcon from '@/material-icons/400-24px/refresh.svg?react';
 import RepeatIcon from '@/material-icons/400-24px/repeat.svg?react';
 import { Account } from 'flavours/glitch/components/account';
 import { Icon }  from 'flavours/glitch/components/icon';
+import { injectIntl } from '@/flavours/glitch/components/intl';
 
 import { fetchReblogs, expandReblogs } from '../../actions/interactions';
 import ColumnHeader from '../../components/column_header';

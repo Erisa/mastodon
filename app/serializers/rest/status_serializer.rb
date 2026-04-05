@@ -32,6 +32,7 @@ class REST::StatusSerializer < ActiveModel::Serializer
   has_many :tags
   has_many :emojis, serializer: REST::CustomEmojiSerializer
   has_many :reactions, serializer: REST::StatusReactionSerializer
+  has_many :tagged_collections, serializer: REST::CollectionSerializer
 
   # Due to a ActiveModel::Serializer quirk, if you change any of the following, have a look at
   # updating `app/serializers/rest/shallow_status_serializer.rb` as well
@@ -184,6 +185,10 @@ class REST::StatusSerializer < ActiveModel::Serializer
     end
   end
 
+  def tagged_collections
+    object.tagged_objects.filter_map { |tagged_object| tagged_object.object if tagged_object.ap_type == 'FeaturedCollection' }
+  end
+
   def quote_approval
     {
       automatic: object.proper.quote_policy_as_keys(:automatic),
@@ -226,13 +231,5 @@ class REST::StatusSerializer < ActiveModel::Serializer
     end
   end
 
-  class TagSerializer < ActiveModel::Serializer
-    include RoutingHelper
-
-    attributes :name, :url
-
-    def url
-      tag_url(object)
-    end
-  end
+  class TagSerializer < REST::ShallowTagSerializer; end
 end

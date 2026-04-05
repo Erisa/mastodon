@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { PureComponent } from 'react';
 
-import { defineMessages, injectIntl, FormattedMessage } from 'react-intl';
+import { defineMessages, FormattedMessage } from 'react-intl';
 
 import ImmutablePropTypes from 'react-immutable-proptypes';
 
@@ -10,6 +10,8 @@ import AsyncSelect from 'react-select/async';
 import Toggle from 'react-toggle';
 
 import { maxFeedHashtags } from 'flavours/glitch/initial_state';
+
+import { injectIntl } from '@/flavours/glitch/components/intl';
 
 import SettingToggle from '../../notifications/components/setting_toggle';
 
