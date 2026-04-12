@@ -158,6 +158,7 @@ Rails.application.routes.draw do
     with_options to: 'accounts#show' do
       get '/@:username', as: :short_account
       get '/@:username/featured'
+      get '/@:username/collections'
       get '/@:username/with_replies', as: :short_account_with_replies
       get '/@:username/media', as: :short_account_media
       get '/@:username/tagged/:tag', as: :short_account_tag
@@ -193,7 +194,7 @@ Rails.application.routes.draw do
   end
 
   resources :media, only: [:show] do
-    get :player
+    member { get :player }
   end
 
   resources :tags,   only: [:show]

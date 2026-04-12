@@ -4,7 +4,6 @@ ga:
     hints:
       account:
         attribution_domains: Ceann in aghaidh an líne. Cosnaíonn sé ó sannadh bréagach.
-        discoverable: Seans go mbeidh do phostálacha poiblí agus do phróifíl le feiceáil nó molta i réimsí éagsúla de Mastodon agus is féidir do phróifíl a mholadh d’úsáideoirí eile.
         display_name: D'ainm iomlán nó d'ainm spraoi.
         fields: Do leathanach baile, forainmneacha, aois, rud ar bith is mian leat.
         indexable: Seans go mbeidh do phostálacha poiblí le feiceáil sna torthaí cuardaigh ar Mastodon. Seans go mbeidh daoine a d’idirghníomhaigh le do phostálacha in ann iad a chuardach beag beann ar.
@@ -154,7 +153,7 @@ ga:
         jurisdiction: Liostaigh an tír ina bhfuil cónaí ar an té a íocann na billí. Más cuideachta nó aonán eile é, liostaigh an tír ina bhfuil sé corpraithe, agus an chathair, an réigiún, an chríoch nó an stát mar is cuí.
         min_age: Níor chóir go mbeidís faoi bhun na haoise íosta a éilíonn dlíthe do dhlínse.
       user:
-        chosen_languages: Nuair a dhéantar iad a sheiceáil, ní thaispeánfar ach postálacha i dteangacha roghnaithe in amlínte poiblí
+        chosen_languages: Nuair a bheidh sé seo seiceáilte, ní thaispeánfar ach poist i dteangacha roghnaithe in amlínte poiblí. Ní dhéanann an socrú seo difear d’amlíne Baile agus do liostaí.
         date_of_birth:
           few: Caithfimid a chinntiú go bhfuil tú %{count} ar a laghad chun %{domain} a úsáid. Ní stórálfaimid é seo.
           many: Caithfimid a chinntiú go bhfuil tú %{count} ar a laghad chun %{domain} a úsáid. Ní stórálfaimid é seo.
@@ -180,7 +179,6 @@ ga:
     labels:
       account:
         attribution_domains: Tá cead ag suíomhanna Gréasáin creidmheas a thabhairt duit
-        discoverable: Próifíl gné agus postálacha in halgartaim fionnachtana
         fields:
           name: Lipéad
           value: Ábhar

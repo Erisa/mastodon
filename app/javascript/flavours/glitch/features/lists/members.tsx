@@ -19,6 +19,7 @@ import {
   apiRemoveAccountFromList,
 } from 'flavours/glitch/api/lists';
 import { Avatar } from 'flavours/glitch/components/avatar';
+import { VerifiedBadge } from 'flavours/glitch/components/badge';
 import { Button } from 'flavours/glitch/components/button';
 import { Column } from 'flavours/glitch/components/column';
 import { ColumnHeader } from 'flavours/glitch/components/column_header';
@@ -27,7 +28,6 @@ import { FollowersCounter } from 'flavours/glitch/components/counters';
 import { DisplayName } from 'flavours/glitch/components/display_name';
 import ScrollableList from 'flavours/glitch/components/scrollable_list';
 import { ShortNumber } from 'flavours/glitch/components/short_number';
-import { VerifiedBadge } from 'flavours/glitch/components/verified_badge';
 import { useSearchAccounts } from 'flavours/glitch/hooks/useSearchAccounts';
 import { me } from 'flavours/glitch/initial_state';
 import { useAppDispatch, useAppSelector } from 'flavours/glitch/store';

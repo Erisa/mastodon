@@ -3,22 +3,17 @@ import { useCallback, useRef, useState } from 'react';
 import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
 
 import type { ApiCollectionJSON } from 'flavours/glitch/api_types/collections';
-import { Account } from 'flavours/glitch/components/account';
+import type { RenderButtonOptions } from 'flavours/glitch/components/account_list_item';
+import {
+  AccountListItem,
+  AccountListItemFollowButton,
+} from 'flavours/glitch/components/account_list_item';
 import { Button } from 'flavours/glitch/components/button';
 import { Callout } from 'flavours/glitch/components/callout';
-import { FollowButton } from 'flavours/glitch/components/follow_button';
-import {
-  NumberFields,
-  NumberFieldsItem,
-} from 'flavours/glitch/components/number_fields';
-import { RelativeTimestamp } from 'flavours/glitch/components/relative_timestamp';
 import {
   Article,
   ItemList,
 } from 'flavours/glitch/components/scrollable_list/components';
-import { ShortNumber } from 'flavours/glitch/components/short_number';
-import { useAccount } from 'flavours/glitch/hooks/useAccount';
-import { useRelationship } from 'flavours/glitch/hooks/useRelationship';
 import { me } from 'flavours/glitch/initial_state';
 
 import { useConfirmRevoke } from './revoke_collection_inclusion_modal';
@@ -30,99 +25,6 @@ const messages = defineMessages({
     defaultMessage: 'This collection is empty',
   },
 });
-
-const AccountItem: React.FC<{
-  accountId: string | undefined;
-  collectionOwnerId: string;
-  onRevoke: () => void;
-  withBio?: boolean;
-  withBorder?: boolean;
-}> = ({
-  accountId,
-  collectionOwnerId,
-  onRevoke,
-  withBio = true,
-  withBorder = true,
-}) => {
-  const intl = useIntl();
-  const account = useAccount(accountId);
-  const relationship = useRelationship(accountId);
-
-  if (!accountId || !account) {
-    return null;
-  }
-
-  // When viewing your own collection, only show the Follow button
-  // for accounts you're not following (anymore).
-  // Otherwise, always show the follow button in its various states.
-  const isOwnAccount = accountId === me;
-  const withoutButton =
-    isOwnAccount ||
-    !relationship ||
-    (collectionOwnerId === me &&
-      (relationship.following || relationship.requested));
-
-  return (
-    <div className={classes.accountItemWrapper} data-with-border={withBorder}>
-      <Account
-        minimal
-        id={accountId}
-        withBio={withBio}
-        withBorder={false}
-        withMenu={false}
-        className={classes.accountItem}
-        extraAccountInfo={
-          <NumberFields>
-            <NumberFieldsItem
-              label={
-                <FormattedMessage
-                  id='account.followers'
-                  defaultMessage='Followers'
-                />
-              }
-              hint={intl.formatNumber(account.followers_count)}
-            >
-              <ShortNumber value={account.followers_count} />
-            </NumberFieldsItem>
-
-            <NumberFieldsItem
-              label={
-                <FormattedMessage id='account.posts' defaultMessage='Posts' />
-              }
-              hint={intl.formatNumber(account.statuses_count)}
-            >
-              <ShortNumber value={account.statuses_count} />
-            </NumberFieldsItem>
-
-            <NumberFieldsItem
-              label={
-                <FormattedMessage
-                  id='account.last_active'
-                  defaultMessage='Last active'
-                />
-              }
-            >
-              <RelativeTimestamp
-                long
-                timestamp={account.last_status_at}
-                noFuture
-              />
-            </NumberFieldsItem>
-          </NumberFields>
-        }
-      />
-      {!withoutButton && <FollowButton compact accountId={accountId} />}
-      {isOwnAccount && (
-        <Button secondary compact onClick={onRevoke}>
-          <FormattedMessage
-            id='collections.detail.revoke_inclusion'
-            defaultMessage='Remove me'
-          />
-        </Button>
-      )}
-    </div>
-  );
-};
 
 const SensitiveScreen: React.FC<{
   sensitive: boolean | undefined;
@@ -158,6 +60,7 @@ const SensitiveScreen: React.FC<{
         />
       }
       onPrimary={showAnyway}
+      className={classes.sensitiveScreen}
     >
       <FormattedMessage
         id='collections.detail.sensitive_note'
@@ -176,14 +79,37 @@ export const CollectionAccountsList: React.FC<{
   const listHeadingRef = useRef<HTMLHeadingElement>(null);
 
   const isOwnCollection = collection?.account_id === me;
-  const { items = [] } = collection ?? {};
+  const { items = [], account_id: collectionOwnerId } = collection ?? {};
+
+  const renderAccountItemButton = useCallback(
+    ({ relationship, accountId }: RenderButtonOptions) => {
+      // When viewing your own collection, only show the Follow button
+      // for accounts you're not following anymore.
+      const withoutButton =
+        !relationship ||
+        (collectionOwnerId === me &&
+          (relationship.following || relationship.requested));
+
+      if (withoutButton) return null;
+
+      if (accountId === me) {
+        return (
+          <Button secondary compact onClick={confirmRevoke}>
+            <FormattedMessage
+              id='collections.detail.revoke_inclusion'
+              defaultMessage='Remove me'
+            />
+          </Button>
+        );
+      }
+
+      return <AccountListItemFollowButton accountId={accountId} />;
+    },
+    [collectionOwnerId, confirmRevoke],
+  );
 
   return (
-    <ItemList
-      isLoading={isLoading}
-      emptyMessage={intl.formatMessage(messages.empty)}
-      className={classes.itemList}
-    >
+    <>
       <h3
         className={classes.columnSubheading}
         tabIndex={-1}
@@ -207,22 +133,26 @@ export const CollectionAccountsList: React.FC<{
           sensitive={!isOwnCollection && collection.sensitive}
           focusTargetRef={listHeadingRef}
         >
-          {items.map(({ account_id }, index) => (
-            <Article
-              key={account_id}
-              aria-posinset={index + 1}
-              aria-setsize={items.length}
-            >
-              <AccountItem
-                withBorder={index !== items.length - 1}
-                accountId={account_id}
-                collectionOwnerId={collection.account_id}
-                onRevoke={confirmRevoke}
-              />
-            </Article>
-          ))}
+          <ItemList
+            isLoading={isLoading}
+            emptyMessage={intl.formatMessage(messages.empty)}
+          >
+            {items.map(({ account_id }, index) => (
+              <Article
+                key={account_id}
+                aria-posinset={index + 1}
+                aria-setsize={items.length}
+              >
+                <AccountListItem
+                  accountId={account_id}
+                  withBorder={index !== items.length - 1}
+                  renderButton={renderAccountItemButton}
+                />
+              </Article>
+            ))}
+          </ItemList>
         </SensitiveScreen>
       )}
-    </ItemList>
+    </>
   );
 };

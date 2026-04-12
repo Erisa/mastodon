@@ -4,7 +4,7 @@ en:
     hints:
       account:
         attribution_domains: One per line. Protects from false attributions.
-        discoverable: Your public posts and profile may be featured or recommended in various areas of Mastodon and your profile may be suggested to other users.
+        discoverable: You may be featured in collections created by other users. You and your public posts may also be suggested to users in other discovery experiences throughout Mastodon.
         display_name: Your full name or your fun name.
         fields: Your homepage, pronouns, age, anything you want.
         indexable: Your public posts may appear in search results on Mastodon. People who have interacted with your posts may be able to search them regardless.
@@ -154,7 +154,7 @@ en:
         jurisdiction: List the country where whoever pays the bills lives. If it’s a company or other entity, list the country where it’s incorporated, and the city, region, territory or state as appropriate.
         min_age: Should not be below the minimum age required by the laws of your jurisdiction.
       user:
-        chosen_languages: When checked, only posts in selected languages will be displayed in public timelines
+        chosen_languages: When checked, only posts in selected languages will be displayed in public timelines. This setting does not affect your Home timeline and lists.
         date_of_birth:
           one: We have to make sure you're at least %{count} to use %{domain}. We won't store this.
           other: We have to make sure you're at least %{count} to use %{domain}. We won't store this.
@@ -177,7 +177,7 @@ en:
     labels:
       account:
         attribution_domains: Websites allowed to credit you
-        discoverable: Feature profile and posts in discovery algorithms
+        discoverable: Feature me in discovery experiences
         fields:
           name: Label
           value: Content

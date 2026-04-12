@@ -11,6 +11,7 @@ import { useAccountHandle } from '@/mastodon/components/display_name/default';
 import ListAltIcon from '@/material-icons/400-24px/list_alt.svg?react';
 import ShareIcon from '@/material-icons/400-24px/share.svg?react';
 import type { ApiCollectionJSON } from 'mastodon/api_types/collections';
+import { Badge } from 'mastodon/components/badge';
 import { Callout } from 'mastodon/components/callout';
 import { Column } from 'mastodon/components/column';
 import { ColumnHeader } from 'mastodon/components/column_header';
@@ -22,8 +23,9 @@ import { domain, me } from 'mastodon/initial_state';
 import { fetchCollection } from 'mastodon/reducers/slices/collections';
 import { useAppDispatch, useAppSelector } from 'mastodon/store';
 
+import { CollectionMenu } from '../components/collection_menu';
+
 import { CollectionAccountsList } from './accounts_list';
-import { CollectionMenu } from './collection_menu';
 import { useConfirmRevoke } from './revoke_collection_inclusion_modal';
 import classes from './styles.module.scss';
 
@@ -65,7 +67,7 @@ export const AuthorNote: React.FC<{ id: string }> = ({ id }) => {
   );
 };
 
-export const RevokeControls: React.FC<{
+const RevokeControls: React.FC<{
   collection: ApiCollectionJSON;
 }> = ({ collection }) => {
   const authorAccount = useAccount(collection.account_id);
@@ -138,7 +140,7 @@ const CollectionHeader: React.FC<{ collection: ApiCollectionJSON }> = ({
     <header className={classes.header}>
       <div className={classes.titleWithMenu}>
         <div className={classes.titleWrapper}>
-          {tag && <span className={classes.tag}>#{tag.name}</span>}
+          {tag && <Badge label={`#${tag.name}`} icon={null} />}
           <h2 className={classes.name}>{name}</h2>
           <AuthorNote id={account_id} />
         </div>
