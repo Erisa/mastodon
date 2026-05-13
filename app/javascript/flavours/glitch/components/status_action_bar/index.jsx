@@ -410,7 +410,6 @@ class StatusActionBar extends ImmutablePureComponent {
         <a href={status.get('url')} className='status__relative-time' target='_blank' rel='noopener'>
           <RelativeTimestamp
             timestamp={status.get('created_at')}
-            noFuture
           />{status.get('edited_at') && <abbr title={intl.formatMessage(messages.edited, { date: intl.formatDate(status.get('edited_at'), { year: 'numeric', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit' }) })}> *</abbr>}
         </a>
       </div>

@@ -12,6 +12,7 @@ import {
 import { useAccount } from '@/flavours/glitch/hooks/useAccount';
 import { useAccountId } from '@/flavours/glitch/hooks/useAccountId';
 import { useRelationship } from '@/flavours/glitch/hooks/useRelationship';
+import { me } from '@/flavours/glitch/initial_state';
 import { selectUserListWithoutMe } from '@/flavours/glitch/selectors/user_lists';
 import { useAppDispatch, useAppSelector } from '@/flavours/glitch/store';
 
@@ -88,6 +89,7 @@ const Followers: FC = () => {
       list={followerList}
       loadMore={loadMore}
       prependAccountId={followerId}
+      withoutFollowsYouBadge={accountId === me}
       scrollKey='followers'
     />
   );

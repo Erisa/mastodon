@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import { FormattedMessage } from 'react-intl';
 
@@ -6,30 +6,30 @@ import { useHistory } from 'react-router';
 
 import { List as ImmutableList } from 'immutable';
 
+import { fetchEndorsedAccounts } from '@/flavours/glitch/actions/accounts';
+import { AccountHeader } from '@/flavours/glitch/components/account_header';
 import { AccountListItem } from '@/flavours/glitch/components/account_list_item';
-import { useAccount } from '@/flavours/glitch/hooks/useAccount';
-import AddIcon from '@/material-icons/400-24px/add.svg?react';
-import { fetchEndorsedAccounts } from 'flavours/glitch/actions/accounts';
-import { ColumnBackButton } from 'flavours/glitch/components/column_back_button';
-import { LoadingIndicator } from 'flavours/glitch/components/loading_indicator';
-import { RemoteHint } from 'flavours/glitch/components/remote_hint';
+import { ColumnBackButton } from '@/flavours/glitch/components/column_back_button';
+import { LoadingIndicator } from '@/flavours/glitch/components/loading_indicator';
+import { RemoteHint } from '@/flavours/glitch/components/remote_hint';
 import {
   Article,
   ItemList,
   Scrollable,
-} from 'flavours/glitch/components/scrollable_list/components';
-import { AccountHeader } from 'flavours/glitch/features/account_timeline/components/account_header';
-import BundleColumnError from 'flavours/glitch/features/ui/components/bundle_column_error';
-import Column from 'flavours/glitch/features/ui/components/column';
-import { useAccountId } from 'flavours/glitch/hooks/useAccountId';
-import { useAccountVisibility } from 'flavours/glitch/hooks/useAccountVisibility';
-import {
-  fetchAccountCollections,
-  selectAccountCollections,
-} from 'flavours/glitch/reducers/slices/collections';
-import { useAppDispatch, useAppSelector } from 'flavours/glitch/store';
+} from '@/flavours/glitch/components/scrollable_list/components';
+import type { TruncatedListItemInfo } from '@/flavours/glitch/components/truncated_list';
+import { TruncatedListItems } from '@/flavours/glitch/components/truncated_list';
+import BundleColumnError from '@/flavours/glitch/features/ui/components/bundle_column_error';
+import Column from '@/flavours/glitch/features/ui/components/column';
+import { useAccount } from '@/flavours/glitch/hooks/useAccount';
+import { useAccountId } from '@/flavours/glitch/hooks/useAccountId';
+import { useAccountVisibility } from '@/flavours/glitch/hooks/useAccountVisibility';
+import { me } from '@/flavours/glitch/initial_state';
+import { useAppDispatch, useAppSelector } from '@/flavours/glitch/store';
+import AddIcon from '@/material-icons/400-24px/add.svg?react';
 
 import { CollectionListItem } from '../collections/components/collection_list_item';
+import { useCollectionsCreatedBy } from '../collections/overview/created_by_you';
 import { areCollectionsEnabled } from '../collections/utils';
 
 import { EmptyMessage } from './components/empty_message';
@@ -57,10 +57,6 @@ const AccountFeatured: React.FC<{ multiColumn: boolean }> = ({
   useEffect(() => {
     if (accountId) {
       void dispatch(fetchEndorsedAccounts({ accountId }));
-
-      if (collectionsEnabled) {
-        void dispatch(fetchAccountCollections({ accountId }));
-      }
     }
   }, [accountId, dispatch]);
 
@@ -71,14 +67,34 @@ const AccountFeatured: React.FC<{ multiColumn: boolean }> = ({
         ImmutableList(),
       ) as ImmutableList<string>,
   );
-  const { collections, status: collectionsLoadStatus } = useAppSelector(
-    (state) => selectAccountCollections(state, accountId ?? null),
+  const { collections, status: collectionsLoadStatus } =
+    useCollectionsCreatedBy(accountId);
+
+  const { listedCollections = [], unlistedCollections = [] } = Object.groupBy(
+    collections,
+    (item) =>
+      item.discoverable && !!item.item_count
+        ? 'listedCollections'
+        : 'unlistedCollections',
   );
-  const listedCollections = collections.filter(
-    // Hide unlisted and empty collections to avoid confusion
-    // (Unlisted collections will only be part of the payload
-    // when viewing your own profile.)
-    (item) => item.discoverable && !!item.item_count,
+
+  const renderListItem = useCallback(
+    ({
+      item,
+      index,
+      totalListLength,
+      isLastElement,
+    }: TruncatedListItemInfo<(typeof listedCollections)[number]>) => (
+      <CollectionListItem
+        key={item.id}
+        collection={item}
+        withoutBorder={isLastElement}
+        withAuthorHandle={false}
+        positionInList={index}
+        listSize={totalListLength}
+      />
+    ),
+    [],
   );
 
   const hasCollections =
@@ -88,7 +104,8 @@ const AccountFeatured: React.FC<{ multiColumn: boolean }> = ({
 
   const hasFeaturedAccounts = !featuredAccountIds.isEmpty();
 
-  const isLoading = !accountId || collectionsLoadStatus !== 'idle';
+  const isLoading =
+    !accountId || (collectionsEnabled && collectionsLoadStatus !== 'idle');
 
   if (accountId === null) {
     return <BundleColumnError multiColumn={multiColumn} errorType='routing' />;
@@ -157,25 +174,37 @@ const AccountFeatured: React.FC<{ multiColumn: boolean }> = ({
                   defaultMessage='Collections'
                 />
               </h2>
-              <SubheadingLink to='/collections/new' icon={AddIcon}>
-                <FormattedMessage
-                  id='account.featured.new_collection'
-                  defaultMessage='New collection'
-                />
-              </SubheadingLink>
+              {accountId === me && (
+                <SubheadingLink to='/collections/new' icon={AddIcon}>
+                  <FormattedMessage
+                    id='account.featured.new_collection'
+                    defaultMessage='New collection'
+                  />
+                </SubheadingLink>
+              )}
             </Subheading>
             {hasCollections ? (
               <ItemList>
-                {listedCollections.map((item, index) => (
-                  <CollectionListItem
-                    key={item.id}
-                    collection={item}
-                    withoutBorder={index === listedCollections.length - 1}
-                    withAuthorHandle={false}
-                    positionInList={index + 1}
-                    listSize={listedCollections.length}
-                  />
-                ))}
+                <TruncatedListItems
+                  visibleItems={listedCollections}
+                  truncatedItems={unlistedCollections}
+                  toggleButton={{
+                    title: (
+                      <FormattedMessage
+                        id='collections.unlisted_collections_with_count'
+                        defaultMessage='Unlisted collections ({count})'
+                        values={{ count: unlistedCollections.length }}
+                      />
+                    ),
+                    subtitle: (
+                      <FormattedMessage
+                        id='collections.unlisted_collections_description'
+                        defaultMessage='These don’t appear on your profile to others. Anyone with the link can discover them.'
+                      />
+                    ),
+                  }}
+                  renderListItem={renderListItem}
+                />
               </ItemList>
             ) : (
               <EmptyMessage
