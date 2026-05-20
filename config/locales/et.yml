@@ -345,12 +345,19 @@ et:
       updated_msg: Teadaande uuendamine õnnestus!
     collections:
       accounts: Kontod
+      back_to_account: Tagasi konto lehele
+      back_to_report: Tagasi raporti lehele
+      batch:
+        add_to_report: 'Lisa raportile #%{id}'
+        report: Raport
       collection_title: Kasutaja %{name} kogumikud
       contents: Sisu
+      no_collection_selected: Ühtegi kogumikku ei muudetud, sest ühtegi polnud valitud
       number_of_accounts:
         one: 1 konto
         other: "%{count} kontot"
       open: Ava
+      title: Konto kogumikud - @%{name}
       view_publicly: Nähtav avalikult
     critical_update_pending: Kriitiline turvauuendus ootel
     custom_emojis:
@@ -484,8 +491,10 @@ et:
         title: Blokeeri uus e-posti domeen
       no_email_domain_block_selected: Ühtegi e-posti domeeni blokeeringut ei muudetud, kuna ühtegi ei valitud
       not_permitted: Ei ole lubatud
+      reset: Lähtesta
       resolved_dns_records_hint_html: Domeeninimi lahendatakse järgmistele MX-domeenidele, mis on lõppkokkuvõttes vastutavad e-kirjade vastuvõtmise eest. MX-domeeni blokeerimine blokeerib registreerimise mis tahes e-posti aadressilt, mis kasutab sama MX-domeeni, isegi kui nähtav domeeninimi on erinev. <strong>Ole ettevaatlik, et mitte blokeerida peamisi e-posti teenusepakkujaid.</strong>
       resolved_through_html: Lahendatud %{domain} kaudu
+      search: Otsi
       title: Blokeeritud e-posti domeenid
     email_subscriptions:
       accounts:

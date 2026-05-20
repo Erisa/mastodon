@@ -35,6 +35,8 @@ node_modules/
 # Ignore IDE files
 .vscode/
 .idea/
+.zed/
+.gram/
 
 # Ignore postgres + redis + elasticsearch volume optionally created by docker-compose
 /postgres

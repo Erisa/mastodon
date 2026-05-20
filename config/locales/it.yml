@@ -85,7 +85,7 @@ it:
       invite_request_text: Motivi d'iscrizione
       invited_by: Invitato da
       ip: IP
-      joined: Iscritto il
+      joined: Account iscritto il
       location:
         all: Tutto
         local: Locale
@@ -345,12 +345,19 @@ it:
       updated_msg: Annuncio aggiornato!
     collections:
       accounts: Account
+      back_to_account: Torna alla pagina dell'account
+      back_to_report: Torna alla pagina di segnalazione
+      batch:
+        add_to_report: 'Aggiungi alla segnalazione #%{id}'
+        report: Segnala
       collection_title: Collezione di %{name}
       contents: Contenuti
+      no_collection_selected: Nessuna collezione è stata cambiata in quanto nessuna è stata selezionata
       number_of_accounts:
         one: 1 account
         other: "%{count} account"
       open: Apri
+      title: Collezioni dell'account - @%{name}
       view_publicly: Visualizza pubblicamente
     critical_update_pending: Aggiornamento critico in sospeso
     custom_emojis:
@@ -484,6 +491,7 @@ it:
         title: Blocca nuovo dominio e-mail
       no_email_domain_block_selected: Nessun blocco di dominio e-mail è stato modificato poiché nessuno è stato selezionato
       not_permitted: Non consentito
+      reset: Reset
       resolved_dns_records_hint_html: Il nome di dominio si risolve nei seguenti domini MX, che sono in ultima analisi responsabili dell'accettazione delle e-mail. Il blocco di un dominio MX bloccherà le registrazioni da qualsiasi indirizzo e-mail che utilizzi lo stesso dominio MX, anche se il nome di dominio visibile è diverso. <strong>Fai attenzione a non bloccare i principali provider di posta elettronica.</strong>
       resolved_through_html: Risolto attraverso %{domain}
       search: Cerca
@@ -746,7 +754,7 @@ it:
       actions_description_html: Decidi quale azione intraprendere per risolvere questa segnalazione. Se intraprendi un'azione punitiva nei confronti dell'account segnalato, gli verrà inviata una notifica via e-mail, tranne quando è selezionata la categoria <strong>Spam</strong>.
       actions_description_remote_html: Decide quali azioni intraprendere per risolvere la relazione. Questo influenzerà solo come <strong>il tuo</strong> server comunica con questo account remoto e ne gestisce il contenuto.
       actions_no_posts: Questa segnalazione non ha alcun post associato da eliminare
-      add_to_report: Aggiungi altro al report
+      add_to_report: Aggiungi altro alla segnalazione
       already_suspended_badges:
         local: Già sospeso su questo server
         remote: Già sospeso sul loro server
@@ -986,7 +994,7 @@ it:
       account: Autore
       application: Applicazione
       back_to_account: Torna alla pagina dell'account
-      back_to_report: Torna alla pagina del report
+      back_to_report: Torna alla pagina di segnalazione
       batch:
         add_to_report: 'Aggiungi alla segnalazione #%{id}'
         remove_from_report: Rimuovi dal report
@@ -1289,7 +1297,7 @@ it:
   appearance:
     advanced_settings: Impostazioni avanzate
     animations_and_accessibility: Animazioni e accessibilità
-    boosting_preferences: Preferenze di potenziamento
+    boosting_preferences: Preferenze di condivisione
     boosting_preferences_info_html: "<strong>Suggerimento:</strong> Indipendentemente dalle impostazioni, <kbd>Maiusc</kbd> + <kbd>Fare clic su</kbd> sull'icona Boost %{icon} aumenterà immediatamente."
     discovery: Scoperta
     localization:
@@ -1450,7 +1458,7 @@ it:
       email_contact_html: Se ancora non arriva, puoi inviare un'e-mail a <a href="mailto:%{email}">%{email}</a> per assistenza
       email_reconfirmation_html: Se non ricevi l'e-mail di conferma, puoi <a href="%{path}">richiederla nuovamente</a>
       irreversible: Non potrai ripristinare o riattivare il tuo account
-      more_details_html: Per maggiori dettagli, vedi la <a href="%{terms_path}">politica di privacy</a>.
+      more_details_html: Per maggiori dettagli, vedi l'<a href="%{terms_path}">informativa sulla privacy</a>.
       username_available: Il tuo nome utente sarà nuovamente disponibile
       username_unavailable: Il tuo nome utente rimarrà non disponibile
   disputes:
@@ -1921,7 +1929,7 @@ it:
     search_hint_html: Controlla come vuoi essere trovato. Vuoi che le persone ti trovino in base a ciò che hai postato pubblicamente? Vuoi che le persone al di fuori di Mastodon trovino il tuo profilo durante la ricerca sul web? Si prega di notare che l'esclusione totale da tutti i motori di ricerca non può essere garantita per le informazioni pubbliche.
     title: Privacy e copertura
   privacy_policy:
-    title: Politica sulla privacy
+    title: Informativa sulla privacy
   reactions:
     errors:
       limit_reached: Raggiunto il limite di reazioni diverse

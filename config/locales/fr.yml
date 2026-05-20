@@ -345,12 +345,19 @@ fr:
       updated_msg: L’annonce a été mise à jour avec succès !
     collections:
       accounts: Comptes
+      back_to_account: Retour à la page du compte
+      back_to_report: Retour à la page du signalement
+      batch:
+        add_to_report: 'Ajouter au signalement #%{id}'
+        report: Signaler
       collection_title: Collection par %{name}
       contents: Contenu
+      no_collection_selected: Aucune collection n'a était changé car qu'aucune n'a était sélectionnée
       number_of_accounts:
         one: 1 compte
         other: "%{count} comptes"
       open: Ouvrir
+      title: Collections du compte - @%{name}
       view_publicly: Afficher publiquement
     critical_update_pending: Mise à jour critique en attente
     custom_emojis:
@@ -484,8 +491,10 @@ fr:
         title: Blocage d'un nouveau domaine de messagerie électronique
       no_email_domain_block_selected: Aucun blocage de domaine de messagerie n'a été modifié comme aucun n'a été sélectionné
       not_permitted: Non autorisé
+      reset: Réinitialiser
       resolved_dns_records_hint_html: Le nom de domaine est lié aux domaines MX suivants, qui sont responsables de la réception des courriels. Le blocage d'un domaine MX empêchera l'inscription de toute adresse de courriel utilisant le même domaine MX, et ce même si le nom de domaine visible est différent. <strong>Veillez à ne pas bloquer les principaux fournisseurs de services de messagerie.</strong>
       resolved_through_html: Résolu par %{domain}
+      search: Rechercher
       title: Domaines de messagerie électronique bloqués
     email_subscriptions:
       accounts:
