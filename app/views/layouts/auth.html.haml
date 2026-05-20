@@ -3,14 +3,14 @@
 
 - content_for :content do
   .container-alt
-    %header.logo-container
+    .logo-container
       - if within_authorization_flow?
         = logo_as_symbol(:wordmark)
       - else
         = link_to root_path do
           = logo_as_symbol(:wordmark)
 
-    %main.form-container
+    .form-container
       = render 'flashes'
 
       = yield

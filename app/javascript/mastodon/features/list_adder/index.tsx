@@ -1,10 +1,9 @@
-import { useEffect, useState, useCallback, useId } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 
 import { FormattedMessage, useIntl, defineMessages } from 'react-intl';
 
 import { isFulfilled } from '@reduxjs/toolkit';
 
-import { Toggle } from '@/mastodon/components/form_fields';
 import CloseIcon from '@/material-icons/400-24px/close.svg?react';
 import ListAltIcon from '@/material-icons/400-24px/list_alt.svg?react';
 import { fetchLists } from 'mastodon/actions/lists';
@@ -16,6 +15,7 @@ import {
 } from 'mastodon/api/lists';
 import type { ApiListJSON } from 'mastodon/api_types/lists';
 import { Button } from 'mastodon/components/button';
+import { CheckBox } from 'mastodon/components/check_box';
 import { Icon } from 'mastodon/components/icon';
 import { IconButton } from 'mastodon/components/icon_button';
 import { getOrderedLists } from 'mastodon/selectors/lists';
@@ -42,8 +42,6 @@ const ListItem: React.FC<{
   checked: boolean;
   onChange: (id: string, checked: boolean) => void;
 }> = ({ id, title, checked, onChange }) => {
-  const uniqueId = useId();
-
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       onChange(id, e.target.checked);
@@ -52,13 +50,14 @@ const ListItem: React.FC<{
   );
 
   return (
-    <label className='lists__item' htmlFor={uniqueId}>
+    // eslint-disable-next-line jsx-a11y/label-has-associated-control
+    <label className='lists__item'>
       <div className='lists__item__title'>
         <Icon id='list-ul' icon={ListAltIcon} />
         <span>{title}</span>
       </div>
 
-      <Toggle id={uniqueId} checked={checked} onChange={handleChange} />
+      <CheckBox value={id} checked={checked} onChange={handleChange} />
     </label>
   );
 };

@@ -13,10 +13,11 @@ RSpec.describe 'Custom CSS' do
         expect(response)
           .to have_http_status(200)
           .and have_cacheable_headers
-        expect(response.media_type)
-          .to eq('text/css')
-        expect(response.body)
-          .to be_blank
+          .and have_attributes(
+            content_type: match('text/css')
+          )
+        expect(response.body.presence)
+          .to be_nil
       end
     end
 
@@ -31,8 +32,9 @@ RSpec.describe 'Custom CSS' do
         expect(response)
           .to have_http_status(200)
           .and have_cacheable_headers
-        expect(response.media_type)
-          .to eq('text/css')
+          .and have_attributes(
+            content_type: match('text/css')
+          )
         expect(response.body.strip)
           .to eq(expected_css)
       end

@@ -25,7 +25,6 @@ export function usePinnedStatusIds({
     tagged,
     pinned: true,
     replies: true,
-    boosts: true,
   });
 
   const dispatch = useAppDispatch();

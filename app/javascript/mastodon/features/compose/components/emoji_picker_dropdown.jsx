@@ -228,7 +228,7 @@ class EmojiPickerMenuImpl extends PureComponent {
 
   handleClick = (emoji, event) => {
     if (!emoji.native) {
-      emoji.native = `:${emoji.id}:`;
+      emoji.native = emoji.colons;
     }
     if (!(event.ctrlKey || event.metaKey)) {
 

@@ -290,7 +290,7 @@ class Request
 
         addresses = []
         begin
-          addresses = [IPAddr.new(host).to_s]
+          addresses = [IPAddr.new(host)]
         rescue IPAddr::InvalidAddressError
           resolvers = [Resolv::Hosts.new, Resolv::DNS.new.tap { |dns| dns.timeouts = 5 }]
           addresses = Resolv.new(resolvers).getaddresses(host)
