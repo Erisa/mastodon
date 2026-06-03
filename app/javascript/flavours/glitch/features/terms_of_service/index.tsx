@@ -14,7 +14,7 @@ import { Helmet } from '@unhead/react/helmet';
 import { apiGetTermsOfService } from 'flavours/glitch/api/instance';
 import type { ApiTermsOfServiceJSON } from 'flavours/glitch/api_types/instance';
 import { Column } from 'flavours/glitch/components/column';
-import BundleColumnError from 'flavours/glitch/features/ui/components/bundle_column_error';
+import { BundleColumnError } from 'flavours/glitch/features/ui/components/bundle_column_error';
 
 const messages = defineMessages({
   title: { id: 'terms_of_service.title', defaultMessage: 'Terms of Service' },

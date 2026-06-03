@@ -31,7 +31,8 @@ export function stringHasUnicodeFlags(input: string): boolean {
 }
 
 // Constant as this is supported by all browsers.
-const CUSTOM_EMOJI_REGEX = /:([a-z0-9_@\\.]+):/i;
+// eslint-disable-next-line no-useless-escape -- this escape is, in fact, necessary
+const CUSTOM_EMOJI_REGEX = /:([a-z0-9_\-]+)((@[a-z0-9\-.]+)|):/i;
 // Use the polyfill regex or the Unicode property escapes if supported.
 const EMOJI_REGEX = emojiRegexPolyfill?.source ?? '\\p{RGI_Emoji}';
 

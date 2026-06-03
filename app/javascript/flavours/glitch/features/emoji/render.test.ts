@@ -71,8 +71,8 @@ describe('tokenizeText', () => {
   });
 
   test('does not capture custom emoji with invalid characters', () => {
-    expect(tokenizeText('Hello :smile-123:!!')).toEqual([
-      'Hello :smile-123:!!',
+    expect(tokenizeText('Hello :smile=123:!!')).toEqual([
+      'Hello :smile=123:!!',
     ]);
   });
 });

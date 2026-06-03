@@ -656,7 +656,7 @@ class Status extends ImmutablePureComponent {
         status.get('tagged_collections')
       ).find((item) => compareUrls(item.get('url'), cardUrl));
       if (taggedCollection) {
-        media.push(<CollectionPreviewCard collection={taggedCollection.toJS()} />);
+        media.push(<CollectionPreviewCard collection={taggedCollection.toJS()} headingLevel='h2' />);
       } else {
         media.push(
           <Card
@@ -671,7 +671,7 @@ class Status extends ImmutablePureComponent {
       const firstLinkedCollection = status.get('tagged_collections').first();
       if (firstLinkedCollection) {
         media = (
-          <CollectionPreviewCard collection={firstLinkedCollection.toJS()} />
+          <CollectionPreviewCard collection={firstLinkedCollection.toJS()} headingLevel='h2' />
         );
       }
     }
@@ -720,13 +720,14 @@ class Status extends ImmutablePureComponent {
           account={account}
           avatarSize={avatarSize}
           onHeaderClick={this.handleHeaderClick}
-        >
-          <StatusIcons
-            status={status}
-            mediaIcons={mediaIcons}
-            settings={settings.get('status_icons')}
-          />
-        </StatusHeader>
+          contentBeforeDate={
+            <StatusIcons
+              status={status}
+              mediaIcons={mediaIcons}
+              settings={settings.get('status_icons')}
+            />
+          }
+        />
       );
 
     return (

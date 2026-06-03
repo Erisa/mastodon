@@ -26,7 +26,6 @@ import {
   userCollectionLimit,
 } from '../editor';
 import classes from '../styles.module.scss';
-import { areCollectionsEnabled } from '../utils';
 
 const CreateButton: React.FC = () => (
   <Link to='/collections/new' className='button button--compact'>
@@ -52,7 +51,7 @@ export function useCollectionsCreatedBy(accountId: string | null | undefined) {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (accountId && areCollectionsEnabled()) {
+    if (accountId) {
       void dispatch(fetchCollectionsCreatedByAccount({ accountId }));
     }
   }, [dispatch, accountId]);

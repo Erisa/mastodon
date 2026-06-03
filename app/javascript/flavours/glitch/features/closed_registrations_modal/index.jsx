@@ -7,7 +7,7 @@ import { fetchServer } from 'flavours/glitch/actions/server';
 import { domain } from 'flavours/glitch/initial_state';
 
 const mapStateToProps = state => ({
-  message: state.getIn(['server', 'server', 'registrations', 'message']),
+  message: state.getIn(['server', 'server', 'item', 'registrations', 'message']),
 });
 
 class ClosedRegistrationsModal extends ImmutablePureComponent {

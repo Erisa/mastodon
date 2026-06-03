@@ -12,6 +12,8 @@ import classNames from 'classnames';
 import type { List, Record } from 'immutable';
 
 import { useAppSelector } from '@/flavours/glitch/store';
+import { Footer } from 'flavours/glitch/features/custom_homepage/components/footer';
+import { Header } from 'flavours/glitch/features/custom_homepage/components/header';
 import { CollapsibleNavigationPanel } from 'flavours/glitch/features/navigation_panel';
 
 import { useBreakpoint } from '../hooks/useBreakpoint';
@@ -32,7 +34,7 @@ import {
 import { useColumnsContext } from '../util/columns_context';
 
 import Bundle from './bundle';
-import BundleColumnError from './bundle_column_error';
+import { BundleColumnError } from './bundle_column_error';
 import { ColumnLoading } from './column_loading';
 import { ComposePanel, RedirectToMobileComposeIfNeeded } from './compose_panel';
 import DrawerLoading from './drawer_loading';
@@ -87,9 +89,10 @@ export const ColumnsArea = forwardRef<
   HTMLDivElement,
   {
     singleColumn?: boolean;
+    minimalShell?: boolean;
     children: React.ReactElement | React.ReactElement[];
   }
->(({ children, singleColumn }, ref) => {
+>(({ children, minimalShell, singleColumn }, ref) => {
   const renderComposePanel = !useBreakpoint('full');
   const columns = useAppSelector((state) =>
     (state.settings as Record<{ columns: List<Record<Column>> }>).get(
@@ -99,6 +102,24 @@ export const ColumnsArea = forwardRef<
   const isModalOpen = useAppSelector(
     (state) => !state.modal.get('stack').isEmpty(),
   );
+
+  if (minimalShell) {
+    return (
+      <div className='columns-area__panels'>
+        <div className='columns-area__panels__main'>
+          <Header />
+
+          <div className='tabs-bar__wrapper'>
+            <TabsBarPortal />
+          </div>
+
+          <div className='columns-area columns-area--mobile'>{children}</div>
+
+          <Footer />
+        </div>
+      </div>
+    );
+  }
 
   if (singleColumn) {
     return (
@@ -110,12 +131,13 @@ export const ColumnsArea = forwardRef<
           </div>
         </div>
 
-        <div className='columns-area__panels__main'>
+        <main className='columns-area__panels__main'>
           <div className='tabs-bar__wrapper'>
             <TabsBarPortal />
           </div>
+
           <div className='columns-area columns-area--mobile'>{children}</div>
-        </div>
+        </main>
 
         <CollapsibleNavigationPanel />
       </div>
@@ -123,7 +145,7 @@ export const ColumnsArea = forwardRef<
   }
 
   return (
-    <div
+    <main
       className={classNames('columns-area', { unscrollable: isModalOpen })}
       ref={ref}
       tabIndex={isModalOpen ? undefined : 0}
@@ -162,7 +184,7 @@ export const ColumnsArea = forwardRef<
           cloneElement(child, { multiColumn: true }),
         )}
       </ColumnIndexContext.Provider>
-    </div>
+    </main>
   );
 });
 
