@@ -88,6 +88,10 @@ class NotifyService < BaseService
         WHERE ancestors.mention_id IS NOT NULL AND s.account_id = :recipient_id AND s.visibility = 3
       SQL
     end
+
+    def from_bot?
+      @sender.bot?
+    end
   end
 
   class DropCondition < BaseCondition
@@ -111,7 +115,8 @@ class NotifyService < BaseService
         blocked_by_not_following_policy? ||
         blocked_by_not_followers_policy? ||
         blocked_by_new_accounts_policy? ||
-        blocked_by_private_mentions_policy?
+        blocked_by_private_mentions_policy? ||
+        blocked_by_bots_policy?
     end
 
     private
@@ -159,6 +164,10 @@ class NotifyService < BaseService
     def blocked_by_limited_accounts_policy?
       @policy.drop_limited_accounts? && (@options[:silenced] || @sender.silenced?) && not_following?
     end
+
+    def blocked_by_bots_policy?
+      @policy.drop_bots? && from_bot? && not_following?
+    end
   end
 
   class FilterCondition < BaseCondition
@@ -170,7 +179,8 @@ class NotifyService < BaseService
         filtered_by_not_following_policy? ||
         filtered_by_not_followers_policy? ||
         filtered_by_new_accounts_policy? ||
-        filtered_by_private_mentions_policy?
+        filtered_by_private_mentions_policy? ||
+        filtered_by_bots_policy?
     end
 
     private
@@ -193,6 +203,10 @@ class NotifyService < BaseService
 
     def filtered_by_limited_accounts_policy?
       @policy.filter_limited_accounts? && (@options[:silenced] || @sender.silenced?) && not_following?
+    end
+
+    def filtered_by_bots_policy?
+      @policy.filter_bots? && from_bot? && not_following?
     end
   end
 

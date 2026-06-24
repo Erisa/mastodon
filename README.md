@@ -11,16 +11,17 @@ Here are some of the changes compared to glitch-soc:
 - Configurable media attachment limits
 - Additional moderation tools for admins
 - Command-line interface for managing username blocks
-- Polls can be posted alongside media (glitch-soc/mastodon#2524)
 - Polls can have only one option
 - Allows configuring status trend half-life time
 - Allows dashes in custom emote names
 - Emojis can be put side-by-side
 - Minor media attachment tweaks
 
-Changes previously in Chuckya that made their way into vanilla Mastodon:
+Changes previously in Chuckya that are now in vanilla Mastodon:
 
 - Unicode emojis use [`jdecked/twemoji`](https://github.com/jdecked/twemoji) v15 graphics (mastodon/mastodon#28404)
+- Polls can be posted alongside media
+- Avatar/header alt text
 
 Setup instructions are the same as [glitch-soc's](https://glitch-soc.github.io/docs); just replace the glitch-soc repo URL with `https://github.com/TheEssem/mastodon`.
 

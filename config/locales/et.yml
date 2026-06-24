@@ -500,13 +500,21 @@ et:
     email_subscriptions:
       accounts:
         account: Konto
-        active: Aktiivne
         empty:
           hint: Ühelgi kontol pole veel tellijaid.
           no_lists_yet: Veel pole loetelusid
-        inactive: Mitteaktiivne
         last_email: Viimane e-post
         lead: Allpool kuvatakse kontod, kus see funktsioon on aktiveeritud ja millel on tellijaid.
+        show:
+          date: Liitumise kuupäev
+          disable_feature: Lülita funktsionaalsus välja
+          disabled: See funktsionaalsus on lülitatud välja ja e-kirju enam seda loendisse ei saadeta.
+          email: E-posti aadress
+          empty:
+            hint: Mitte keegi pole seda kontot veel tellinud.
+            no_subscribers_yet: Tellijaid veel pole
+          enable_feature: Lülita funktsionaalsus sisse
+          view_account: Vaata kasutajakontot
         status: Olek
         subscribers: Tellijad
         title: Meililistid
@@ -664,7 +672,7 @@ et:
         stop: Peata edastus
         unavailable: Pole saadaval
       delivery_available: Üleandmine on saadaval
-      delivery_error_days: Edastustõrgete päevad
+      delivery_error_days: Päevad, millal tekkis edastusvigu
       delivery_error_hint: Kui edastus pole võimalik %{count} päeva, märgitakse automaatselt edastamatuks.
       destroyed_msg: Domeeni %{domain} andmed on märgitud lõplikuks kustutamiseks.
       empty: Domeene ei leidu.
@@ -716,6 +724,8 @@ et:
       new:
         title: Uue IP-reegli lisamine
       no_ip_block_selected: Ühtegi IP-reeglit ei muudetud, kuna midagi polnud valitud
+      reset: Lähtesta
+      search: Otsi
       title: IP-reeglid
     relationships:
       title: "%{acct}-i suhted"
@@ -746,6 +756,7 @@ et:
       action_log: Auditilogi
       action_taken_by: Meetmeid kasutanud
       actions:
+        delete_description_html: Teatatud postitused ja/või kogumikud kustutatakse ning registreeritakse hoiatus, mis aitab sul sama konto tulevaste rikkumiste korral asja edasi suunata.
         mark_as_sensitive_description_html: Raporteeritud meedia märgitakse kui tundlik sisu ja juhtum talletatakse hoiatusena tulevaste eksimuste ärahoidmiseks.
         other_description_html: On rohkem valikuid konto käitumise juhtimiseks ja suhtluse kohandamiseks raporteeritud kontoga.
         resolve_description_html: Raporteeritud konto suhtes ei võeta midagi ette, juhtumit ei registreerita ja raport suletakse.
@@ -772,6 +783,7 @@ et:
       confirm: Kinnita
       confirm_action: Kinnita @%{acct} modereering
       created_at: Teavitatud
+      delete_and_resolve: Kustuta sisu
       forwarded: Edastatud
       forwarded_replies_explanation: See aruanne pärineb kaugkasutajalt ja käsitleb kaugsisu. See on edastatud sulle, sest raporteeritud sisu on vastus ühele sinu kasutajale.
       forwarded_to: Edastatud %{domain} domeeni
@@ -1531,7 +1543,9 @@ et:
         success_html: Nüüdsest hakkad saama e-kirju, kui %{name} avaldab uusi postitusi. Lisa %{sender} oma kontaktide hulka, et need postitused ei satuks rämpsposti kausta.
         title: Oled registreeritud
         unsubscribe: Lõpeta tellimus
+    disabled: Väljalülitatud
     inactive: Mitteaktiivne
+    no_access: Ligipääs puudub
     status: Olek
     subscribers: Tellijad
   emoji_styles:
@@ -1567,7 +1581,9 @@ et:
     blocks: Sa blokeerid
     bookmarks: Järjehoidjad
     csv: CSV
+    custom_filters: Filtrid
     domain_blocks: Domeeni blokeeringud
+    json: JSON
     lists: Loetelud
     mutes: Oled summutanud
     storage: Meedia hoidla
@@ -1644,7 +1660,8 @@ et:
     errors:
       empty: Tühi CSV-fail
       incompatible_type: Ei sobi kokku valitud importimistüübiga
-      invalid_csv_file: 'Vigane CSV-fail. Tõrge: %{error}'
+      invalid_csv_file: 'Vigane CSV-fail. Veateade: %{error}'
+      invalid_json_file: 'Vigane JSON-fail. Viga: %{error}'
       over_rows_processing_limit: sisaldab rohkem, kui %{count} rida
       too_large: Fail on liiga suur
     failures: Ebaõnnestumised
@@ -1681,6 +1698,9 @@ et:
       bookmarks_html:
         one: Oled lisamas kuni <strong>%{count} postituse</strong> failist <strong>%{filename}</strong> oma <strong>järjehoidjatesse</strong>.
         other: Oled lisamas kuni <strong>%{count} postitust</strong> failist <strong>%{filename}</strong> oma <strong>järjehoidjatesse</strong>.
+      custom_filters_html:
+        one: Sa oled <strong>%{filename}</strong> failist lisamas oma <strong>filtrite hulka</strong> <strong>%{count} filtri</strong>.
+        other: Sa oled <strong>%{filename}</strong> failist lisamas oma <strong>filtrite hulka</strong> <strong>%{count} filtrit</strong>.
       domain_blocking_html:
         one: Oled <strong>blokeerimas</strong> kuni <strong>%{count} domeeni</strong> failist <strong>%{filename}</strong>.
         other: Oled <strong>blokeerimas</strong> kuni <strong>%{count} domeeni</strong> failist <strong>%{filename}</strong>.
@@ -1717,6 +1737,7 @@ et:
     types:
       blocking: Blokeeringute nimekiri
       bookmarks: Järjehoidjad
+      custom_filters: Filtrid
       domain_blocking: Domeeniblokeeringute nimekiri
       following: Jälgimiste nimekiri
       lists: Loetelud
@@ -2346,13 +2367,13 @@ et:
   webauthn_credentials:
     add: Uue turvavõtme lisamine
     create:
-      error: Turvavõtme lisamisel tekkis tõrge. Proovi palun uuesti.
+      error: Turvavõtme lisamisel tekkis viga või probleem. Proovi palun uuesti.
       success: Turvavõti edukalt lisatud.
     delete: Kustuta
     delete_confirmation: Kindel, et kustutada see turvavõti?
     description_html: Lubades <strong>turvavõtmega autentimise</strong> on sisenemisel tarvis ühte turvavõtmetest.
     destroy:
-      error: Turvavõtme kustutamisel tekkis tõrge. Palun proovi uuesti.
+      error: Turvavõtme kustutamisel tekkis viga või probleem. Palun proovi uuesti.
       success: Turvavõtmed edukalt kustutatud.
     invalid_credential: Vigane turvavõti
     nickname: Hüüdnimi

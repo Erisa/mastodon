@@ -620,6 +620,7 @@ body > [data-popper-placement] {
     display: block;
     box-sizing: border-box;
     width: 100%;
+    max-height: 300px;
     margin: 0;
     color: var(--color-text-primary);
     background: transparent;
@@ -1652,6 +1653,10 @@ body > [data-popper-placement] {
     top: 0;
     inset-inline-start: 14px + ((46px - 2px) * 0.5);
 
+    .status__wrapper:has(> .status__prepend) &:not(&--full, &--first) {
+      height: 50px;
+    }
+
     &--full {
       top: 0;
       height: 100%;
@@ -1807,6 +1812,12 @@ body > [data-popper-placement] {
   line-height: 22px;
   font-weight: 500;
   color: var(--color-text-secondary);
+
+  .status__wrapper-reply.status__wrapper--in-thread & {
+    --thread-margin: calc(46px + 8px);
+
+    margin-inline-start: var(--thread-margin);
+  }
 
   &__icon {
     display: flex;
@@ -2578,7 +2589,7 @@ a.account__display-name {
   overflow: hidden;
 
   strong,
-  span {
+  span:not(.emojione) {
     display: block;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -3097,7 +3108,6 @@ a.account__display-name {
 
     &__pane {
       height: 100%;
-      overflow: hidden;
       display: flex;
       justify-content: flex-end;
       min-width: 285px;
@@ -3670,6 +3680,8 @@ a.account__display-name {
   text-align: center;
   padding-bottom: 32px;
 
+  h1,
+  h2,
   h3 {
     font-size: 24px;
     line-height: 1.5;
@@ -3965,6 +3977,7 @@ a.account__display-name {
 }
 
 .scrollable {
+  container: column / inline-size;
   overflow-y: scroll;
   overflow-x: hidden;
   flex: 1 1 auto;
@@ -4669,6 +4682,7 @@ a.status-card {
 }
 
 .column-header__wrapper {
+  container: column / inline-size;
   position: relative;
   flex: 0 0 auto;
   z-index: 1;
@@ -4741,10 +4755,17 @@ a.status-card {
   z-index: 2;
   outline: 0;
 
+  &__title-wrapper {
+    display: flex;
+    flex-grow: 1;
+    min-width: 0;
+  }
+
   &__title {
     display: flex;
     align-items: center;
     gap: 5px;
+    flex-grow: 1;
     margin: 0;
     border: 0;
     padding: 13px;
@@ -4753,10 +4774,11 @@ a.status-card {
     background: transparent;
     font: inherit;
     text-align: start;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    flex: 1;
+    min-width: 0;
+
+    &--with-back-button {
+      padding-inline-start: 0;
+    }
 
     &:focus-visible {
       outline: var(--outline-focus-default);
@@ -4767,8 +4789,10 @@ a.status-card {
     }
   }
 
-  .column-header__back-button + &__title {
-    padding-inline-start: 0;
+  &__text {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
   }
 
   .column-header__back-button {
@@ -9498,6 +9522,8 @@ noscript {
     padding-bottom: 32px;
   }
 
+  h1,
+  h2,
   h3 {
     font-size: 22px;
     line-height: 33px;
@@ -9528,6 +9554,8 @@ noscript {
   &__lead {
     margin-bottom: 20px;
 
+    h1,
+    h2,
     h3 {
       margin-bottom: 15px;
     }
@@ -9603,6 +9631,8 @@ noscript {
       flex: 1;
       box-sizing: border-box;
 
+      h1,
+      h2,
       h3 {
         margin-bottom: 20px;
       }
@@ -10201,6 +10231,10 @@ noscript {
   display: flex;
   flex-direction: column;
   gap: 4px;
+
+  &:empty {
+    display: none;
+  }
 }
 
 .notification-bar {

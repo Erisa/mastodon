@@ -15,6 +15,7 @@ import ReplyIcon from '@/material-icons/400-24px/reply.svg?react';
 import VisibilityOffIcon from '@/material-icons/400-24px/visibility_off.svg?react';
 import { blockAccount } from 'flavours/glitch/actions/accounts';
 import { closeModal } from 'flavours/glitch/actions/modal';
+import { NavigationFocusTarget } from 'flavours/glitch/components/navigation_focus_target';
 import { Button } from 'flavours/glitch/components/button';
 import { Icon } from 'flavours/glitch/components/icon';
 
@@ -46,7 +47,9 @@ export const BlockModal = ({ accountId, acct }) => {
           </div>
 
           <div>
-            <h1><FormattedMessage id='block_modal.title' defaultMessage='Block user?' /></h1>
+            <NavigationFocusTarget as='h1'>
+              <FormattedMessage id='block_modal.title' defaultMessage='Block user?' />
+            </NavigationFocusTarget>
             <p>@{acct}</p>
           </div>
         </div>

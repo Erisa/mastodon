@@ -10,6 +10,8 @@ unless Vips.at_least_libvips?(8, 13)
   ERROR
 end
 
+Vips.cache_set_max(0)
+
 Vips.block('VipsForeign', true)
 
 %w(

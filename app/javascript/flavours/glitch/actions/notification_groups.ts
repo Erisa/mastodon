@@ -5,6 +5,7 @@ import {
   apiFetchNotificationGroups,
 } from 'flavours/glitch/api/notifications';
 import type { ApiAccountJSON } from 'flavours/glitch/api_types/accounts';
+import type { ApiCollectionJSON } from 'flavours/glitch/api_types/collections';
 import type {
   ApiNotificationGroupJSON,
   ApiNotificationJSON,
@@ -25,6 +26,8 @@ import {
   createAppAsyncThunk,
   createDataLoadingThunk,
 } from 'flavours/glitch/store/typed_functions';
+
+import { fetchAccountsForCollectionPreview } from '../reducers/slices/collections';
 
 import { importFetchedAccounts, importFetchedStatuses } from './importer';
 import { NOTIFICATIONS_FILTER_SET } from './notifications';
@@ -70,6 +73,7 @@ function dispatchAssociatedRecords(
 ) {
   const fetchedAccounts: ApiAccountJSON[] = [];
   const fetchedStatuses: ApiStatusJSON[] = [];
+  const collections: ApiCollectionJSON[] = [];
 
   notifications.forEach((notification) => {
     if (notification.type === 'admin.report') {
@@ -83,6 +87,10 @@ function dispatchAssociatedRecords(
     if ('status' in notification && notification.status) {
       fetchedStatuses.push(notification.status);
     }
+
+    if ('collection' in notification && notification.collection) {
+      collections.push(notification.collection);
+    }
   });
 
   if (fetchedAccounts.length > 0)
@@ -90,6 +98,9 @@ function dispatchAssociatedRecords(
 
   if (fetchedStatuses.length > 0)
     dispatch(importFetchedStatuses(fetchedStatuses));
+
+  if (collections.length > 0)
+    void fetchAccountsForCollectionPreview(collections, dispatch);
 }
 
 function selectNotificationGroupedTypes(state: RootState) {

@@ -7,7 +7,7 @@ class ActivityPub::ImageSerializer < ActivityPub::Serializer
 
   attributes :type, :media_type, :url
   attribute :focal_point, if: :focal_point?
-  attribute :name, if: :name?
+  attribute :summary, if: :summary?
 
   def type
     'Image'
@@ -29,11 +29,11 @@ class ActivityPub::ImageSerializer < ActivityPub::Serializer
     [object.meta['focus']['x'], object.meta['focus']['y']]
   end
 
-  def name?
-    object.instance_respond_to?(:description) && !object.instance_read(:description).empty?
+  def summary?
+    object.respond_to?(:description) && object.description.present?
   end
 
-  def name
-    object.instance_read(:description)
+  def summary
+    object.description
   end
 end
