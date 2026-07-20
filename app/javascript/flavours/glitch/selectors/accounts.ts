@@ -1,16 +1,16 @@
 import type { Map as ImmutableMap } from 'immutable';
 import { Record as ImmutableRecord, List as ImmutableList } from 'immutable';
 
-import { me } from 'flavours/glitch/initial_state';
-import { accountDefaultValues } from 'flavours/glitch/models/account';
+import { me } from '@/flavours/glitch/initial_state';
+import { accountDefaultValues } from '@/flavours/glitch/models/account';
 import type {
   Account,
   AccountShape,
   AccountShapeFull,
-} from 'flavours/glitch/models/account';
-import type { Relationship } from 'flavours/glitch/models/relationship';
-import { createAppSelector } from 'flavours/glitch/store';
-import type { RootState } from 'flavours/glitch/store';
+} from '@/flavours/glitch/models/account';
+import type { Relationship } from '@/flavours/glitch/models/relationship';
+import type { RootState } from '@/flavours/glitch/store';
+import { createAppSelector } from '@/flavours/glitch/store/typed_functions';
 
 import type { ApiHashtagJSON } from '../api_types/tags';
 
@@ -55,8 +55,13 @@ export function makeGetAccount() {
 }
 
 export const selectPlainAccount = createAppSelector(
-  [(state, accountId: string) => state.accounts.get(accountId)],
-  (account) => (account ? (account.toJS() as AccountShapeFull) : null),
+  [(state, accountId?: string | null) => state.accounts.get(accountId ?? '')],
+  (account) => (account?.toJS() as AccountShapeFull | undefined) ?? null,
+);
+
+export const selectIsAccountLocal = createAppSelector(
+  [selectPlainAccount],
+  (account) => !!account && account.username === account.acct,
 );
 
 export const getAccountHidden = createAppSelector(
