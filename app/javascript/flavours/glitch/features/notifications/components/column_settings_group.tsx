@@ -18,9 +18,10 @@ import PillBarButton from './pill_bar_button';
 const selectNotificationSettings = createAppSelector(
   [
     (state) =>
-      (state.settings as Immutable.Map<string, unknown>).get(
-        'notifications',
-      ) as Immutable.Map<string, Immutable.Map<string, unknown> | boolean>,
+      state.settings.get('notifications') as Immutable.Map<
+        string,
+        Immutable.Map<string, unknown> | boolean
+      >,
     (state) => state.notifications.get('browserPermission') as string,
     (state) => state.push_notifications,
   ],
