@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useRef, useCallback, useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import { useIntl, defineMessages, FormattedMessage } from 'react-intl';
 
@@ -12,14 +12,14 @@ import { addColumn } from 'flavours/glitch/actions/columns';
 import { changeSetting } from 'flavours/glitch/actions/settings';
 import { connectPublicStream, connectCommunityStream, connectBubbleStream } from 'flavours/glitch/actions/streaming';
 import { expandPublicTimeline, expandCommunityTimeline, expandBubbleTimeline } from 'flavours/glitch/actions/timelines';
+import { Column } from '@/flavours/glitch/components/column';
+import { ColumnHeader } from '@/flavours/glitch/components/column/header';
 import { DismissableBanner } from 'flavours/glitch/components/dismissable_banner';
 import SettingText from 'flavours/glitch/components/setting_text';
 import { localLiveFeedAccess, bubbleLiveFeedAccess, remoteLiveFeedAccess, domain } from 'flavours/glitch/initial_state';
 import { canViewFeed } from 'flavours/glitch/permissions';
 import { useAppDispatch, useAppSelector } from 'flavours/glitch/store';
 
-import Column from '../../components/column';
-import ColumnHeader from '../../components/column_header';
 import SettingToggle from '../notifications/components/setting_toggle';
 import StatusListContainer from '../ui/containers/status_list_container';
 
@@ -85,7 +85,6 @@ const Firehose = ({ feedType, multiColumn }) => {
   const dispatch = useAppDispatch();
   const intl = useIntl();
   const { signedIn, permissions } = useIdentity();
-  const columnRef = useRef(null);
 
   const allowLocalOnly = useAppSelector((state) => state.getIn(['settings', 'firehose', 'allowLocalOnly']));
   const regex = useAppSelector((state) => state.getIn(['settings', 'firehose', 'regex', 'body']));
@@ -132,8 +131,6 @@ const Firehose = ({ feedType, multiColumn }) => {
     },
     [dispatch, onlyMedia, allowLocalOnly, feedType],
   );
-
-  const handleHeaderClick = useCallback(() => columnRef.current?.scrollTop(), []);
 
   useEffect(() => {
     let disconnect;
@@ -245,15 +242,15 @@ const Firehose = ({ feedType, multiColumn }) => {
   }
 
   return (
-    <Column bindToDocument={!multiColumn} ref={columnRef} label={intl.formatMessage(messages.title)}>
+    <Column bindToDocument={!multiColumn} label={intl.formatMessage(messages.title)}>
       <ColumnHeader
         icon='globe'
         iconComponent={PublicIcon}
         active={hasUnread}
         title={intl.formatMessage(title)}
         onPin={handlePin}
-        onClick={handleHeaderClick}
         multiColumn={multiColumn}
+        scrollTopOnClick
       >
         <ColumnSettings />
       </ColumnHeader>

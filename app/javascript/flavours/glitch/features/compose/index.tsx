@@ -8,6 +8,8 @@ import type { Map as ImmutableMap, List as ImmutableList } from 'immutable';
 
 import { Helmet } from '@unhead/react/helmet';
 
+import { Column } from '@/flavours/glitch/components/column';
+import { ColumnHeader } from '@/flavours/glitch/components/column/header';
 import elephantUIPlane from '@/images/elephant_ui_plane.svg';
 import BubbleChartIcon from '@/material-icons/400-24px/bubble_chart.svg?react';
 import EditIcon from '@/material-icons/400-24px/edit_square.svg?react';
@@ -20,8 +22,6 @@ import NotificationsIcon from '@/material-icons/400-24px/notifications-fill.svg?
 import PublicIcon from '@/material-icons/400-24px/public.svg?react';
 import { mountCompose, unmountCompose } from 'flavours/glitch/actions/compose';
 import { openModal } from 'flavours/glitch/actions/modal';
-import { Column } from 'flavours/glitch/components/column';
-import { ColumnHeader } from 'flavours/glitch/components/column_header';
 import { Icon } from 'flavours/glitch/components/icon';
 import glitchedElephant1 from 'flavours/glitch/images/mbstobon-ui-0.png';
 import glitchedElephant2 from 'flavours/glitch/images/mbstobon-ui-1.png';

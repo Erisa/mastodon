@@ -1,8 +1,7 @@
-import { useCallback, useMemo, useRef } from 'react';
+import { useMemo } from 'react';
 import type { FC, ReactNode } from 'react';
 
 import { AccountListItem } from '@/flavours/glitch/components/account_list_item';
-import type { ColumnRef } from '@/flavours/glitch/components/column';
 import { Column } from '@/flavours/glitch/components/column';
 import { LoadingIndicator } from '@/flavours/glitch/components/loading_indicator';
 import ScrollableList from '@/flavours/glitch/components/scrollable_list';
@@ -78,11 +77,6 @@ export const AccountList: FC<AccountListProps> = ({
     return children;
   }, [prependAccountId, list, forceEmptyState, withoutFollowsYouBadge]);
 
-  const columnRef = useRef<ColumnRef>(null);
-  const handleHeaderClick = useCallback(() => {
-    columnRef.current?.scrollTop();
-  }, []);
-
   const { multiColumn } = useLayout();
 
   // Null means accountId does not exist (e.g. invalid acct). Undefined means loading.
@@ -101,11 +95,8 @@ export const AccountList: FC<AccountListProps> = ({
   const domain = account.acct.split('@')[1];
 
   return (
-    <Column ref={columnRef}>
-      <ProfileColumnHeader
-        onClick={handleHeaderClick}
-        multiColumn={multiColumn}
-      />
+    <Column>
+      <ProfileColumnHeader multiColumn={multiColumn} />
 
       <ScrollableList
         scrollKey={scrollKey}

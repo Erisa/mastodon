@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useRef, useCallback, useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import { defineMessages, useIntl, FormattedMessage } from 'react-intl';
 
@@ -12,8 +12,8 @@ import { addColumn, removeColumn, moveColumn } from 'flavours/glitch/actions/col
 import { mountConversations, unmountConversations, expandConversations } from 'flavours/glitch/actions/conversations';
 import { connectDirectStream } from 'flavours/glitch/actions/streaming';
 import { expandDirectTimeline } from 'flavours/glitch/actions/timelines';
-import Column from 'flavours/glitch/components/column';
-import ColumnHeader from 'flavours/glitch/components/column_header';
+import { Column } from '@/flavours/glitch/components/column';
+import { ColumnHeader } from '@/flavours/glitch/components/column/header';
 import StatusListContainer from 'flavours/glitch/features/ui/containers/status_list_container';
 
 import { ConversationsList } from './components/conversations_list';
@@ -24,7 +24,6 @@ const messages = defineMessages({
 });
 
 const DirectTimeline = ({ columnId, multiColumn }) => {
-  const columnRef = useRef();
   const intl = useIntl();
   const dispatch = useDispatch();
   const pinned = !!columnId;
@@ -44,10 +43,6 @@ const DirectTimeline = ({ columnId, multiColumn }) => {
   const handleMove = useCallback((dir) => {
     dispatch(moveColumn(columnId, dir));
   }, [dispatch, columnId]);
-
-  const handleHeaderClick = useCallback(() => {
-    columnRef.current.scrollTop();
-  }, [columnRef]);
 
   const handleLoadMoreTimeline = useCallback(maxId => {
     dispatch(expandDirectTimeline({ maxId }));
@@ -71,7 +66,7 @@ const DirectTimeline = ({ columnId, multiColumn }) => {
   }, [dispatch, conversationsMode]);
 
   return (
-    <Column bindToDocument={!multiColumn} ref={columnRef} label={intl.formatMessage(messages.title)}>
+    <Column bindToDocument={!multiColumn} label={intl.formatMessage(messages.title)}>
       <ColumnHeader
         icon='envelope'
         iconComponent={MailIcon}
@@ -79,9 +74,9 @@ const DirectTimeline = ({ columnId, multiColumn }) => {
         title={intl.formatMessage(messages.title)}
         onPin={handlePin}
         onMove={handleMove}
-        onClick={handleHeaderClick}
         pinned={pinned}
         multiColumn={multiColumn}
+        scrollTopOnClick
       >
         <ColumnSettingsContainer />
       </ColumnHeader>
