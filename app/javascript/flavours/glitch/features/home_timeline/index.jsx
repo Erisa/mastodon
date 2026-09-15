@@ -153,15 +153,16 @@ class HomeTimeline extends PureComponent {
         {isRedesignEnabled() ? (
           <ColumnHeader
             title={intl.formatMessage(messages.following)}
+            withBackButton={multiColumn && !pinned && 'auto'}
             withUnreadMarker={hasUnread}
             extraButtons={
               <HomeColumnSettings>
                 {multiColumn &&
                   <MultiColumnMenuItems
                     withDivider
+                    pinned={pinned}
                     onPin={this.handlePin}
                     onMove={this.handleMove}
-                    pinned={pinned}
                   />
                 }
               </HomeColumnSettings>

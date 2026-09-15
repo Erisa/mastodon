@@ -20,7 +20,7 @@ import {
 import { changeSetting } from 'flavours/glitch/actions/settings';
 import { CheckBox } from 'flavours/glitch/components/check_box';
 import { Column } from '@/flavours/glitch/components/column';
-import { ColumnHeader } from '@/flavours/glitch/components/column/header';
+import { ColumnHeader as LegacyColumnHeader } from '@/flavours/glitch/components/column/header';
 import { Icon } from 'flavours/glitch/components/icon';
 import ScrollableList from 'flavours/glitch/components/scrollable_list';
 import { Dropdown } from 'flavours/glitch/components/dropdown_menu';
@@ -28,6 +28,8 @@ import { Dropdown } from 'flavours/glitch/components/dropdown_menu';
 import { NotificationRequest } from './components/notification_request';
 import { PolicyControls } from './components/policy_controls';
 import SettingToggle from './components/setting_toggle';
+import { isRedesignEnabled } from '@/flavours/glitch/utils/environment';
+import { ColumnHeader } from '@/flavours/glitch/components/column_header';
 
 const messages = defineMessages({
   title: { id: 'notification_requests.title', defaultMessage: 'Filtered notifications' },
@@ -207,22 +209,31 @@ export const NotificationRequests = ({ multiColumn }) => {
     dispatch(fetchNotificationRequests());
   }, [dispatch]);
 
+  const selectionRow = notificationRequests.length > 0 && (
+    <SelectRow selectionMode={selectionMode} setSelectionMode={setSelectionMode} selectAllChecked={selectAllChecked} toggleSelectAll={toggleSelectAll} selectedItems={checkedRequestIds} />
+  );
+
   return (
     <Column bindToDocument={!multiColumn} label={intl.formatMessage(messages.title)}>
-      <ColumnHeader
-        icon='archive'
-        iconComponent={InventoryIcon}
-        title={intl.formatMessage(messages.title)}
-        multiColumn={multiColumn}
-        showBackButton
-        scrollTopOnClick
-        appendContent={
-          notificationRequests.length > 0 && (
-            <SelectRow selectionMode={selectionMode} setSelectionMode={setSelectionMode} selectAllChecked={selectAllChecked} toggleSelectAll={toggleSelectAll} selectedItems={checkedRequestIds} />
-          )}
-      >
-        <ColumnSettings />
-      </ColumnHeader>
+      {isRedesignEnabled() ? (
+        <ColumnHeader
+          withBackButton
+          title={intl.formatMessage(messages.title)}
+          extraStickyContent={selectionRow}
+        />
+      ) : (
+        <LegacyColumnHeader
+          icon='archive'
+          iconComponent={InventoryIcon}
+          title={intl.formatMessage(messages.title)}
+          multiColumn={multiColumn}
+          showBackButton
+          scrollTopOnClick
+          appendContent={selectionRow}
+        >
+          <ColumnSettings />
+        </LegacyColumnHeader>
+      )}
 
       <ScrollableList
         scrollKey='notification_requests'

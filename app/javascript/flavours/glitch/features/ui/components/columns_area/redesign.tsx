@@ -5,7 +5,6 @@ import { RedesignNavigationPanel } from '@/flavours/glitch/features/navigation_p
 import { RedesignMobileNavigation } from '@/flavours/glitch/features/navigation_panel/redesign/mobile_nav';
 import { useAppSelector } from '@/flavours/glitch/store';
 import { Footer } from 'flavours/glitch/features/custom_homepage/components/footer';
-import { Header } from 'flavours/glitch/features/custom_homepage/components/header';
 
 import { useBreakpoint } from '../../hooks/useBreakpoint';
 
@@ -25,11 +24,10 @@ export const ColumnsAreaRedesign: React.FC<{
 
   if (minimalShell) {
     return (
-      <div className={classes.root}>
+      <div className={classNames(classes.root, classes.rootMinimal)}>
+        {isMobile && <RedesignMobileNavigation />}
         <div className={classes.main}>
-          <Header />
-
-          <div className={classes.content}>{children}</div>
+          <div>{children}</div>
 
           <Footer />
         </div>
