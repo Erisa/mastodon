@@ -10,6 +10,7 @@
   "boost_modal.missing_description": "This toot contains some media without description",
   "bubble.column_settings.media_only": "Media only",
   "column.bubble": "Bubble timeline",
+  "column.bubble_servers": "Bubble Servers",
   "column.favourited_by": "Favourited by",
   "column.reacted_by": "Reacted by",
   "column.reblogged_by": "Boosted by",

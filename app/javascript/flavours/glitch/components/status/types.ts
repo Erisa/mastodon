@@ -1,4 +1,4 @@
-import type { ComponentType, MouseEventHandler, ReactNode } from 'react';
+import type { ComponentType, ReactNode } from 'react';
 
 import StatusContainer from '@/flavours/glitch/containers/status_container';
 import type { Account as TAccount } from '@/flavours/glitch/models/account';
@@ -28,7 +28,7 @@ export interface StatusContainerProps {
   rootId?: string;
   previousId?: string;
   nextId?: string;
-  onClick?: MouseEventHandler<HTMLDivElement>;
+  onOpen?: () => void;
   muted?: boolean;
   hidden?: boolean;
   unread?: boolean;

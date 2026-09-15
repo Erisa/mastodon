@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { FormattedMessage } from 'react-intl';
 
@@ -9,7 +9,6 @@ import {
   ChatCircleIcon,
   HouseIcon,
   MagnifyingGlassIcon,
-  HamburgerIcon,
 } from '@phosphor-icons/react';
 import { animated, useSpring } from '@react-spring/web';
 import { useDrag } from '@use-gesture/react';
@@ -19,7 +18,7 @@ import {
   openNavigation,
 } from '@/flavours/glitch/actions/navigation';
 import { Avatar } from '@/flavours/glitch/components/avatar';
-import { IconButton } from '@/flavours/glitch/components/button/redesign';
+import { Menu, MenuList, MenuTrigger } from '@/flavours/glitch/components/menu';
 import { FOCUS_TARGET } from '@/flavours/glitch/components/navigation_focus_target';
 import { ComposeRedesignButton } from '@/flavours/glitch/features/compose/redesign/trigger';
 import { useAccount } from '@/flavours/glitch/hooks/useAccount';
@@ -28,22 +27,17 @@ import { selectUnreadNotificationGroupsCount } from '@/flavours/glitch/selectors
 import { useAppDispatch, useAppSelector } from '@/flavours/glitch/store';
 
 import { RedesignNavigationPanel } from '.';
+import { AccountMenuItems } from './account_card_and_menu';
 import classes from './mobile_nav.module.scss';
-import { MobileNavLink } from './navigation_link';
+import { MobileNavLink, MobileNavProfileButton } from './navigation_link';
 
 export const RedesignMobileNavigation: React.FC = () => {
-  const dispatch = useAppDispatch();
-
   const { accountId, signedIn } = useIdentity();
   const account = useAccount(accountId);
 
   const notificationsCount = useAppSelector(
     selectUnreadNotificationGroupsCount,
   );
-
-  const handleOpenNavigation = useCallback(() => {
-    dispatch(openNavigation());
-  }, [dispatch]);
 
   if (!signedIn) {
     return null;
@@ -82,23 +76,28 @@ export const RedesignMobileNavigation: React.FC = () => {
               defaultMessage='Notifications'
             />
           </MobileNavLink>
-          <MobileNavLink
-            to={`/@${account?.acct}`}
-            customIcon={
-              <Avatar size={24} account={account} className={classes.avatar} />
-            }
-          >
-            <FormattedMessage id='tabs_bar.profile' defaultMessage='Profile' />
-          </MobileNavLink>
+          <Menu>
+            <MenuTrigger
+              as={MobileNavProfileButton}
+              avatar={
+                <Avatar
+                  size={24}
+                  account={account}
+                  className={classes.avatar}
+                />
+              }
+            >
+              <FormattedMessage
+                id='tabs_bar.account_settings'
+                defaultMessage='Account settings'
+              />
+            </MenuTrigger>
+            <MenuList placement='top-end' offset={8}>
+              <AccountMenuItems context='mobile' />
+            </MenuList>
+          </Menu>
         </ul>
         <ComposeRedesignButton inline />
-        <IconButton // Silly placeholder – will be replaced with button in column header
-          icon={HamburgerIcon}
-          variant='solid'
-          onClick={handleOpenNavigation}
-        >
-          Menu
-        </IconButton>
       </nav>
       <SlideOutNavigation />
     </>
@@ -219,7 +218,7 @@ const SlideOutNavigation: React.FC = () => {
       ref={overlayRef}
     >
       <animated.div className={classes.slideOut} {...bind()} style={{ x }}>
-        <RedesignNavigationPanel />
+        <RedesignNavigationPanel mode='slide-out' />
       </animated.div>
     </div>
   );

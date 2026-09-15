@@ -9,21 +9,27 @@ import { connect } from 'react-redux';
 
 import { injectIntl } from '@/flavours/glitch/components/intl';
 import BubbleChartIcon from '@/material-icons/400-24px/bubble_chart.svg?react';
+import { Column } from '@/flavours/glitch/components/column';
+import { ColumnHeader as LegacyColumnHeader } from '@/flavours/glitch/components/column/header';
 import { DismissableBanner } from 'flavours/glitch/components/dismissable_banner';
 import { identityContextPropShape, withIdentity } from 'flavours/glitch/identity_context';
-import { domain } from 'flavours/glitch/initial_state';
+import { domain, bubbleLiveFeedAccess } from 'flavours/glitch/initial_state';
+import { canViewFeed } from 'flavours/glitch/permissions';
 
 import { addColumn, removeColumn, moveColumn } from '../../actions/columns';
 import { connectBubbleStream } from '../../actions/streaming';
 import { expandBubbleTimeline } from '../../actions/timelines';
-import { Column } from '../../components/column';
-import { ColumnHeader } from '../../components/column/header';
 import StatusListContainer from '../ui/containers/status_list_container';
 
 import ColumnSettingsContainer from './containers/column_settings_container';
+import { isRedesignEnabled } from '@/flavours/glitch/utils/environment';
+import { ColumnHeader, ColumnSettingsMenu } from '@/flavours/glitch/components/column_header';
+import { FeedColumnSettings } from './components/feed_column_settings';
+import { MultiColumnMenuItems } from '@/flavours/glitch/components/column_header/multicolumn_settings';
 
 const messages = defineMessages({
   title: { id: 'column.bubble', defaultMessage: 'Bubble timeline' },
+  title_redesign: { id: 'column.bubble_servers', defaultMessage: 'Bubble Servers' },
 });
 
 const mapStateToProps = (state, { columnId }) => {
@@ -72,10 +78,6 @@ class BubbleTimeline extends PureComponent {
     dispatch(moveColumn(columnId, dir));
   };
 
-  handleHeaderClick = () => {
-    this.column.scrollTop();
-  };
-
   componentDidMount () {
     const { dispatch, onlyMedia } = this.props;
     const { signedIn } = this.props.identity;
@@ -112,10 +114,6 @@ class BubbleTimeline extends PureComponent {
     }
   }
 
-  setRef = c => {
-    this.column = c;
-  };
-
   handleLoadMore = maxId => {
     const { dispatch, onlyMedia } = this.props;
 
@@ -124,23 +122,60 @@ class BubbleTimeline extends PureComponent {
 
   render () {
     const { intl, hasUnread, columnId, multiColumn, onlyMedia } = this.props;
+    const { signedIn, permissions } = this.props.identity;
     const pinned = !!columnId;
 
+    const emptyMessage = canViewFeed(signedIn, permissions, bubbleLiveFeedAccess) ? (
+      <FormattedMessage
+        id='empty_column.bubble'
+        defaultMessage='The bubble timeline is currently empty, but something might show up here soon!'
+      />
+    ) : (
+      <FormattedMessage
+        id='empty_column.disabled_feed'
+        defaultMessage='This feed has been disabled by your server administrators.'
+      />
+    );
+
+    const title = intl.formatMessage(isRedesignEnabled() ? messages.title_redesign : messages.title)
+
     return (
-      <Column bindToDocument={!multiColumn} ref={this.setRef} label={intl.formatMessage(messages.title)}>
-        <ColumnHeader
-          icon='bubble'
-          iconComponent={BubbleChartIcon}
-          active={hasUnread}
-          title={intl.formatMessage(messages.title)}
-          onPin={this.handlePin}
-          onMove={this.handleMove}
-          onClick={this.handleHeaderClick}
-          pinned={pinned}
-          multiColumn={multiColumn}
-        >
-          <ColumnSettingsContainer columnId={columnId} />
-        </ColumnHeader>
+      <Column bindToDocument={!multiColumn} label={title}>
+        {isRedesignEnabled() ? (
+          <ColumnHeader
+            title={title}
+            withUnreadMarker={hasUnread}
+            extraButtons={
+              <ColumnSettingsMenu
+                labelPrefix={title}
+              >
+                <FeedColumnSettings columnId={columnId} />
+                {multiColumn && (
+                  <MultiColumnMenuItems
+                    withDivider
+                    pinned={pinned}
+                    onPin={this.handlePin}
+                    onMove={this.handleMove}
+                  />
+                )}
+              </ColumnSettingsMenu>
+            }
+          />
+        ) : (
+          <LegacyColumnHeader
+            icon='bubble'
+            iconComponent={BubbleChartIcon}
+            active={hasUnread}
+            title={title}
+            onPin={this.handlePin}
+            onMove={this.handleMove}
+            pinned={pinned}
+            multiColumn={multiColumn}
+            scrollTopOnClick
+          >
+            <ColumnSettingsContainer columnId={columnId} />
+          </LegacyColumnHeader>
+        )}
 
         <StatusListContainer
           prepend={<DismissableBanner id='bubble_timeline'><FormattedMessage id='dismissable_banner.bubble_timeline' defaultMessage='These are the most recent public posts from people on the fediverse whose accounts are on other servers selected by {domain}.' values={{ domain }} /></DismissableBanner>}
@@ -148,13 +183,13 @@ class BubbleTimeline extends PureComponent {
           scrollKey={`bubble_timeline-${columnId}`}
           timelineId={`bubble${onlyMedia ? ':media' : ''}`}
           onLoadMore={this.handleLoadMore}
-          emptyMessage={<FormattedMessage id='empty_column.bubble' defaultMessage='The bubble timeline is currently empty, but something might show up here soon!' />}
+          emptyMessage={emptyMessage}
           bindToDocument={!multiColumn}
           regex={this.props.regex}
         />
 
         <Helmet>
-          <title>{intl.formatMessage(messages.title)}</title>
+          <title>{title}</title>
           <meta name='robots' content='noindex' />
         </Helmet>
       </Column>
