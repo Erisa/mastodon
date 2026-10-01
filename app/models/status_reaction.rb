@@ -36,10 +36,11 @@ class StatusReaction < ApplicationRecord
   after_destroy :decrement_cache_counters
 
   class << self
-    def value_for_reaction_me_column(account_id)
+    def value_for_reaction_me_column(account_id, exclude = nil)
       if account_id.nil?
         'FALSE AS me'
       else
+        not_id = "AND inner_reactions.id != #{exclude}" if exclude
         <<~SQL.squish
           EXISTS(
             SELECT 1
@@ -52,6 +53,7 @@ class StatusReaction < ApplicationRecord
                 OR inner_reactions.custom_emoji_id IS NULL
                   AND status_reactions.custom_emoji_id IS NULL
               )
+              #{not_id}
           ) AS me
         SQL
       end

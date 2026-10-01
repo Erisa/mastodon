@@ -12,12 +12,13 @@ import {
   MenuItemDivider,
 } from '@/flavours/glitch/components/menu';
 import type { MenuItemCheckboxChangeHandler } from '@/flavours/glitch/components/menu/items';
+import { useHashtag } from '@/flavours/glitch/hooks/useHashtag';
 import { useIdentity } from '@/flavours/glitch/identity_context';
 import { useAppDispatch } from 'flavours/glitch/store';
 
 import { useColumnSettings } from '../../public_timeline/components/feed_column_settings';
 
-import { useHashtag, messages } from './hashtag_header';
+import { messages } from './hashtag_header';
 
 export const HashtagColumnMenu: React.FC<{
   tagId: string;

@@ -8,6 +8,7 @@ import { createBrowserHistory } from 'history';
 
 import { WithOptionalRouterPropTypes, withOptionalRouter } from 'flavours/glitch/utils/react_router';
 import { IGNORE_FOCUS_ON_OPEN } from '../reducers/modal';
+import { normalizeKey } from './hotkeys/utils';
 
 class ModalRoot extends PureComponent {
 
@@ -32,15 +33,12 @@ class ModalRoot extends PureComponent {
 
   activeElement = this.props.children ? document.activeElement : null;
 
-  handleKeyUp = (e) => {
-    if ((e.key === 'Escape' || e.key === 'Esc' || e.keyCode === 27)
-         && !!this.props.children && !this.props.noEsc) {
-      this.props.onClose();
-    }
-  };
-
+  /**
+   * @param {KeyboardEvent} e Event
+   */
   handleKeyDown = (e) => {
-    if (e.key === 'Tab') {
+    const key = normalizeKey(e.key);
+    if (key === 'tab') {
       const focusable = Array.from(this.node.querySelectorAll('button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])')).filter((x) => window.getComputedStyle(x).display !== 'none');
       const index = focusable.indexOf(e.target);
 
@@ -57,11 +55,12 @@ class ModalRoot extends PureComponent {
         e.stopPropagation();
         e.preventDefault();
       }
+    } else if (key === 'enter' && !e.defaultPrevented && !!this.props.children) {
+      this.props.onClose();
     }
   };
 
   componentDidMount () {
-    window.addEventListener('keyup', this.handleKeyUp, false);
     window.addEventListener('keydown', this.handleKeyDown, false);
     this.history = this.props.history || createBrowserHistory();
 
@@ -101,7 +100,6 @@ class ModalRoot extends PureComponent {
   }
 
   componentWillUnmount () {
-    window.removeEventListener('keyup', this.handleKeyUp);
     window.removeEventListener('keydown', this.handleKeyDown);
   }
 

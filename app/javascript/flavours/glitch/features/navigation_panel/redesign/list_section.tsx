@@ -1,15 +1,8 @@
 import { useCallback } from 'react';
 import type { ReactNode } from 'react';
 
-import { FormattedMessage } from 'react-intl';
-
 import { CaretDownIcon } from '@phosphor-icons/react';
 
-import {
-  Button,
-  IconButton,
-} from '@/flavours/glitch/components/button/redesign';
-import type { MastodonLocationDescriptor } from '@/flavours/glitch/components/router';
 import { useStorageState } from '@/flavours/glitch/hooks/useStorage';
 import { useIdentity } from '@/flavours/glitch/identity_context';
 import { hasReactChildren } from '@/flavours/glitch/utils/has_react_children';
@@ -18,10 +11,6 @@ import classes from './list_section.module.scss';
 
 export const ListSection: React.FC<{
   title: ReactNode;
-  action?: {
-    label: ReactNode;
-    link: MastodonLocationDescriptor;
-  };
   /**
    * Unique identifier of this section, used for storing the
    * open/close state of the section in localStorage
@@ -29,7 +18,7 @@ export const ListSection: React.FC<{
   id: string;
   children: ReactNode;
   emptyMessage?: ReactNode;
-}> = ({ title, action, id, children, emptyMessage }) => {
+}> = ({ title, id, children, emptyMessage }) => {
   const hasContent = hasReactChildren(children);
 
   const { accountId } = useIdentity();
@@ -42,33 +31,18 @@ export const ListSection: React.FC<{
   return (
     <li className={classes.root}>
       <div className={classes.titleWrapper}>
-        {hasContent && (
-          <IconButton
-            size='sm'
-            variant='ghost'
-            icon={CaretDownIcon}
-            onClick={toggleIsOpen}
-            noActiveHighlight
+        {hasContent ? (
+          <button
+            type='button'
             aria-expanded={isOpen}
-            className={classes.toggleButton}
+            className={classes.title}
+            onClick={toggleIsOpen}
           >
-            <FormattedMessage
-              id='tabs_bar.open_section'
-              defaultMessage='Open {title} menu'
-              values={{ title }}
-            />
-          </IconButton>
-        )}
-        <span className={classes.title}>{title}</span>
-        {action && (
-          <Button
-            as='link'
-            to={action.link}
-            size='xs'
-            className={classes.action}
-          >
-            {action.label}
-          </Button>
+            {title}
+            <CaretDownIcon className={classes.toggleIcon} />
+          </button>
+        ) : (
+          <span className={classes.title}>{title}</span>
         )}
       </div>
       {hasContent

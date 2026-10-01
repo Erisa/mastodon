@@ -3,6 +3,7 @@ import { useLayoutEffect, useRef } from 'react';
 
 import classNames from 'classnames';
 
+import { useBodyScrollLock } from '@/flavours/glitch/hooks/useBodyScrollLock';
 import { useMergedRefs } from '@/flavours/glitch/hooks/useMergedRefs';
 import { useOnClickOutside } from '@/flavours/glitch/hooks/useOnClickOutside';
 import { useScrollSensor } from '@/flavours/glitch/hooks/useScrollSensor';
@@ -24,6 +25,8 @@ export const BottomSheet: React.FC<BottomSheetProps> = ({
 }) => {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+
+  useBodyScrollLock();
 
   useLayoutEffect(() => {
     const dialog = dialogRef.current;

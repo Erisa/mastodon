@@ -1,24 +1,14 @@
-import { useCallback, useMemo, useState, useEffect } from 'react';
+import { useMemo } from 'react';
 
 import { defineMessages, useIntl, FormattedMessage } from 'react-intl';
 
-import { isFulfilled } from '@reduxjs/toolkit';
-
+import { useHashtag } from '@/flavours/glitch/hooks/useHashtag';
 import MoreHorizIcon from '@/material-icons/400-24px/more_horiz.svg?react';
-import {
-  fetchHashtag,
-  followHashtag,
-  unfollowHashtag,
-  featureHashtag,
-  unfeatureHashtag,
-} from 'flavours/glitch/actions/tags_typed';
-import type { ApiHashtagJSON } from 'flavours/glitch/api_types/tags';
 import { Button } from 'flavours/glitch/components/button';
 import { Dropdown } from 'flavours/glitch/components/dropdown_menu';
 import { ShortNumber } from 'flavours/glitch/components/short_number';
 import { useIdentity } from 'flavours/glitch/identity_context';
 import { PERMISSION_MANAGE_TAXONOMIES } from 'flavours/glitch/permissions';
-import { useAppDispatch } from 'flavours/glitch/store';
 
 export const messages = defineMessages({
   followHashtag: { id: 'hashtag.follow', defaultMessage: 'Follow hashtag' },
@@ -75,76 +65,6 @@ const usesTodayRenderer = (
     }}
   />
 );
-
-export function useHashtag(tagId: string) {
-  const dispatch = useAppDispatch();
-  const [tag, setTag] = useState<ApiHashtagJSON>();
-
-  useEffect(() => {
-    void dispatch(fetchHashtag({ tagId })).then((result) => {
-      if (isFulfilled(result)) {
-        setTag(result.payload);
-      }
-
-      return '';
-    });
-  }, [dispatch, tagId, setTag]);
-
-  const toggleFeature = useCallback(() => {
-    if (!tag) {
-      return;
-    }
-    if (tag.featuring) {
-      void dispatch(unfeatureHashtag({ tagId })).then((result) => {
-        if (isFulfilled(result)) {
-          setTag(result.payload);
-        }
-
-        return '';
-      });
-    } else {
-      void dispatch(featureHashtag({ tagId })).then((result) => {
-        if (isFulfilled(result)) {
-          setTag(result.payload);
-        }
-
-        return '';
-      });
-    }
-  }, [dispatch, tag, tagId]);
-
-  const { signedIn } = useIdentity();
-
-  const toggleFollow = useCallback(() => {
-    if (!signedIn || !tag) {
-      return;
-    }
-
-    if (tag.following) {
-      setTag((hashtag) => hashtag && { ...hashtag, following: false });
-
-      void dispatch(unfollowHashtag({ tagId })).then((result) => {
-        if (isFulfilled(result)) {
-          setTag(result.payload);
-        }
-
-        return '';
-      });
-    } else {
-      setTag((hashtag) => hashtag && { ...hashtag, following: true });
-
-      void dispatch(followHashtag({ tagId })).then((result) => {
-        if (isFulfilled(result)) {
-          setTag(result.payload);
-        }
-
-        return '';
-      });
-    }
-  }, [dispatch, signedIn, tag, tagId]);
-
-  return { tag, toggleFollow, toggleFeature };
-}
 
 export const HashtagHeader: React.FC<{
   tagId: string;

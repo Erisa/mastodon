@@ -10,7 +10,6 @@ import { useDispatch } from 'react-redux';
 
 import AlternateEmailIcon from '@/material-icons/400-24px/alternate_email.svg?react';
 import CampaignIcon from '@/material-icons/400-24px/campaign.svg?react';
-import ReplyIcon from '@/material-icons/400-24px/reply.svg?react';
 import VisibilityOffIcon from '@/material-icons/400-24px/visibility_off.svg?react';
 import VolumeOffIcon from '@/material-icons/400-24px/volume_off.svg?react';
 import { muteAccount } from 'flavours/glitch/actions/accounts';
@@ -20,6 +19,7 @@ import { CheckBox } from 'flavours/glitch/components/check_box';
 import { Icon } from 'flavours/glitch/components/icon';
 import { NavigationFocusTarget } from 'flavours/glitch/components/navigation_focus_target';
 import { RadioButton } from 'flavours/glitch/components/radio_button';
+import { StatusReplyIcon } from '@/flavours/glitch/components/status/icons';
 
 const messages = defineMessages({
   minutes: { id: 'intervals.full.minutes', defaultMessage: '{number, plural, one {# minute} other {# minutes}}' },
@@ -109,7 +109,7 @@ export const MuteModal = ({ accountId, acct }) => {
           </li>
 
           <li>
-            <div className='safety-action-modal__bullet-points__icon'><Icon icon={ReplyIcon} /></div>
+            <div className='safety-action-modal__bullet-points__icon'><Icon icon={StatusReplyIcon} /></div>
             <div><FormattedMessage id='mute_modal.they_can_mention_and_follow' defaultMessage="They can mention and follow you, but you won't see them." /></div>
           </li>
         </ul>

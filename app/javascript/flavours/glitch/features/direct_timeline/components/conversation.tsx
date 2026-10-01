@@ -13,6 +13,8 @@ import type {
 
 import { LinkedDisplayName } from '@/flavours/glitch/components/display_name';
 import { AnimateEmojiProvider } from '@/flavours/glitch/components/emoji/context';
+import { StatusReplyIcon } from '@/flavours/glitch/components/status/icons';
+import StatusContent from '@/flavours/glitch/components/status/legacy/content';
 import type { Account } from '@/flavours/glitch/models/account';
 import type { StatusShape } from '@/flavours/glitch/models/status';
 import {
@@ -21,7 +23,6 @@ import {
   useAppSelector,
 } from '@/flavours/glitch/store';
 import MoreHorizIcon from '@/material-icons/400-24px/more_horiz.svg?react';
-import ReplyIcon from '@/material-icons/400-24px/reply.svg?react';
 import { replyCompose } from 'flavours/glitch/actions/compose';
 import {
   markConversationRead,
@@ -39,7 +40,6 @@ import { Dropdown } from 'flavours/glitch/components/dropdown_menu';
 import { Hotkeys } from 'flavours/glitch/components/hotkeys';
 import { IconButton } from 'flavours/glitch/components/icon_button';
 import { RelativeTimestamp } from 'flavours/glitch/components/relative_timestamp';
-import StatusContent from 'flavours/glitch/components/status_content';
 import { makeGetStatus } from 'flavours/glitch/selectors';
 
 const messages = defineMessages({
@@ -270,7 +270,7 @@ export const Conversation: React.FC<{
               className='status__action-bar-button'
               title={intl.formatMessage(messages.reply)}
               icon='reply'
-              iconComponent={ReplyIcon}
+              iconComponent={StatusReplyIcon}
               onClick={handleReply}
             />
 

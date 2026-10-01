@@ -22,12 +22,12 @@ class Api::V1::Statuses::ReactionsController < Api::V1::Statuses::BaseController
 
   def destroy
     name = Emoji.normalize(params[:id])
-    react = current_account.status_reactions.find_by(status_id: params[:status_id], name: name)
+    @react = current_account.status_reactions.find_by(status_id: params[:status_id], name: name)
 
-    if react
-      @status = react.status
+    if @react
+      @status = @react.status
       count = [@status.reactions_count - 1, 0].max
-      reactions = select_reactions.where.not(id: react.id)
+      reactions = select_reactions.where.not(id: @react.id)
       UnreactWorker.perform_async(current_account.id, @status.id, name)
     else
       @status = Status.find(params[:status_id])
@@ -48,15 +48,15 @@ class Api::V1::Statuses::ReactionsController < Api::V1::Statuses::BaseController
 
   def select_reactions
     StatusReaction.select(
-      [:name, :custom_emoji_id, 'COUNT(*) as count', 'FALSE AS me']
+      [:name, :custom_emoji_id, 'COUNT(*) as count'].tap do |values|
+        values << StatusReaction.value_for_reaction_me_column(current_account&.id, @react&.id)
+      end
     ).where(status_id: @status.id)
   end
 
   def set_reactions
     ordered_reactions.select(
-      [:id, :account_id, :name, :custom_emoji_id].tap do |values|
-        values << StatusReaction.value_for_reaction_me_column(current_account&.id)
-      end
+      [:id, :account_id, :name, :custom_emoji_id]
     ).to_a_paginated_by_id(
       limit_param(REACTIONS_LIMIT),
       params_slice(:max_id, :since_id, :min_id)

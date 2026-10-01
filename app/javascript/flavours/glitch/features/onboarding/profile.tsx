@@ -7,6 +7,7 @@ import { useHistory } from 'react-router-dom';
 
 import { Helmet } from '@unhead/react/helmet';
 
+import { Button } from '@/flavours/glitch/components/button/redesign';
 import { Column } from '@/flavours/glitch/components/column';
 import { ColumnHeader as LegacyColumnHeader } from '@/flavours/glitch/components/column/header';
 import { ColumnHeader } from '@/flavours/glitch/components/column_header';
@@ -16,7 +17,7 @@ import EditIcon from '@/material-icons/400-24px/edit.svg?react';
 import PersonIcon from '@/material-icons/400-24px/person.svg?react';
 import { updateAccount } from 'flavours/glitch/actions/accounts';
 import { closeOnboarding } from 'flavours/glitch/actions/onboarding';
-import { Button } from 'flavours/glitch/components/button';
+import { Button as LegacyButton } from 'flavours/glitch/components/button';
 import {
   TextAreaField,
   TextInputField,
@@ -310,16 +311,25 @@ export const Profile: React.FC<{
         <div className='spacer' />
 
         <div className='column-footer'>
-          <Button block onClick={handleSubmit} disabled={isSaving}>
-            {isSaving ? (
-              <LoadingIndicator />
-            ) : (
+          {isRedesignEnabled() ? (
+            <Button variant='solid' onClick={handleSubmit} loading={isSaving}>
               <FormattedMessage
                 id='onboarding.profile.finish'
                 defaultMessage='Finish'
               />
-            )}
-          </Button>
+            </Button>
+          ) : (
+            <LegacyButton block onClick={handleSubmit} disabled={isSaving}>
+              {isSaving ? (
+                <LoadingIndicator />
+              ) : (
+                <FormattedMessage
+                  id='onboarding.profile.finish'
+                  defaultMessage='Finish'
+                />
+              )}
+            </LegacyButton>
+          )}
         </div>
       </div>
 
