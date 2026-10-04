@@ -21,6 +21,7 @@ import { TextArea } from '@/flavours/glitch/components/form_fields';
 import { normalizeKey } from '@/flavours/glitch/components/hotkeys/utils';
 import { useScrollSensor } from '@/flavours/glitch/hooks/useScrollSensor';
 import {
+  clearComposerErrors,
   clearComposerFocusRequest,
   COMPOSER_TEXTAREA_ID,
 } from '@/flavours/glitch/reducers/slices/composer';
@@ -55,7 +56,7 @@ type ComposeTextareaProps = Omit<
   | 'onDrop'
   | 'onChange'
   | 'onKeyDown'
-> & { onSubmit: () => void };
+>;
 
 const selectComposeTextState = createAppSelector(
   [(state) => state.compose],
@@ -67,7 +68,6 @@ const selectComposeTextState = createAppSelector(
 );
 
 export const ComposeTextarea: React.FC<ComposeTextareaProps> = ({
-  onSubmit,
   className,
   disabled,
   children,
@@ -142,6 +142,7 @@ export const ComposeTextarea: React.FC<ComposeTextareaProps> = ({
   const onChange: React.ChangeEventHandler<HTMLTextAreaElement> = useCallback(
     (event) => {
       dispatch(changeCompose(event.target.value));
+      dispatch(clearComposerErrors());
       onTextChange(event);
     },
     [dispatch, onTextChange],
@@ -152,11 +153,7 @@ export const ComposeTextarea: React.FC<ComposeTextareaProps> = ({
       (event) => {
         const key = normalizeKey(event.key);
 
-        if (key === 'enter' && (event.ctrlKey || event.metaKey)) {
-          onSubmit();
-          event.preventDefault();
-          onSuggestionClear();
-        } else if (key === 'escape') {
+        if (key === 'escape') {
           event.preventDefault();
           // Dismiss the suggestions if we're displaying any.
           if (suggestions.length > 0) {
@@ -169,7 +166,7 @@ export const ComposeTextarea: React.FC<ComposeTextareaProps> = ({
           focus(event);
         }
       },
-      [onSubmit, onSuggestionClear, suggestions.length, focus],
+      [onSuggestionClear, suggestions.length, focus],
     );
 
   const onPasteOrDrop = useCallback(

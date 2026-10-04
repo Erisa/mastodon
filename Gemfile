@@ -235,3 +235,5 @@ gem 'mail', '~> 2.8'
 
 gem 'base58', '~> 0.2.3'
 gem 'prism'
+
+gem 'bloom_fit', '~> 1.2'

@@ -3,6 +3,7 @@ import { useMemo } from 'react';
 import classNames from 'classnames';
 
 import { LinkedDisplayName } from '@/flavours/glitch/components/display_name';
+import { isRedesignEnabled } from '@/flavours/glitch/utils/environment';
 import { replyComposeById } from 'flavours/glitch/actions/compose';
 import {
   toggleReblog,
@@ -101,6 +102,8 @@ export const NotificationWithStatus: React.FC<{
           {
             'notification-ungrouped--unread': unread,
             'notification-ungrouped--direct': isPrivateMention,
+            'notification-ungrouped--redesign':
+              isRedesignEnabled() && isRedesignEnabled(),
           },
         )}
         tabIndex={0}

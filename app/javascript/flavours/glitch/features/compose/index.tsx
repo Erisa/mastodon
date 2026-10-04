@@ -1,4 +1,4 @@
-import { useEffect, useCallback, useState } from 'react';
+import { useEffect, useCallback, useState, Suspense, lazy } from 'react';
 
 import { useIntl, defineMessages } from 'react-intl';
 
@@ -11,6 +11,7 @@ import { Helmet } from '@unhead/react/helmet';
 import { Column } from '@/flavours/glitch/components/column';
 import { ColumnHeader as LegacyColumnHeader } from '@/flavours/glitch/components/column/header';
 import { ColumnHeader } from '@/flavours/glitch/components/column_header';
+import { LoadingIndicator } from '@/flavours/glitch/components/loading_indicator';
 import { isRedesignEnabled } from '@/flavours/glitch/utils/environment';
 import elephantUIPlane from '@/images/elephant_ui_plane.svg';
 import BubbleChartIcon from '@/material-icons/400-24px/bubble_chart.svg?react';
@@ -268,12 +269,14 @@ const Compose: React.FC<{ multiColumn: boolean }> = ({ multiColumn }) => {
         />
       )}
 
-      <div className='scrollable'>
-        <ComposeFormContainer
-          // This is fine on this single-purpose view
-          // eslint-disable-next-line jsx-a11y/no-autofocus
-          autoFocus
-        />
+      <div className='scrollable scrollable--flex'>
+        {isRedesignEnabled() ? (
+          <Suspense fallback={<LoadingIndicator />}>
+            <ComposeLazyForm autoFocus headless />
+          </Suspense>
+        ) : (
+          <ComposeFormContainer autoFocus />
+        )}
       </div>
 
       <Helmet>
@@ -282,6 +285,12 @@ const Compose: React.FC<{ multiColumn: boolean }> = ({ multiColumn }) => {
     </Column>
   );
 };
+
+const ComposeLazyForm = lazy(() =>
+  import('./redesign/index').then(({ RedesignComposeForm }) => ({
+    default: RedesignComposeForm,
+  })),
+);
 
 // eslint-disable-next-line import/no-default-export
 export default Compose;

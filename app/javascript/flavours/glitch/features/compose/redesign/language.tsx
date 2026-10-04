@@ -3,10 +3,9 @@ import { useCallback } from 'react';
 
 import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
 
-import { MagnifyingGlassIcon } from '@phosphor-icons/react';
+import { MagnifyingGlassIcon, TranslateIcon } from '@phosphor-icons/react';
 
 import { changeComposeLanguage } from '@/flavours/glitch/actions/compose';
-import { CaretIcon } from '@/flavours/glitch/components/button/redesign';
 import { TextInput } from '@/flavours/glitch/components/form_fields/redesign';
 import {
   Menu,
@@ -33,7 +32,7 @@ export const LanguageButton: React.FC = () => {
 
   return (
     <Menu>
-      <MenuTrigger size='sm' trailingIcon={CaretIcon}>
+      <MenuTrigger size='sm' leadingIcon={TranslateIcon}>
         {langCode.toLocaleUpperCase()}
       </MenuTrigger>
 

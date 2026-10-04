@@ -121,6 +121,7 @@ export const RedesignMobileNavigation: React.FC = () => {
               as='a'
               href='/auth/sign_up'
               variant='solid'
+              color='accent'
               size='sm'
               className={classes.signUpButton}
             >
@@ -253,6 +254,7 @@ const SlideOutNavigation: React.FC = () => {
       className={classes.slideOutWrapper}
       data-is-open={isOpen}
       ref={overlayRef}
+      inert={!isOpen}
     >
       <animated.div className={classes.slideOut} {...bind()} style={{ x }}>
         <RedesignNavigationPanel mode='slide-out' />

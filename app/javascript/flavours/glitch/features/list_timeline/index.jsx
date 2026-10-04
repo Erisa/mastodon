@@ -21,7 +21,7 @@ import { Column } from '@/flavours/glitch/components/column';
 import { ColumnHeader as LegacyColumnHeader } from '@/flavours/glitch/components/column/header';
 import { Icon }  from 'flavours/glitch/components/icon';
 import { LoadingIndicator } from 'flavours/glitch/components/loading_indicator';
-import BundleColumnError from 'flavours/glitch/features/ui/components/bundle_column_error';
+import { BundleColumnError } from 'flavours/glitch/features/ui/components/bundle_column_error';
 import StatusListContainer from 'flavours/glitch/features/ui/containers/status_list_container';
 import { WithRouterPropTypes } from 'flavours/glitch/utils/react_router';
 import { isRedesignEnabled } from '@/flavours/glitch/utils/environment';

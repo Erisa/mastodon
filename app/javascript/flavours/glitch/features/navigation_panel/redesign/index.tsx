@@ -2,6 +2,8 @@ import { useCallback, useEffect } from 'react';
 
 import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
 
+import type { Map as ImmutableMap } from 'immutable';
+
 import {
   PenNibIcon,
   HouseIcon,
@@ -11,17 +13,25 @@ import {
   ChatCircleDotsIcon,
   BookmarkSimpleIcon,
   PlusIcon,
+  InfoIcon,
 } from '@phosphor-icons/react';
 
+import { fetchFollowRequests } from '@/flavours/glitch/actions/accounts';
 import { fetchLists } from '@/flavours/glitch/actions/lists';
 import { closeNavigation } from '@/flavours/glitch/actions/navigation';
 import { fetchFollowedHashtags } from '@/flavours/glitch/actions/tags_typed';
+import { Button } from '@/flavours/glitch/components/button/redesign';
 import { Callout } from '@/flavours/glitch/components/callout/redesign';
 import { FOCUS_TARGET } from '@/flavours/glitch/components/navigation_focus_target';
 import { useScrollSensor } from '@/flavours/glitch/hooks/useScrollSensor';
 import { useIdentity } from '@/flavours/glitch/identity_context';
-import { disabledAccountId } from '@/flavours/glitch/initial_state';
+import {
+  disabledAccountId,
+  localLiveFeedAccess,
+  remoteLiveFeedAccess,
+} from '@/flavours/glitch/initial_state';
 import { transientSingleColumn } from '@/flavours/glitch/is_mobile';
+import { canViewFeed } from '@/flavours/glitch/permissions';
 import { openNewComposer } from '@/flavours/glitch/reducers/slices/composer';
 import { getOrderedLists } from '@/flavours/glitch/selectors/lists';
 import { selectUnreadNotificationGroupsCount } from '@/flavours/glitch/selectors/notifications';
@@ -78,13 +88,40 @@ function useFollowedHashtags() {
   return { followedHashtags: tags };
 }
 
+export function useFollowRequestsCount({
+  fetch = true,
+}: { fetch?: boolean } = {}) {
+  const followRequestsCount = useAppSelector(
+    (state) =>
+      (
+        state.user_lists.getIn(['follow_requests', 'items']) as
+          | ImmutableMap<string, unknown>
+          | undefined
+      )?.size ?? 0,
+  );
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (fetch) {
+      dispatch(fetchFollowRequests());
+    }
+  }, [dispatch, fetch]);
+
+  return followRequestsCount;
+}
+
 export function useNotificationsCount() {
   const unreadNotificationsCount = useAppSelector(
     selectUnreadNotificationGroupsCount,
   );
-  const { unreadAnnouncementCount } = useHasAnnouncements();
+  const { signedIn } = useIdentity();
+  const followRequestsCount = useFollowRequestsCount({ fetch: signedIn });
 
-  return unreadNotificationsCount + unreadAnnouncementCount;
+  const { unreadAnnouncementCount } = useHasAnnouncements({ fetch: signedIn });
+
+  return (
+    unreadNotificationsCount + followRequestsCount + unreadAnnouncementCount
+  );
 }
 
 const isFediverseFeedsLinkActive = (
@@ -141,44 +178,26 @@ export const RedesignNavigationPanel: React.FC<{
         <>
           {transientSingleColumn && <TransientSingleColumnCallout />}
           <ul className={classes.list}>
-            <NavigationLink
-              withSpaceAfter
-              as='button'
-              onClick={openComposer}
-              iconComponent={PenNibIcon}
-            >
-              <FormattedMessage
-                id='tabs_bar.publish'
-                defaultMessage='New Post'
-              />
-            </NavigationLink>
+            <li>
+              <Button
+                leadingIcon={PenNibIcon}
+                onClick={openComposer}
+                variant='solid'
+                color='accent'
+                size='md'
+                className={classes.newPostButton}
+              >
+                <FormattedMessage
+                  id='tabs_bar.publish'
+                  defaultMessage='New Post'
+                />
+              </Button>
+            </li>
             <NavigationLink to='/home' iconComponent={HouseIcon}>
               <FormattedMessage id='tabs_bar.home' defaultMessage='Home' />
             </NavigationLink>
-            <NavigationLink
-              to={{
-                pathname: '/explore',
-                state: { focusTarget: FOCUS_TARGET.SEARCH },
-              }}
-              iconComponent={MagnifyingGlassIcon}
-              onClick={invokeVirtualIosKeyboard}
-            >
-              <FormattedMessage
-                id='tabs_bar.explore'
-                defaultMessage='Explore'
-              />
-            </NavigationLink>
-            <NavigationLink
-              withSpaceAfter
-              to='/public/local'
-              iconComponent={FediIcon}
-              isActive={isFediverseFeedsLinkActive}
-            >
-              <FormattedMessage
-                id='tabs_bar.fediverse_feeds'
-                defaultMessage='Fediverse Feeds'
-              />
-            </NavigationLink>
+            <ExploreLink />
+            <PublicFeedsLink />
             <ListSection
               id='custom-feeds'
               title={
@@ -275,24 +294,86 @@ export const RedesignNavigationPanel: React.FC<{
                 <NavigationAccountCardAndMenu />
               </>
             )}
-            <NavigationFooterLinks
-              multiColumn={multiColumn}
-              siteName={siteName}
-            />
+            <NavigationFooterLinks multiColumn={multiColumn} />
           </footer>
         </>
       )}
       {!signedIn && (
-        <footer className={classes.footer} data-stuck={!isScrolledToBottom}>
-          {disabledAccountId ? <DisabledAccountBanner /> : <LoggedOutInfo />}
-          <NavigationFooterLinks
-            multiColumn={multiColumn}
-            siteName={siteName}
-          />
-        </footer>
+        <>
+          <ul className={classes.list}>
+            <NavigationLink to='/about' iconComponent={InfoIcon}>
+              <FormattedMessage
+                id='footer.about_this_server'
+                defaultMessage='About'
+              />
+            </NavigationLink>
+            <ExploreLink />
+            <PublicFeedsLink />
+          </ul>
+          <footer className={classes.footer} data-stuck={!isScrolledToBottom}>
+            {disabledAccountId ? <DisabledAccountBanner /> : <LoggedOutInfo />}
+            <NavigationFooterLinks withVersionInfo multiColumn={multiColumn} />
+          </footer>
+        </>
       )}
       {bottomSensor}
     </nav>
+  );
+};
+
+const ExploreLink: React.FC = () => {
+  return (
+    <NavigationLink
+      to={{
+        pathname: '/explore',
+        state: { focusTarget: FOCUS_TARGET.SEARCH },
+      }}
+      iconComponent={MagnifyingGlassIcon}
+      onClick={invokeVirtualIosKeyboard}
+    >
+      <FormattedMessage id='tabs_bar.explore' defaultMessage='Explore' />
+    </NavigationLink>
+  );
+};
+
+const PublicFeedsLink: React.FC = () => {
+  const { signedIn, permissions } = useIdentity();
+
+  const canViewLocalFeed = canViewFeed(
+    signedIn,
+    permissions,
+    localLiveFeedAccess,
+  );
+  const canViewRemoteFeed = canViewFeed(
+    signedIn,
+    permissions,
+    remoteLiveFeedAccess,
+  );
+
+  if (!canViewLocalFeed && !canViewRemoteFeed) {
+    return null;
+  }
+
+  const canViewOnlyOneFeed = canViewLocalFeed !== canViewRemoteFeed;
+
+  return (
+    <NavigationLink
+      to={canViewLocalFeed ? '/public/local' : '/public/remote'}
+      iconComponent={FediIcon}
+      isActive={isFediverseFeedsLinkActive}
+    >
+      {canViewOnlyOneFeed ? (
+        <FormattedMessage
+          id='tabs_bar.public_feed'
+          defaultMessage='Public Feed'
+        />
+      ) : (
+        <FormattedMessage
+          id='tabs_bar.public_feeds'
+          defaultMessage='Public Feeds'
+        />
+      )}
+    </NavigationLink>
   );
 };
 

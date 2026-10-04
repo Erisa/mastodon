@@ -2,6 +2,8 @@ import { useCallback } from 'react';
 
 import { FormattedMessage, useIntl } from 'react-intl';
 
+import { WarningIcon } from '@phosphor-icons/react';
+
 import { toggleStatusSpoilers } from '@/flavours/glitch/actions/statuses';
 import { selectStatusFilters } from '@/flavours/glitch/selectors/filters';
 import { selectPlainStatus } from '@/flavours/glitch/selectors/statuses';
@@ -10,7 +12,7 @@ import {
   useAppSelector,
 } from '@/flavours/glitch/store/typed_functions';
 
-import { Button } from '../button/redesign';
+import { Callout } from '../callout/redesign';
 import { EmojiHTML } from '../emoji/html';
 
 import { useStatusContext } from './hooks';
@@ -79,27 +81,26 @@ const StatusWarningDisplay: React.FC<{
   wrapperId?: string;
 }> = ({ hidden, onToggle, children, wrapperId }) => {
   return (
-    <div className={classes.spoiler}>
-      <div className={classes.spoilerContent}>{children}</div>
-
-      <Button
-        variant='solid'
-        size='sm'
-        onClick={onToggle}
-        aria-controls={wrapperId}
-      >
-        {hidden ? (
+    <Callout
+      className={classes.spoiler}
+      aria-controls={wrapperId}
+      actionClick={onToggle}
+      icon={WarningIcon}
+      actionText={
+        hidden ? (
           <FormattedMessage
-            id='content_warning.hide_short'
-            defaultMessage='Hide'
+            id='content_warning.hide_post'
+            defaultMessage='Hide post'
           />
         ) : (
           <FormattedMessage
-            id='content_warning.show_short'
-            defaultMessage='Show'
+            id='content_warning.show_post'
+            defaultMessage='Show post'
           />
-        )}
-      </Button>
-    </div>
+        )
+      }
+    >
+      {children}
+    </Callout>
   );
 };
