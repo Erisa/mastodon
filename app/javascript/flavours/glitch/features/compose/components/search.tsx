@@ -111,7 +111,8 @@ export const Search: React.FC<{
   const [expanded, setExpanded] = useState(false);
   const [selectedOption, setSelectedOption] = useState(-1);
   const [quickActions, setQuickActions] = useState<SearchOption[]>([]);
-  const [shouldOpenOnFocus, setShouldOpenOnFocus] = useState(false);
+  const [shouldOpenOnFocus, setShouldOpenOnFocus] =
+    useState(!isRedesignEnabled());
   const focusAfterNavigation = useFocusAfterNavigation(
     FOCUS_TARGET.SEARCH,
     () => {
@@ -575,13 +576,14 @@ export const Search: React.FC<{
       className={classNames('search', { active: expanded })}
     >
       <input
+        type='text'
+        inputMode='search'
+        data-main-search
         ref={useMergedRefs(
           searchInputRef,
           isRedesignEnabled() ? focusAfterNavigation : null,
         )}
         className='search__input'
-        type='text'
-        inputMode='search'
         placeholder={intl.formatMessage(
           signedIn ? messages.placeholderSignedIn : messages.placeholder,
         )}

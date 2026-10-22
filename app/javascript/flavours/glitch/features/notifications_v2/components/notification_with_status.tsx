@@ -2,9 +2,9 @@ import { useMemo } from 'react';
 
 import classNames from 'classnames';
 
+import { replyComposeById } from '@/flavours/glitch/actions/compose_typed';
 import { LinkedDisplayName } from '@/flavours/glitch/components/display_name';
 import { isRedesignEnabled } from '@/flavours/glitch/utils/environment';
-import { replyComposeById } from 'flavours/glitch/actions/compose';
 import {
   toggleReblog,
   toggleFavourite,
@@ -72,7 +72,7 @@ export const NotificationWithStatus: React.FC<{
       },
 
       reply: () => {
-        dispatch(replyComposeById(statusId));
+        dispatch(replyComposeById({ statusId }));
       },
 
       boost: () => {

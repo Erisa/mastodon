@@ -1,0 +1,28 @@
+@use 'application';
+
+[data-color-scheme='dark'],
+html:not([data-color-scheme]) {
+  --base-color-bg: var(--color-grey-950);
+  --color-bg-desktop: color-mix(
+    in srgb,
+    var(--color-bg-primary),
+    var(--color-black) 30%
+  );
+  --color-bg-brand-base: var(--color-indigo-600);
+  --color-bg-brand-base-hover: var(--color-indigo-700);
+  --color-text-on-brand-base: var(--color-white);
+  --color-bg-brand-softest: var(--color-indigo-900);
+  --color-bg-brand-soft: var(--color-indigo-800);
+  --color-text-warning: #ffb900;
+}
+
+[data-color-scheme='light'] {
+  --base-color-bg: var(--color-white);
+  --color-bg-desktop: color-mix(
+    in srgb,
+    var(--color-bg-primary),
+    var(--color-grey-950) 4%
+  );
+  --color-bg-secondary: var(--color-grey-50);
+  --color-text-warning: #bb4d00;
+}

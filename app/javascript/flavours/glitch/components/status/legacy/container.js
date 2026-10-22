@@ -2,11 +2,10 @@ import { connect } from 'react-redux';
 
 import { initBlockModal } from '@/flavours/glitch/actions/blocks';
 import {
-  replyCompose,
   mentionCompose,
   directCompose,
 } from '@/flavours/glitch/actions/compose';
-import { quoteComposeById } from '@/flavours/glitch/actions/compose_typed';
+import { quoteComposeById, replyComposeById } from '@/flavours/glitch/actions/compose_typed';
 import {
   initAddFilter,
 } from '@/flavours/glitch/actions/filters';
@@ -74,15 +73,7 @@ const makeMapStateToProps = () => {
 const mapDispatchToProps = (dispatch, { contextType }) => ({
 
   onReply (status) {
-    dispatch((_, getState) => {
-      let state = getState();
-
-      if (state.getIn(['local_settings', 'confirm_before_clearing_draft']) && state.getIn(['compose', 'text']).trim().length !== 0) {
-        dispatch(openModal({ modalType: 'CONFIRM_REPLY', modalProps: { status } }));
-      } else {
-        dispatch(replyCompose(status));
-      }
-    });
+    dispatch(replyComposeById({ statusId: status.get('id') }));
   },
 
   onQuote (status) {

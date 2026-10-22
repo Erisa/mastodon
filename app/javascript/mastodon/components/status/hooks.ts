@@ -54,6 +54,7 @@ import type { AppDispatch } from '@/mastodon/store';
 import { isRedesignEnabled } from '@/mastodon/utils/environment';
 import type { OnElementHandler } from '@/mastodon/utils/html';
 
+import type { HotkeyHandlerFunction, HotkeyName } from '../hotkeys';
 import { FOCUS_TARGET } from '../navigation_focus_target';
 
 import { boostItemState, quoteItemState } from './boost_button_utils';
@@ -73,6 +74,10 @@ import type { StatusContextType } from './types';
 export const StatusContext = createContext<{
   id?: string | null;
   contextType?: StatusContextType;
+  registerHotkeyCallback?: (
+    hotkey: HotkeyName,
+    handler: HotkeyHandlerFunction,
+  ) => void;
 }>({});
 
 export function useStatusContext() {
@@ -163,7 +168,7 @@ export function useStatusHandlers({
       const target = event.target;
       if (
         !(target instanceof HTMLElement) ||
-        target.closest('a, button') ||
+        target.closest('a, button, dialog') ||
         contextType === 'detailed' ||
         window.getSelection()?.type === 'Range'
       ) {
@@ -581,7 +586,10 @@ export function useStatusMenuActions({
   const interactions = useAppSelector((state) =>
     selectStatusInteractionsAllowed(state, status.id),
   );
-  const statusInteractionFactory = useStatusInteractionFactory(status.id);
+  const statusInteractionFactory = useStatusInteractionFactory(
+    status.id,
+    contextType,
+  );
 
   return useMemo(
     () =>
